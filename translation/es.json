@@ -1,0 +1,215 @@
+{
+  "login": {
+    "title": "Bienvenido a",
+    "google": "Iniciar con Google",
+    "apple": "Iniciar con Apple",
+    "policyText": {
+      "part1": "Al iniciar sesión, aceptas nuestra ",
+      "privacyPolicy": "Política de Privacidad",
+      "part2": " y ",
+      "terms": "Términos y Condiciones",
+      "part3": "."
+    }
+  },
+  "onboarding": {
+    "age": {
+      "title": "¿Cuántos años tienes?",
+      "years_old": "años"
+    },
+    "availableDays": {
+      "title": "¿Cuántos días estás disponible por semana?",
+      "days": "días",
+      "day": "día"
+    },
+    "creating": {
+      "title1": "Analizando tus objetivos de carrera...",
+      "title2": "Diseñando tu calendario de entrenamiento perfecto...",
+      "title3": "Optimizando la intensidad de tus ejercicios...",
+      "title4": "Casi listo, finalizando tu plan...",
+      "try_again": "Intentar de nuevo",
+      "errorTitle": "Ups, algo salió mal =("
+    },
+    "duration": {
+      "title": "¿Cuánto tiempo quieres que dure tu plan de carrera?",
+      "weeks": "semanas",
+      "choose_weeks": "Quiero elegir la cantidad de semanas",
+      "choose_date": "Quiero elegir una fecha específica"
+    },
+    "experience": {
+      "title": "¿Cuál es tu nivel de experiencia como corredor?",
+      "level_1": "Principiante",
+      "level_1_description": "¡Nunca he corrido antes, pero estoy listo para empezar!",
+      "level_2": "Novato",
+      "level_2_description": "He corrido un poco, pero aún soy bastante nuevo en esto.",
+      "level_3": "Intermedio",
+      "level_3_description": "Corro ocasionalmente, pero nada demasiado serio.",
+      "level_4": "Avanzado",
+      "level_4_description": "Corro regularmente y mantengo un buen ritmo.",
+      "level_5": "Profesional",
+      "level_5_description": "¡Tengo experiencia y siempre estoy listo para un nuevo desafío!"
+    },
+    "finish": {
+      "title": "¡Todo listo!",
+      "create_plan": "Crear mi plan de carrera"
+    },
+    "gender": {
+      "title": "¿Cuál es tu género?",
+      "man": "Hombre",
+      "woman": "Mujer",
+      "skip": "Omitir"
+    },
+    "goal": {
+      "title": "¿Cuál es tu objetivo principal?",
+      "loseWeight": "Perder peso",
+      "improveHealth": "Mejorar mi salud",
+      "runSpecificDistance": "Correr una distancia específica",
+      "improvePace": "Mejorar mi ritmo",
+      "noGoals": "Solo correr, sin objetivos"
+    },
+    "start": {
+      "title": "Vamos a crear tu plan de carrera personalizado",
+      "start_now": "Comenzar ahora"
+    },
+    "strava": {
+      "title": "¿Quieres vincular tu cuenta de Strava?"
+    },
+    "weight": {
+      "title": "¿Cuál es tu peso?",
+      "kgs": "kgs",
+      "lbs": "lbs"
+    },
+    "next": "Siguiente"
+  },
+  "settings": {
+    "title": "Configuración",
+    "language": "Idioma",
+    "createNewPlan": "Crear nuevo plan de carrera",
+    "clearChat": "Borrar mensajes del chat",
+    "logout": "Cerrar sesión",
+    "logoutConfirmTitle": "Confirmar cierre de sesión",
+    "logoutConfirmMessage": "¿Estás seguro de que quieres cerrar sesión?",
+    "newPlanConfirmTitle": "Crear nuevo plan",
+    "newPlanConfirmMessage": "Crear un nuevo plan borrará tu progreso actual. ¿Estás seguro de que quieres continuar?",
+    "disclaimer": "RunnerAI es una herramienta de IA diseñada para ayudar en tu desarrollo como corredor. No reemplaza el entrenamiento profesional.",
+    "version": "Versión: {{version}}",
+    "talkWithUs": "Habla con nosotros",
+    "deleteAccount": "Borrar cuenta",
+    "deleteAccountConfirmTitle": "Borrar cuenta",
+    "deleteAccountConfirmMessage": "¿Estás seguro de que quieres borrar tu cuenta? Esta acción no se puede deshacer.",
+    "deleteAccountEmailSubject": "Borrar Cuenta",
+    "deleteAccountEmailBody": "Hola,\n\nMe gustaría solicitar la eliminación de mi cuenta RunnerAI asociada al correo electrónico: {{email}}. Por favor, procese esta solicitud lo antes posible.\n\nGracias."
+  },
+  "analytics": {
+    "title": "Análisis",
+    "notEnoughWorkouts": "No hay suficientes entrenamientos completados",
+    "completeMoreWorkouts": "Completa {{count}} día(s) más para habilitar los análisis.",
+    "dayNumber": "Día {{number}}",
+    "overallStatistics": "Estadísticas generales",
+    "totalDistance": "Distancia total",
+    "totalDuration": "Duración total",
+    "hours": "{{value}} horas",
+    "averagePace": "Ritmo promedio",
+    "completedDays": "Días completados",
+    "workoutDistance": "Distancia del entrenamiento",
+    "lastWorkouts": "Últimos {{count}} entrenamientos ({{unit}})",
+    "workoutDuration": "Duración del entrenamiento",
+    "lastWorkoutsMinutes": "Últimos {{count}} entrenamientos (minutos)",
+    "premiumFeature": "Desbloquear análisis avanzados",
+    "upgradeToAccess": "Actualiza a premium para acceder a esta función.",
+    "upgrade": "Actualizar ahora"
+  },
+  "chat": {
+    "title": "Entrenador IA",
+    "errorMessage": "Lo siento, encontré un error. Por favor, inténtalo de nuevo.",
+    "welcomeMessage": "¡Pregúntame cualquier cosa sobre tu plan de carrera!",
+    "inputPlaceholder": "Escribe un mensaje...",
+    "dailyLimitExceeded": "Ocurrió algo mal... Vuelve a intentarlo más tarde."
+  },
+  "runningPlan": {
+    "title": "Mi plan de carrera",
+    "noPlanAvailable": "No hay plan de carrera disponible",
+    "duration": "Duración",
+    "distance": "Distancia",
+    "pace": "Ritmo",
+    "confirm": "Confirmar",
+    "skipped": "Omitido",
+    "skip": "Omitir",
+    "back": "Atrás",
+    "done": "Hecho",
+    "markAsDone": "Marcar como hecho",
+    "save": "Guardar",
+    "undo": "Deshacer",
+    "next": "Siguiente",
+    "week": "Semana {{number}}",
+    "distanceUnit": "{{distance}} {{unit}}",
+    "completed": {
+      "title": "¡Felicidades!",
+      "subtitle": "Has completado tu plan de carrera. ¿Listo para un nuevo desafío?",
+      "createNow": "Crear nuevo plan"
+    },
+    "share": {
+      "selectTemplate": "Selecciona una plantilla",
+      "selectTemplateDescription": "Selecciona una plantilla para tu historia de Instagram.",
+      "premium": "Premium",
+      "free": "Gratis",
+      "share": "Compartir",
+      "selectBackground": "Selecciona un fondo",
+      "selectBackgroundDescription": "Selecciona una foto o vídeo de tu biblioteca o toma una foto con tu cámara.",
+      "chooseFromLibrary": "Elegir de la biblioteca",
+      "takePhoto": "Tomar una foto",
+      "or": "o",
+      "back": "Atrás",
+      "continue": "Continuar",
+      "cameraPermissionError": "¡Lo siento, necesitamos permisos de cámara para que esto funcione!",
+      "layouts": {
+        "avgPace": "Ritmo",
+        "time": "Tiempo",
+        "completed": "Completado",
+        "remaining": "Restante",
+        "total": "Total",
+        "currentWeek": "Semana {{current}} de {{total}}",
+        "progress": "Progreso",
+        "stats": "Estadísticas",
+        "distance": "Distancia",
+        "duration": "Duración",
+        "pace": "Ritmo"
+      },
+      "showBackground": "Mostrar fondo",
+      "hideBackground": "Ocultar fondo"
+    }
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "create": "Crear",
+    "logout": "Cerrar sesión",
+    "delete": "Borrar",
+    "recommended": "Recomendado"
+  },
+  "newRunningPlan": {
+    "title": "Elige tu nuevo plan de carrera",
+    "beginner": "Principiante",
+    "intermediate": "Intermedio",
+    "advanced": "Avanzado",
+    "beginnerDescription": "Perfecto para quienes son nuevos en la carrera o están volviendo a ella.",
+    "intermediateDescription": "Para corredores con algo de experiencia que buscan mejorar.",
+    "advancedDescription": "Plan desafiante para corredores experimentados que buscan superar sus límites.",
+    "create": "Crear plan",
+    "duration": "Duración: {{weeks}} semanas",
+    "goalDistance": "Distancia objetivo: {{distance}}{{unit}}",
+    "custom": "Plan personalizado",
+    "customDescription": "Crea un plan completamente personalizado para tus necesidades y objetivos específicos."
+  },
+  "paywall": {
+    "title": "Desbloquea premium para acelerar tu progreso",
+    "benefits": {
+      "aiCoach": "Recibe consejos y apoyo en tiempo real de nuestro coach de IA.",
+      "advancedAnalytics": "Sigue tus mejoras con análisis detallados e insights que te mantienen motivado.",
+      "customPlan": "Planes de entrenamiento personalizados para cumplir tus objetivos y nivel de condición física.",
+      "noAds": "Disfruta de una experiencia sin anuncios."
+    },
+    "annual": "Anual",
+    "monthly": "Mensual",
+    "freeTrial": "Incluye 1 semana de prueba gratis",
+    "subscribe": "Suscríbete Ahora"
+  }
+}

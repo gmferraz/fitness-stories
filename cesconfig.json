@@ -39,12 +39,12 @@
     "noInstall": false,
     "overwrite": false,
     "importAlias": true,
-    "packageManager": "pnpm",
+    "packageManager": "bun",
     "eas": true
   },
   "packageManager": {
-    "type": "pnpm",
-    "version": "9.15.0"
+    "type": "bun",
+    "version": "1.2.1"
   },
   "os": {
     "type": "Darwin",

@@ -1,33 +1,183 @@
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Icon } from '@roninoss/icons';
+import { router, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Linking, Platform, View } from 'react-native';
+import { usePostHog } from 'posthog-react-native';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Linking, Platform, Pressable, ScrollView, TouchableOpacity, View } from 'react-native';
+import * as DropdownMenu from 'zeego/dropdown-menu';
 
 import { Text } from '~/components/nativewindui/Text';
+import { Toggle } from '~/components/nativewindui/Toggle';
+import { useEnvironmentStore } from '~/features/app-setup/use-environment';
 import { useColorScheme } from '~/lib/useColorScheme';
+import { languageDetector } from '~/utils/i18n/languageDetector';
 
-export default function ModalScreen() {
+import StravaIcon from '~/assets/svg/strava.svg';
+import AppleHealthIcon from '~/assets/svg/apple-health.svg';
+import { useStravaStore } from '~/stores/use-strava-store';
+
+export default function SettingsScreen() {
   const { colors, colorScheme } = useColorScheme();
+  const { t, i18n } = useTranslation();
+  const [language, setLanguage] = useState(i18n.language);
+  const { isGui, isPremium, setIsPremium } = useEnvironmentStore();
+  const { isAuthenticated: isStravaConnected } = useStravaStore();
+
+  const pathname = usePathname();
+  const posthog = usePostHog();
+
+  // useEffect(() => {
+  //   posthog.capture('$pageview', {
+  //     $current_url: pathname,
+  //   });
+
+  //   return () => {
+  //     posthog.capture('$pageleave', {
+  //       $current_url: pathname,
+  //     });
+  //   };
+  // }, [pathname]);
+
+  const handleTalkWithUs = () => {
+    Linking.openURL('mailto:guilherme@runnerai.xyz');
+  };
+
+  const handleLanguageChange = (newLanguage: string) => {
+    setLanguage(newLanguage);
+    i18n.changeLanguage(newLanguage);
+    languageDetector.cacheUserLanguage?.(newLanguage);
+  };
+
   return (
     <>
       <StatusBar
         style={Platform.OS === 'ios' ? 'light' : colorScheme === 'dark' ? 'light' : 'dark'}
       />
-      <View className="flex-1 items-center justify-center gap-1 px-12">
-        <Icon name="file-plus-outline" size={42} color={colors.grey} />
-        <Text variant="title3" className="pb-1 text-center font-semibold">
-          NativeWindUI
-        </Text>
-        <Text color="tertiary" variant="subhead" className="pb-4 text-center">
-          You can install any of the free components from the{' '}
-          <Text
-            onPress={() => Linking.openURL('https://nativewindui.com')}
-            variant="subhead"
-            className="text-primary">
-            NativeWindUI
+      <ScrollView className="flex-1 bg-background">
+        <View className="px-4 py-6">
+          <Text variant="footnote" className="mb-2 px-4 text-gray-500">
+            {t('settings.general')}
           </Text>
-          {' website.'}
-        </Text>
-      </View>
+
+          <View className="mb-6 rounded-lg bg-card">
+            <View className="flex-row items-center justify-between border-b border-gray-400/20 px-4 py-3 dark:border-gray-200/10">
+              <View className="flex-row items-center gap-3">
+                <MaterialCommunityIcons name="earth" size={24} color={colors.grey} />
+                <Text variant="body">{t('settings.language')}</Text>
+              </View>
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger>
+                  <Pressable className="android:gap-3 flex-row items-center gap-1.5">
+                    <Text variant="subhead" color="primary">
+                      {language === 'en'
+                        ? 'English'
+                        : language === 'pt'
+                          ? 'Português'
+                          : language === 'es'
+                            ? 'Español'
+                            : 'Français'}
+                    </Text>
+                    <View className="pl-0.5">
+                      <Icon name="chevron-down" color={colors.grey} size={21} />
+                    </View>
+                  </Pressable>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content>
+                  <DropdownMenu.CheckboxItem
+                    key="en"
+                    value={language === 'en'}
+                    onValueChange={() => handleLanguageChange('en')}>
+                    <DropdownMenu.ItemIndicator />
+                    <DropdownMenu.ItemTitle>English</DropdownMenu.ItemTitle>
+                  </DropdownMenu.CheckboxItem>
+                  <DropdownMenu.CheckboxItem
+                    key="pt"
+                    value={language === 'pt'}
+                    onValueChange={() => handleLanguageChange('pt')}>
+                    <DropdownMenu.ItemIndicator />
+                    <DropdownMenu.ItemTitle>Português</DropdownMenu.ItemTitle>
+                  </DropdownMenu.CheckboxItem>
+                  <DropdownMenu.CheckboxItem
+                    key="es"
+                    value={language === 'es'}
+                    onValueChange={() => handleLanguageChange('es')}>
+                    <DropdownMenu.ItemIndicator />
+                    <DropdownMenu.ItemTitle>Español</DropdownMenu.ItemTitle>
+                  </DropdownMenu.CheckboxItem>
+                  <DropdownMenu.CheckboxItem
+                    key="fr"
+                    value={language === 'fr'}
+                    onValueChange={() => handleLanguageChange('fr')}>
+                    <DropdownMenu.ItemIndicator />
+                    <DropdownMenu.ItemTitle>Français</DropdownMenu.ItemTitle>
+                  </DropdownMenu.CheckboxItem>
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
+            </View>
+
+            <TouchableOpacity
+              onPress={handleTalkWithUs}
+              className="flex-row items-center justify-between px-4 py-3">
+              <View className="flex-row items-center gap-3">
+                <MaterialCommunityIcons name="email-outline" size={24} color={colors.grey} />
+                <Text variant="body">{t('settings.talkWithUs')}</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.grey} />
+            </TouchableOpacity>
+          </View>
+
+          <Text variant="footnote" className="mb-2 px-4 text-gray-500">
+            {t('settings.premium')}
+          </Text>
+          <TouchableOpacity className="mb-6 flex-row items-center justify-between rounded-lg bg-card px-4 py-3">
+            <View className="flex-row items-center gap-3">
+              <Icon name="star" size={24} color={colors.grey} />
+              <Text variant="body" color="primary">
+                Premium
+              </Text>
+            </View>
+            <Toggle
+              value={isPremium}
+              onValueChange={isGui ? setIsPremium : isPremium ? null : () => null}
+              trackColor={{ false: colors.grey4, true: 'green' }}
+            />
+          </TouchableOpacity>
+
+          <Text variant="footnote" className="mb-2 px-4 text-gray-500">
+            {t('settings.integrations')}
+          </Text>
+          <View className="mb-6 rounded-lg bg-card">
+            <View className="flex-row items-center justify-between border-b border-gray-400/20 px-4 py-3 dark:border-gray-200/10">
+              <View className="flex-row items-center gap-4">
+                <View className="rounded-4xl h-8 w-8 shadow-sm">
+                  <StravaIcon />
+                </View>
+                <Text variant="body">Strava</Text>
+              </View>
+              <Toggle
+                value={isStravaConnected}
+                onValueChange={() => {}}
+                trackColor={{ false: colors.grey4, true: 'green' }}
+              />
+            </View>
+            <View className="flex-row items-center justify-between px-4 py-3">
+              <View className="flex-row items-center gap-4">
+                <View className="rounded-4xl h-8 w-8 shadow-sm">
+                  <AppleHealthIcon />
+                </View>
+                <Text variant="body">Apple Health</Text>
+              </View>
+              <Toggle
+                value={false}
+                onValueChange={() => {}}
+                trackColor={{ false: colors.grey4, true: 'green' }}
+              />
+            </View>
+          </View>
+        </View>
+      </ScrollView>
     </>
   );
 }
