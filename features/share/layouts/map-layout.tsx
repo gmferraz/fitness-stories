@@ -30,12 +30,12 @@ export function MapLayout({
   showBackground = true,
 }: MapLayoutProps) {
   const { t } = useTranslation();
-  const { fontFamily, titleSize, bodySize, labelSize, fontColor, backgroundColor, iconColor } =
-    useLayoutEditionStore();
+  const { styles } = useLayoutEditionStore();
+  const style = styles.map;
 
-  const textColor = getFontColor(fontColor);
-  const bgColor = getBackgroundColor(backgroundColor);
-  const icon = getIconColor(iconColor);
+  const textColor = getFontColor(style.fontColor);
+  const bgColor = getBackgroundColor(style.backgroundColor);
+  const icon = getIconColor(style.iconColor);
 
   const getCoordinates = () => {
     if (activity.root === 'strava') {
@@ -63,10 +63,10 @@ export function MapLayout({
         <View className="p-4">
           <Text
             style={{
-              fontFamily,
+              fontFamily: style.fontFamily,
               color: textColor,
-              fontSize: titleSize,
-              lineHeight: titleSize * 1.2,
+              fontSize: style.titleSize,
+              lineHeight: style.titleSize * 1.2,
             }}
             className="font-bold">
             {formatDistance(distance)}
@@ -76,20 +76,20 @@ export function MapLayout({
             <View className="flex-1">
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
                 }}
                 className="mb-1">
                 Avg Pace
               </Text>
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: bodySize,
-                  lineHeight: bodySize * 1.2,
+                  fontSize: style.bodySize,
+                  lineHeight: style.bodySize * 1.2,
                 }}
                 className="font-bold">
                 {pace} /{unit}
@@ -98,20 +98,20 @@ export function MapLayout({
             <View className="ml-3 flex-1">
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
                 }}
                 className="mb-1">
                 Time
               </Text>
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: bodySize,
-                  lineHeight: bodySize * 1.2,
+                  fontSize: style.bodySize,
+                  lineHeight: style.bodySize * 1.2,
                 }}
                 className="font-bold">
                 {formatDuration(duration)}
@@ -124,20 +124,20 @@ export function MapLayout({
               <View className="flex-1">
                 <Text
                   style={{
-                    fontFamily,
+                    fontFamily: style.fontFamily,
                     color: textColor,
-                    fontSize: labelSize,
-                    lineHeight: labelSize * 1.2,
+                    fontSize: style.labelSize,
+                    lineHeight: style.labelSize * 1.2,
                   }}
                   className="mb-1">
                   Avg HR
                 </Text>
                 <Text
                   style={{
-                    fontFamily,
+                    fontFamily: style.fontFamily,
                     color: textColor,
-                    fontSize: bodySize,
-                    lineHeight: bodySize * 1.2,
+                    fontSize: style.bodySize,
+                    lineHeight: style.bodySize * 1.2,
                   }}
                   className="font-bold">
                   {Math.round(activity.average_heartrate)} bpm
@@ -147,20 +147,20 @@ export function MapLayout({
                 <View className="ml-3 flex-1">
                   <Text
                     style={{
-                      fontFamily,
+                      fontFamily: style.fontFamily,
                       color: textColor,
-                      fontSize: labelSize,
-                      lineHeight: labelSize * 1.2,
+                      fontSize: style.labelSize,
+                      lineHeight: style.labelSize * 1.2,
                     }}
                     className="mb-1">
                     Max HR
                   </Text>
                   <Text
                     style={{
-                      fontFamily,
+                      fontFamily: style.fontFamily,
                       color: textColor,
-                      fontSize: bodySize,
-                      lineHeight: bodySize * 1.2,
+                      fontSize: style.bodySize,
+                      lineHeight: style.bodySize * 1.2,
                     }}
                     className="font-bold">
                     {Math.round(activity.max_heartrate)} bpm

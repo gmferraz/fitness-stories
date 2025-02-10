@@ -30,12 +30,12 @@ export function DetailedLayout({
 }: WorkoutLayoutProps) {
   const width = Dimensions.get('window').width;
   const { t } = useTranslation();
-  const { fontFamily, bodySize, labelSize, fontColor, backgroundColor, iconColor } =
-    useLayoutEditionStore();
+  const { styles } = useLayoutEditionStore();
+  const style = styles.detailed;
 
-  const textColor = getFontColor(fontColor);
-  const bgColor = getBackgroundColor(backgroundColor);
-  const icon = getIconColor(iconColor);
+  const textColor = getFontColor(style.fontColor);
+  const bgColor = getBackgroundColor(style.backgroundColor);
+  const icon = getIconColor(style.iconColor);
 
   const totalElevation = activity.total_elevation_gain ?? 0;
 
@@ -53,10 +53,10 @@ export function DetailedLayout({
               <Ionicons name="map-outline" size={16} color={icon} />
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
                 }}
                 className="ml-1">
                 Distance
@@ -64,10 +64,10 @@ export function DetailedLayout({
             </View>
             <Text
               style={{
-                fontFamily,
+                fontFamily: style.fontFamily,
                 color: textColor,
-                fontSize: bodySize,
-                lineHeight: bodySize * 1.2,
+                fontSize: style.bodySize,
+                lineHeight: style.bodySize * 1.2,
               }}
               className="font-bold">
               {formatDistance(distance)}
@@ -79,10 +79,10 @@ export function DetailedLayout({
               <Ionicons name="time-outline" size={16} color={icon} />
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
                 }}
                 className="ml-1">
                 Time
@@ -90,10 +90,10 @@ export function DetailedLayout({
             </View>
             <Text
               style={{
-                fontFamily,
+                fontFamily: style.fontFamily,
                 color: textColor,
-                fontSize: bodySize,
-                lineHeight: bodySize * 1.2,
+                fontSize: style.bodySize,
+                lineHeight: style.bodySize * 1.2,
               }}
               className="font-bold">
               {formatDuration(duration)}
@@ -107,10 +107,10 @@ export function DetailedLayout({
               <Ionicons name="speedometer-outline" size={16} color={icon} />
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
                 }}
                 className="ml-1">
                 Pace
@@ -118,10 +118,10 @@ export function DetailedLayout({
             </View>
             <Text
               style={{
-                fontFamily,
+                fontFamily: style.fontFamily,
                 color: textColor,
-                fontSize: bodySize,
-                lineHeight: bodySize * 1.2,
+                fontSize: style.bodySize,
+                lineHeight: style.bodySize * 1.2,
               }}
               className="font-bold">
               {pace}
@@ -132,10 +132,10 @@ export function DetailedLayout({
               <Ionicons name="arrow-up-circle-outline" size={16} color={icon} />
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
                 }}
                 className="ml-1">
                 Elevation
@@ -143,10 +143,10 @@ export function DetailedLayout({
             </View>
             <Text
               style={{
-                fontFamily,
+                fontFamily: style.fontFamily,
                 color: textColor,
-                fontSize: bodySize,
-                lineHeight: bodySize * 1.2,
+                fontSize: style.bodySize,
+                lineHeight: style.bodySize * 1.2,
               }}
               className="font-bold">
               {totalElevation}m

@@ -10,7 +10,7 @@ type Init18n = {
 };
 
 export const init18n = ({ resources, fallbackLng }: Init18n) => {
-  return i18n
+  i18n
     .use(languageDetector)
     .use(initReactI18next)
     .init({
@@ -21,4 +21,6 @@ export const init18n = ({ resources, fallbackLng }: Init18n) => {
         escapeValue: false,
       },
     });
+
+  return i18n;
 };

@@ -9,10 +9,17 @@ import { Text } from '~/components/nativewindui/Text';
 import { useColorScheme } from '~/lib/useColorScheme';
 
 export default function LayoutEditorScreen() {
-  const { resetEdits } = useLayoutEditionStore();
+  const { activeLayout, resetLayoutStyle } = useLayoutEditionStore();
   const { id } = useLocalSearchParams<{ id: string }>();
 
   const { colors } = useColorScheme();
+
+  const handleReset = () => {
+    if (activeLayout) {
+      resetLayoutStyle(activeLayout);
+    }
+  };
+
   return (
     <>
       <Stack.Screen
@@ -21,7 +28,7 @@ export default function LayoutEditorScreen() {
           headerLargeTitle: false,
           headerRight: () => (
             <MotiPressable
-              onPress={resetEdits}
+              onPress={handleReset}
               animate={({ pressed }) => {
                 'worklet';
                 return {

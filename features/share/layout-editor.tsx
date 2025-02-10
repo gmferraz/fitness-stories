@@ -2,7 +2,7 @@ import { View, ScrollView, Pressable } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { MotiView } from 'moti';
 import { MotiPressable } from 'moti/interactions';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 import { Text } from '~/components/nativewindui/Text';
 import { Slider } from '~/components/nativewindui/Slider';
@@ -86,26 +86,21 @@ const LAYOUT_COMPONENTS: Record<LayoutType, React.ComponentType<any>> = {
 export function LayoutEditor({ id }: { id: string }) {
   const { colors } = useColorScheme();
   const [selectedSection, setSelectedSection] = useState<number>(0);
-  const {
-    fontFamily,
-    titleSize,
-    bodySize,
-    labelSize,
-    backgroundColor,
-    fontColor,
-    iconColor,
-    showBackground,
-    setFontFamily,
-    setTitleSize,
-    setBodySize,
-    setLabelSize,
-    setBackgroundColor,
-    setFontColor,
-    setIconColor,
-    toggleBackground,
-  } = useLayoutEditionStore();
   const { selectedLayout } = useInstagramShareStore();
   const { bottom } = useSafeAreaInsets();
+
+  const { styles, activeLayout, setLayoutStyle, setActiveLayout, toggleBackground } =
+    useLayoutEditionStore();
+
+  // Get current layout style
+  const currentStyle = selectedLayout ? styles[selectedLayout] : null;
+
+  // Update active layout when selected layout changes
+  useEffect(() => {
+    if (selectedLayout && activeLayout !== selectedLayout) {
+      setActiveLayout(selectedLayout);
+    }
+  }, [selectedLayout, activeLayout, setActiveLayout]);
 
   const activity = getStoredActivityDetails(id);
 
@@ -131,7 +126,9 @@ export function LayoutEditor({ id }: { id: string }) {
         {FONT_FAMILIES.map((font) => (
           <MotiPressable
             key={font.value}
-            onPress={() => setFontFamily(font.value)}
+            onPress={() =>
+              selectedLayout && setLayoutStyle(selectedLayout, { fontFamily: font.value })
+            }
             animate={({ pressed }) => {
               'worklet';
               return {
@@ -141,13 +138,15 @@ export function LayoutEditor({ id }: { id: string }) {
             }}>
             <View
               className={`self-start rounded-xl border p-3 ${
-                fontFamily === font.value ? 'bg-primary/5 border-primary' : 'border-border/30'
+                currentStyle?.fontFamily === font.value
+                  ? 'bg-primary/5 border-primary'
+                  : 'border-border/30'
               }`}>
               <Text
                 color="primary"
                 variant="callout"
                 style={{ fontFamily: font.value }}
-                className={fontFamily === font.value ? 'font-bold' : 'font-medium'}>
+                className={currentStyle?.fontFamily === font.value ? 'font-bold' : 'font-medium'}>
                 {font.label}
               </Text>
             </View>
@@ -165,15 +164,17 @@ export function LayoutEditor({ id }: { id: string }) {
             Title Size
           </Text>
           <Text color="primary" variant="callout" className="font-medium">
-            {titleSize}px
+            {currentStyle?.titleSize}px
           </Text>
         </View>
         <Slider
-          value={titleSize}
+          value={currentStyle?.titleSize ?? 28}
           minimumValue={20}
           maximumValue={40}
           step={1}
-          onValueChange={setTitleSize}
+          onValueChange={(value) =>
+            selectedLayout && setLayoutStyle(selectedLayout, { titleSize: value })
+          }
         />
       </View>
       <View className="mb-6">
@@ -182,15 +183,17 @@ export function LayoutEditor({ id }: { id: string }) {
             Body Size
           </Text>
           <Text color="primary" variant="callout" className="font-medium">
-            {bodySize}px
+            {currentStyle?.bodySize}px
           </Text>
         </View>
         <Slider
-          value={bodySize}
+          value={currentStyle?.bodySize ?? 18}
           minimumValue={12}
           maximumValue={24}
           step={1}
-          onValueChange={setBodySize}
+          onValueChange={(value) =>
+            selectedLayout && setLayoutStyle(selectedLayout, { bodySize: value })
+          }
         />
       </View>
       <View>
@@ -199,15 +202,17 @@ export function LayoutEditor({ id }: { id: string }) {
             Label Size
           </Text>
           <Text color="primary" variant="callout" className="font-medium">
-            {labelSize}px
+            {currentStyle?.labelSize}px
           </Text>
         </View>
         <Slider
-          value={labelSize}
+          value={currentStyle?.labelSize ?? 14}
           minimumValue={10}
           maximumValue={18}
           step={1}
-          onValueChange={setLabelSize}
+          onValueChange={(value) =>
+            selectedLayout && setLayoutStyle(selectedLayout, { labelSize: value })
+          }
         />
       </View>
     </View>
@@ -224,7 +229,9 @@ export function LayoutEditor({ id }: { id: string }) {
           {FONT_COLORS.map((color) => (
             <MotiPressable
               key={color.value}
-              onPress={() => setFontColor(color.value)}
+              onPress={() =>
+                selectedLayout && setLayoutStyle(selectedLayout, { fontColor: color.value })
+              }
               animate={({ pressed }) => {
                 'worklet';
                 return {
@@ -234,10 +241,10 @@ export function LayoutEditor({ id }: { id: string }) {
               }}>
               <View
                 className={`aspect-square w-12 items-center justify-center rounded-full ${
-                  fontColor === color.value ? 'border-2 border-primary' : ''
+                  currentStyle?.fontColor === color.value ? 'border-2 border-primary' : ''
                 }`}
                 style={{ backgroundColor: getFontColor(color.value) }}>
-                {fontColor === color.value && (
+                {currentStyle?.fontColor === color.value && (
                   <MaterialCommunityIcons name="check" size={20} color="white" />
                 )}
               </View>
@@ -255,7 +262,9 @@ export function LayoutEditor({ id }: { id: string }) {
           {BACKGROUND_COLORS.map((color) => (
             <MotiPressable
               key={color.value}
-              onPress={() => setBackgroundColor(color.value)}
+              onPress={() =>
+                selectedLayout && setLayoutStyle(selectedLayout, { backgroundColor: color.value })
+              }
               animate={({ pressed }) => {
                 'worklet';
                 return {
@@ -265,12 +274,12 @@ export function LayoutEditor({ id }: { id: string }) {
               }}>
               <View
                 className={`aspect-square w-12 items-center justify-center rounded-full ${
-                  backgroundColor === color.value
+                  currentStyle?.backgroundColor === color.value
                     ? 'border-2 border-primary'
                     : 'border-border/30 border'
                 }`}
                 style={{ backgroundColor: getBackgroundColor(color.value) }}>
-                {backgroundColor === color.value && (
+                {currentStyle?.backgroundColor === color.value && (
                   <MaterialCommunityIcons name="check" size={20} color={colors.primary} />
                 )}
               </View>
@@ -285,12 +294,14 @@ export function LayoutEditor({ id }: { id: string }) {
           {['blue', 'purple', 'pink', 'orange', 'green', 'white', 'gray'].map((color) => (
             <Pressable
               key={color}
-              onPress={() => setIconColor(color as IconColor)}
+              onPress={() =>
+                selectedLayout && setLayoutStyle(selectedLayout, { iconColor: color as IconColor })
+              }
               className={`h-8 w-8 items-center justify-center rounded-full ${
-                iconColor === color ? 'border-2 border-white' : ''
+                currentStyle?.iconColor === color ? 'border-2 border-white' : ''
               }`}
               style={{ backgroundColor: getIconColor(color as IconColor) }}>
-              {iconColor === color && (
+              {currentStyle?.iconColor === color && (
                 <Ionicons
                   name="checkmark"
                   size={16}
@@ -307,7 +318,8 @@ export function LayoutEditor({ id }: { id: string }) {
   const renderPreview = () => {
     if (!activity || !selectedLayout || !props) return null;
     const LayoutComponent = LAYOUT_COMPONENTS[selectedLayout];
-    return <LayoutComponent {...props} showBackground={showBackground} />;
+    const currentStyle = styles[selectedLayout];
+    return <LayoutComponent {...props} showBackground={currentStyle?.showBackground ?? true} />;
   };
 
   return (
@@ -323,7 +335,7 @@ export function LayoutEditor({ id }: { id: string }) {
               Layout Editor
             </Text>
             <MotiPressable
-              onPress={toggleBackground}
+              onPress={() => selectedLayout && toggleBackground()}
               animate={({ pressed }) => {
                 'worklet';
                 return {
@@ -333,12 +345,12 @@ export function LayoutEditor({ id }: { id: string }) {
               }}>
               <View className="border-border/30 mt-2 flex-row items-center gap-2 self-end rounded-full border px-3 py-1.5">
                 <MaterialIcons
-                  name={showBackground ? 'visibility' : 'visibility-off'}
+                  name={currentStyle?.showBackground ? 'visibility' : 'visibility-off'}
                   size={16}
                   color={colors.primary}
                 />
                 <Text color="primary" variant="caption1" className="font-medium">
-                  {showBackground ? 'Hide background' : 'Show background'}
+                  {currentStyle?.showBackground ? 'Hide background' : 'Show background'}
                 </Text>
               </View>
             </MotiPressable>
@@ -360,7 +372,7 @@ export function LayoutEditor({ id }: { id: string }) {
 
         {/* Section Content */}
         <ScrollView
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator
           className="flex-1 px-6"
           contentContainerStyle={{ paddingBottom: 24 }}>
           {selectedSection === 0 && renderStyleSection()}

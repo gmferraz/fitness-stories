@@ -1,10 +1,8 @@
 import { View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Text } from '~/components/nativewindui/Text';
 import { formatDistance } from '~/utils/formatters';
 import { Activity } from '~/features/home/types/activity';
-import { languageDetector } from '~/utils/i18n/languageDetector';
 import {
   useLayoutEditionStore,
   getFontColor,
@@ -28,11 +26,28 @@ export function SocialLayout({
 }: SocialLayoutProps) {
   const hasHeartRate = !!activity.average_heartrate;
   const hasElevation = !!activity.total_elevation_gain;
-  const { fontFamily, titleSize, bodySize, labelSize, fontColor, backgroundColor } =
-    useLayoutEditionStore();
+  const { styles } = useLayoutEditionStore();
+  const style = styles.social;
 
-  const textColor = getFontColor(fontColor);
-  const bgColor = getBackgroundColor(backgroundColor);
+  const textColor = getFontColor(style.fontColor);
+  const bgColor = getBackgroundColor(style.backgroundColor);
+
+  const commonTextStyles = {
+    fontFamily: style.fontFamily,
+    color: textColor,
+  };
+
+  const labelStyles = {
+    ...commonTextStyles,
+    fontSize: style.labelSize,
+    lineHeight: style.labelSize * 1.2,
+  };
+
+  const bodyStyles = {
+    ...commonTextStyles,
+    fontSize: style.bodySize,
+    lineHeight: style.bodySize * 1.2,
+  };
 
   return (
     <View
@@ -41,101 +56,78 @@ export function SocialLayout({
         width: 320,
         backgroundColor: showBackground ? bgColor : 'transparent',
       }}>
-      <View className="flex-row justify-between">
+      {hasHeartRate ? (
+        // Layout with heart rate: 2x2 grid
         <View className="flex-1">
-          <Text
-            style={{
-              fontFamily,
-              color: textColor,
-              fontSize: labelSize,
-              lineHeight: labelSize * 1.2,
-            }}
-            className="mb-1">
-            Distance
-          </Text>
-          <Text
-            style={{
-              fontFamily,
-              color: textColor,
-              fontSize: bodySize,
-              lineHeight: bodySize * 1.2,
-            }}
-            className="font-bold">
-            {formatDistance(distance)}
-          </Text>
-        </View>
-
-        <View className="flex-1">
-          <Text
-            style={{
-              fontFamily,
-              color: textColor,
-              fontSize: labelSize,
-              lineHeight: labelSize * 1.2,
-            }}
-            className="mb-1">
-            Avg Pace
-          </Text>
-          <Text
-            style={{
-              fontFamily,
-              color: textColor,
-              fontSize: bodySize,
-              lineHeight: bodySize * 1.2,
-            }}
-            className="font-bold">
-            {pace}
-          </Text>
-        </View>
-      </View>
-
-      {(hasHeartRate || hasElevation) && (
-        <View className="mt-4 flex-row justify-between">
-          {hasHeartRate && (
+          <View className="flex-row justify-between">
             <View className="flex-1">
-              <Text
-                style={{
-                  fontFamily,
-                  color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
-                }}
-                className="mb-1">
+              <Text style={labelStyles} className="mb-1">
+                Distance
+              </Text>
+              <Text style={bodyStyles} className="font-bold">
+                {formatDistance(distance)}
+              </Text>
+            </View>
+
+            <View className="flex-1">
+              <Text style={labelStyles} className="mb-1">
+                Avg Pace
+              </Text>
+              <Text style={bodyStyles} className="font-bold">
+                {pace}
+              </Text>
+            </View>
+          </View>
+
+          <View className="mt-4 flex-row justify-between">
+            <View className="flex-1">
+              <Text style={labelStyles} className="mb-1">
                 Avg HR
               </Text>
-              <Text
-                style={{
-                  fontFamily,
-                  color: textColor,
-                  fontSize: bodySize,
-                  lineHeight: bodySize * 1.2,
-                }}
-                className="font-bold">
+              <Text style={bodyStyles} className="font-bold">
                 {Math.round(activity.average_heartrate!)} bpm
               </Text>
             </View>
-          )}
+
+            {hasElevation && (
+              <View className="flex-1">
+                <Text style={labelStyles} className="mb-1">
+                  Elevation
+                </Text>
+                <Text style={bodyStyles} className="font-bold">
+                  {Math.round(activity.total_elevation_gain!)} m
+                </Text>
+              </View>
+            )}
+          </View>
+        </View>
+      ) : (
+        // Layout without heart rate: single row with consistent gaps
+        <View className="flex-row justify-between gap-4">
+          <View className="flex-1">
+            <Text style={labelStyles} className="mb-1">
+              Distance
+            </Text>
+            <Text style={bodyStyles} className="font-bold">
+              {formatDistance(distance)}
+            </Text>
+          </View>
+
+          <View className="ml-2 flex-1">
+            <Text style={labelStyles} className="mb-1">
+              Avg Pace
+            </Text>
+            <Text style={bodyStyles} className="font-bold">
+              {pace}
+            </Text>
+          </View>
 
           {hasElevation && (
-            <View className="flex-1">
-              <Text
-                style={{
-                  fontFamily,
-                  color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
-                }}
-                className="mb-1">
+            <View className="flex-1 self-end text-end">
+              <Text style={labelStyles} className="mb-1">
                 Elevation
               </Text>
-              <Text
-                style={{
-                  fontFamily,
-                  color: textColor,
-                  fontSize: bodySize,
-                  lineHeight: bodySize * 1.2,
-                }}
-                className="font-bold">
+              <Text style={bodyStyles} className="font-bold">
                 {Math.round(activity.total_elevation_gain!)} m
               </Text>
             </View>

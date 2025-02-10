@@ -22,12 +22,12 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
   const language = languageDetector.detect();
   const hasHeartRate = !!activity.average_heartrate;
   const hasCalories = !!activity.calories;
-  const { fontFamily, titleSize, bodySize, labelSize, fontColor, backgroundColor, iconColor } =
-    useLayoutEditionStore();
+  const { styles } = useLayoutEditionStore();
+  const style = styles.weight;
 
-  const textColor = getFontColor(fontColor);
-  const bgColor = getBackgroundColor(backgroundColor);
-  const icon = getIconColor(iconColor);
+  const textColor = getFontColor(style.fontColor);
+  const bgColor = getBackgroundColor(style.backgroundColor);
+  const icon = getIconColor(style.iconColor);
 
   return (
     <View
@@ -35,10 +35,10 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
       style={{ width: 320, backgroundColor: showBackground ? bgColor : 'transparent' }}>
       <Text
         style={{
-          fontFamily,
+          fontFamily: style.fontFamily,
           color: textColor,
-          fontSize: labelSize,
-          lineHeight: labelSize * 1.2,
+          fontSize: style.labelSize,
+          lineHeight: style.labelSize * 1.2,
         }}
         className="mb-2">
         {new Date().toLocaleDateString(language, {
@@ -53,10 +53,10 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
           <MaterialCommunityIcons name="dumbbell" size={24} color={icon} />
           <Text
             style={{
-              fontFamily,
+              fontFamily: style.fontFamily,
               color: textColor,
-              fontSize: bodySize,
-              lineHeight: bodySize * 1.2,
+              fontSize: style.bodySize,
+              lineHeight: style.bodySize * 1.2,
             }}
             className="ml-2 font-bold">
             Weight Training
@@ -67,20 +67,20 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
       <View className="mt-4">
         <Text
           style={{
-            fontFamily,
+            fontFamily: style.fontFamily,
             color: textColor,
-            fontSize: labelSize,
-            lineHeight: labelSize * 1.2,
+            fontSize: style.labelSize,
+            lineHeight: style.labelSize * 1.2,
           }}
           className="mb-1 opacity-60">
           Duration
         </Text>
         <Text
           style={{
-            fontFamily,
+            fontFamily: style.fontFamily,
             color: textColor,
-            fontSize: titleSize,
-            lineHeight: titleSize * 1.2,
+            fontSize: style.titleSize,
+            lineHeight: style.titleSize * 1.2,
           }}
           className="font-black">
           {formatDuration(duration)}
@@ -93,20 +93,20 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
             <View className="flex-1">
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
                 }}
                 className="mb-1 opacity-60">
                 Avg HR
               </Text>
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: bodySize,
-                  lineHeight: bodySize * 1.2,
+                  fontSize: style.bodySize,
+                  lineHeight: style.bodySize * 1.2,
                 }}
                 className="font-bold">
                 {Math.round(activity.average_heartrate!)} bpm
@@ -118,20 +118,20 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
             <View className="flex-1">
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
                 }}
                 className="mb-1 opacity-60">
                 Calories
               </Text>
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: bodySize,
-                  lineHeight: bodySize * 1.2,
+                  fontSize: style.bodySize,
+                  lineHeight: style.bodySize * 1.2,
                 }}
                 className="font-bold">
                 {Math.round(activity.calories!)} kcal

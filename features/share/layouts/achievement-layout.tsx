@@ -29,12 +29,12 @@ export function AchievementLayout({
   showBackground = true,
 }: AchievementLayoutProps) {
   const { t } = useTranslation();
-  const { fontFamily, titleSize, bodySize, labelSize, fontColor, backgroundColor, iconColor } =
-    useLayoutEditionStore();
+  const { styles } = useLayoutEditionStore();
+  const style = styles.achievement;
 
-  const textColor = getFontColor(fontColor);
-  const bgColor = getBackgroundColor(backgroundColor);
-  const icon = getIconColor(iconColor);
+  const textColor = getFontColor(style.fontColor);
+  const bgColor = getBackgroundColor(style.backgroundColor);
+  const icon = getIconColor(style.iconColor);
 
   return (
     <View
@@ -61,10 +61,10 @@ export function AchievementLayout({
 
           <Text
             style={{
-              fontFamily,
+              fontFamily: style.fontFamily,
               color: textColor,
-              fontSize: titleSize * 1.2,
-              lineHeight: titleSize * 1.4,
+              fontSize: style.titleSize * 1.2,
+              lineHeight: style.titleSize * 1.4,
             }}
             className="mt-4 text-center font-black">
             {formatDistance(distance)}
@@ -72,10 +72,10 @@ export function AchievementLayout({
 
           <Text
             style={{
-              fontFamily,
+              fontFamily: style.fontFamily,
               color: textColor,
-              fontSize: labelSize,
-              lineHeight: labelSize * 1.2,
+              fontSize: style.labelSize,
+              lineHeight: style.labelSize * 1.2,
             }}
             className="mt-1 text-center">
             {title}
@@ -89,19 +89,19 @@ export function AchievementLayout({
               <View>
                 <Text
                   style={{
-                    fontFamily,
+                    fontFamily: style.fontFamily,
                     color: textColor,
-                    fontSize: labelSize,
-                    lineHeight: labelSize * 1.2,
+                    fontSize: style.labelSize,
+                    lineHeight: style.labelSize * 1.2,
                   }}>
                   Time
                 </Text>
                 <Text
                   style={{
-                    fontFamily,
+                    fontFamily: style.fontFamily,
                     color: textColor,
-                    fontSize: bodySize,
-                    lineHeight: bodySize * 1.2,
+                    fontSize: style.bodySize,
+                    lineHeight: style.bodySize * 1.2,
                   }}
                   className="font-bold">
                   {formatDuration(duration)}
@@ -111,19 +111,19 @@ export function AchievementLayout({
               <View className="items-start">
                 <Text
                   style={{
-                    fontFamily,
+                    fontFamily: style.fontFamily,
                     color: textColor,
-                    fontSize: labelSize,
-                    lineHeight: labelSize * 1.2,
+                    fontSize: style.labelSize,
+                    lineHeight: style.labelSize * 1.2,
                   }}>
                   Avg Pace
                 </Text>
                 <Text
                   style={{
-                    fontFamily,
+                    fontFamily: style.fontFamily,
                     color: textColor,
-                    fontSize: bodySize,
-                    lineHeight: bodySize * 1.2,
+                    fontSize: style.bodySize,
+                    lineHeight: style.bodySize * 1.2,
                   }}
                   className="font-bold">
                   {pace}

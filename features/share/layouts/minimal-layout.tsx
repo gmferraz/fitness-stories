@@ -32,11 +32,11 @@ export function MinimalLayout({
   const language = languageDetector.detect();
   const width = Dimensions.get('window').width;
   const { t } = useTranslation();
-  const { fontFamily, titleSize, bodySize, labelSize, fontColor, backgroundColor } =
-    useLayoutEditionStore();
+  const { styles } = useLayoutEditionStore();
+  const style = styles.minimal;
 
-  const textColor = getFontColor(fontColor);
-  const bgColor = getBackgroundColor(backgroundColor);
+  const textColor = getFontColor(style.fontColor);
+  const bgColor = getBackgroundColor(style.backgroundColor);
   const hasElevation = !!activity.total_elevation_gain;
 
   return (
@@ -48,10 +48,10 @@ export function MinimalLayout({
       }}>
       <Text
         style={{
-          fontFamily,
+          fontFamily: style.fontFamily,
           color: textColor,
-          fontSize: labelSize,
-          lineHeight: labelSize * 1.2,
+          fontSize: style.labelSize,
+          lineHeight: style.labelSize * 1.2,
         }}>
         {new Date().toLocaleDateString(language, {
           month: 'long',
@@ -63,9 +63,9 @@ export function MinimalLayout({
         numberOfLines={2}
         className="mb-6 mt-2 font-bold"
         style={{
-          fontSize: titleSize,
-          fontFamily,
-          lineHeight: titleSize * 1.2,
+          fontSize: style.titleSize,
+          fontFamily: style.fontFamily,
+          lineHeight: style.titleSize * 1.2,
           color: textColor,
         }}>
         {formatDistance(distance)}
@@ -76,19 +76,19 @@ export function MinimalLayout({
           <Text
             className="mb-1"
             style={{
-              fontFamily,
+              fontFamily: style.fontFamily,
               color: textColor,
-              fontSize: labelSize,
-              lineHeight: labelSize * 1.2,
+              fontSize: style.labelSize,
+              lineHeight: style.labelSize * 1.2,
             }}>
             Avg pace
           </Text>
           <Text
             className="font-bold"
             style={{
-              fontSize: bodySize,
-              fontFamily,
-              lineHeight: bodySize * 1.2,
+              fontSize: style.bodySize,
+              fontFamily: style.fontFamily,
+              lineHeight: style.bodySize * 1.2,
               color: textColor,
             }}>
             {pace}
@@ -98,19 +98,19 @@ export function MinimalLayout({
           <Text
             className="mb-1"
             style={{
-              fontFamily,
+              fontFamily: style.fontFamily,
               color: textColor,
-              fontSize: labelSize,
-              lineHeight: labelSize * 1.2,
+              fontSize: style.labelSize,
+              lineHeight: style.labelSize * 1.2,
             }}>
             Time
           </Text>
           <Text
             className="font-bold"
             style={{
-              fontSize: bodySize,
-              fontFamily,
-              lineHeight: bodySize * 1.2,
+              fontSize: style.bodySize,
+              fontFamily: style.fontFamily,
+              lineHeight: style.bodySize * 1.2,
               color: textColor,
             }}>
             {formatDuration(duration)}
@@ -121,19 +121,19 @@ export function MinimalLayout({
             <Text
               className="mb-1"
               style={{
-                fontFamily,
+                fontFamily: style.fontFamily,
                 color: textColor,
-                fontSize: labelSize,
-                lineHeight: labelSize * 1.2,
+                fontSize: style.labelSize,
+                lineHeight: style.labelSize * 1.2,
               }}>
               Elevation
             </Text>
             <Text
               className="font-bold"
               style={{
-                fontSize: bodySize,
-                fontFamily,
-                lineHeight: bodySize * 1.2,
+                fontSize: style.bodySize,
+                fontFamily: style.fontFamily,
+                lineHeight: style.bodySize * 1.2,
                 color: textColor,
               }}>
               {activity.total_elevation_gain}m

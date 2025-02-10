@@ -51,7 +51,7 @@ export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
   const { bottom } = useSafeAreaInsets();
   const [currentPage, setCurrentPage] = useState(0);
   const { selectedImage, setSelectedLayout } = useInstagramShareStore();
-  const { lastUsedLayout, setLastUsedLayout, showBackground, toggleBackground } =
+  const { lastUsedLayout, setLastUsedLayout, styles, toggleBackground, setActiveLayout } =
     useLayoutEditionStore();
   const userPreferedMetric = 'km';
   const width = Dimensions.get('window').width;
@@ -59,6 +59,10 @@ export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
   const viewShotRef = useRef<ViewShot>(null);
   const activity = getStoredActivityDetails(id);
   const availableLayouts = getAvailableLayouts(activity as Activity);
+
+  // Get current layout and its style
+  const currentLayout = availableLayouts[currentPage];
+  const currentStyle = currentLayout ? styles[currentLayout] : null;
 
   // Find the index of the last used layout if it exists
   const initialIndex = useMemo(() => {
@@ -71,6 +75,7 @@ export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
   useMountEffect(() => {
     setCurrentPage(initialIndex);
     setSelectedLayout(availableLayouts[initialIndex]);
+    setActiveLayout(availableLayouts[initialIndex]);
   });
 
   if (!selectedImage || !activity) return null;
@@ -80,6 +85,7 @@ export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
   const handlePageSelected = (page: number) => {
     setCurrentPage(page);
     setSelectedLayout(availableLayouts[page]);
+    setActiveLayout(availableLayouts[page]);
   };
 
   const { moving_time, distance, name } = activity;
@@ -91,7 +97,7 @@ export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
     unit,
     title: name,
     activity,
-    showBackground,
+    showBackground: currentStyle?.showBackground ?? true,
   };
 
   const handleShare = async () => {
@@ -116,6 +122,7 @@ export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
     const layout = availableLayouts[index];
     const LayoutComponent = LAYOUT_COMPONENTS[layout];
     const isPremium = layout !== 'minimal' && layout !== 'progress';
+    const layoutStyle = styles[layout];
 
     return (
       <View className="px-2">
@@ -143,7 +150,7 @@ export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
             quality: 1,
             result: 'data-uri',
           }}>
-          <LayoutComponent {...props} />
+          <LayoutComponent {...props} showBackground={layoutStyle?.showBackground ?? true} />
         </ViewShot>
         <MotiPressable
           onPress={toggleBackground}
@@ -156,12 +163,12 @@ export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
           }}>
           <View className="border-border/30 mt-4 flex-row items-center gap-2 self-end rounded-full border px-3 py-1.5">
             <MaterialIcons
-              name={showBackground ? 'visibility' : 'visibility-off'}
+              name={layoutStyle?.showBackground ? 'visibility' : 'visibility-off'}
               size={16}
               color={colors.primary}
             />
             <Text color="primary" variant="caption1" className="font-medium">
-              {showBackground ? 'Hide background' : 'Show background'}
+              {layoutStyle?.showBackground ? 'Hide background' : 'Show background'}
             </Text>
           </View>
         </MotiPressable>
@@ -181,7 +188,7 @@ export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
       <Carousel
         loop
         width={width - 48}
-        height={460}
+        height={520}
         autoPlay={false}
         data={availableLayouts}
         defaultIndex={initialIndex}

@@ -25,11 +25,11 @@ export function ProgressLayout({
 }: ProgressLayoutProps) {
   const width = Dimensions.get('window').width;
   const { t } = useTranslation();
-  const { fontFamily, titleSize, bodySize, labelSize, fontColor, backgroundColor } =
-    useLayoutEditionStore();
+  const { styles } = useLayoutEditionStore();
+  const style = styles.progress;
 
-  const textColor = getFontColor(fontColor);
-  const bgColor = getBackgroundColor(backgroundColor);
+  const textColor = getFontColor(style.fontColor);
+  const bgColor = getBackgroundColor(style.backgroundColor);
 
   return (
     <View className="self-center rounded-2xl" style={{ height: 180, width: width - 48 }}>
@@ -38,10 +38,10 @@ export function ProgressLayout({
         style={{ backgroundColor: showBackground ? bgColor : 'transparent' }}>
         <Text
           style={{
-            fontFamily,
+            fontFamily: style.fontFamily,
             color: textColor,
-            fontSize: bodySize,
-            lineHeight: labelSize * 1.2,
+            fontSize: style.bodySize,
+            lineHeight: style.labelSize * 1.2,
           }}
           className="mb-2"
           numberOfLines={3}>
@@ -50,10 +50,10 @@ export function ProgressLayout({
         <Text
           numberOfLines={2}
           style={{
-            fontFamily,
+            fontFamily: style.fontFamily,
             color: textColor,
-            fontSize: titleSize,
-            lineHeight: titleSize * 1.2,
+            fontSize: style.titleSize,
+            lineHeight: style.titleSize * 1.2,
           }}
           className="mb-4 font-bold">
           {formatDistance(activity.distance)}
@@ -63,20 +63,20 @@ export function ProgressLayout({
           <View className="flex-1">
             <Text
               style={{
-                fontFamily,
+                fontFamily: style.fontFamily,
                 color: textColor,
-                fontSize: labelSize,
-                lineHeight: labelSize * 1.2,
+                fontSize: style.labelSize,
+                lineHeight: style.labelSize * 1.2,
               }}
               className="mb-1">
               Avg Pace
             </Text>
             <Text
               style={{
-                fontFamily,
+                fontFamily: style.fontFamily,
                 color: textColor,
-                fontSize: bodySize,
-                lineHeight: bodySize * 1.2,
+                fontSize: style.bodySize,
+                lineHeight: style.bodySize * 1.2,
               }}
               className="font-bold">
               {pace}
@@ -85,20 +85,20 @@ export function ProgressLayout({
           <View className="ml-3 flex-1">
             <Text
               style={{
-                fontFamily,
+                fontFamily: style.fontFamily,
                 color: textColor,
-                fontSize: labelSize,
-                lineHeight: labelSize * 1.2,
+                fontSize: style.labelSize,
+                lineHeight: style.labelSize * 1.2,
               }}
               className="mb-1">
               Time
             </Text>
             <Text
               style={{
-                fontFamily,
+                fontFamily: style.fontFamily,
                 color: textColor,
-                fontSize: bodySize,
-                lineHeight: bodySize * 1.2,
+                fontSize: style.bodySize,
+                lineHeight: style.bodySize * 1.2,
               }}
               className="font-bold">
               {formatDuration(duration)}

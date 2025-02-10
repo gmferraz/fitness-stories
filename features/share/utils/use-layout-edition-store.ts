@@ -32,80 +32,143 @@ export const zustandStorage: StateStorage = {
   },
 };
 
-interface LayoutEditionState {
-  // Font customization
+interface LayoutStyle {
   fontFamily: FontFamily;
   titleSize: number;
   bodySize: number;
   labelSize: number;
   fontColor: FontColor;
-
-  // Style customization
   iconColor: IconColor;
   backgroundColor: BackgroundColor;
-  lastUsedLayout: LayoutType | null;
   showBackground: boolean;
-  hasCustomEdits: boolean;
-
-  // Actions
-  setFontFamily: (family: FontFamily) => void;
-  setTitleSize: (size: number) => void;
-  setBodySize: (size: number) => void;
-  setLabelSize: (size: number) => void;
-  setFontColor: (color: FontColor) => void;
-  setIconColor: (color: IconColor) => void;
-  setBackgroundColor: (color: BackgroundColor) => void;
-  setLastUsedLayout: (layout: LayoutType | null) => void;
-  toggleBackground: () => void;
-  resetEdits: () => void;
 }
 
-const DEFAULT_STATE = {
-  fontFamily: 'Inter' as FontFamily,
+interface LayoutStylesState {
+  styles: Record<LayoutType, LayoutStyle>;
+  activeLayout: LayoutType | null;
+  lastUsedLayout: LayoutType | null;
+
+  // Actions
+  setLayoutStyle: (layout: LayoutType, style: Partial<LayoutStyle>) => void;
+  setActiveLayout: (layout: LayoutType) => void;
+  resetLayoutStyle: (layout: LayoutType) => void;
+  setLastUsedLayout: (layout: LayoutType | null) => void;
+  toggleBackground: () => void;
+}
+
+const DEFAULT_STYLE: LayoutStyle = {
+  fontFamily: 'Inter',
   titleSize: 28,
   bodySize: 18,
   labelSize: 14,
-  fontColor: 'black' as FontColor,
-  iconColor: 'blue' as IconColor,
-  backgroundColor: 'dark' as BackgroundColor,
-  lastUsedLayout: null as LayoutType | null,
+  fontColor: 'white',
+  iconColor: 'blue',
+  backgroundColor: 'dark',
   showBackground: true,
-  hasCustomEdits: false,
 };
 
-export const useLayoutEditionStore = create<LayoutEditionState>()(
+const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
+  minimal: {
+    ...DEFAULT_STYLE,
+    titleSize: 24,
+    bodySize: 16,
+  },
+  social: {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Poppins',
+    titleSize: 32,
+    bodySize: 16,
+  },
+  detailed: {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Montserrat',
+    titleSize: 28,
+    bodySize: 18,
+  },
+  progress: {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Inter',
+    titleSize: 26,
+    bodySize: 16,
+  },
+  map: {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Oswald',
+    titleSize: 30,
+    bodySize: 18,
+  },
+  stats: {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Poppins',
+    titleSize: 28,
+    bodySize: 18,
+  },
+  aesthetic: {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Montserrat',
+    titleSize: 32,
+    bodySize: 20,
+  },
+  achievement: {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Inter',
+    titleSize: 26,
+    bodySize: 16,
+  },
+  weight: {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Oswald',
+    titleSize: 28,
+    bodySize: 18,
+  },
+};
+
+export const useLayoutEditionStore = create<LayoutStylesState>()(
   persist(
     (set) => ({
-      ...DEFAULT_STATE,
+      styles: DEFAULT_LAYOUT_STYLES,
+      activeLayout: null,
+      lastUsedLayout: null,
 
-      setFontFamily: (family) => set((state) => ({ fontFamily: family, hasCustomEdits: true })),
-
-      setTitleSize: (size) => set((state) => ({ titleSize: size, hasCustomEdits: true })),
-
-      setBodySize: (size) => set((state) => ({ bodySize: size, hasCustomEdits: true })),
-
-      setLabelSize: (size) => set((state) => ({ labelSize: size, hasCustomEdits: true })),
-
-      setFontColor: (color) => set((state) => ({ fontColor: color, hasCustomEdits: true })),
-
-      setIconColor: (color) =>
+      setLayoutStyle: (layout, style) =>
         set((state) => ({
-          ...state,
-          iconColor: color,
-          hasCustomEdits: true,
+          styles: {
+            ...state.styles,
+            [layout]: { ...state.styles[layout], ...style },
+          },
         })),
 
-      setBackgroundColor: (color) =>
-        set((state) => ({ backgroundColor: color, hasCustomEdits: true })),
+      setActiveLayout: (layout) => set({ activeLayout: layout }),
 
-      setLastUsedLayout: (layout) => set((state) => ({ lastUsedLayout: layout })),
+      resetLayoutStyle: (layout) =>
+        set((state) => ({
+          styles: {
+            ...state.styles,
+            [layout]: DEFAULT_LAYOUT_STYLES[layout],
+          },
+        })),
 
-      toggleBackground: () => set((state) => ({ showBackground: !state.showBackground })),
+      setLastUsedLayout: (layout) => set({ lastUsedLayout: layout }),
 
-      resetEdits: () => set(DEFAULT_STATE),
+      toggleBackground: () =>
+        set((state) => {
+          if (state.activeLayout) {
+            const currentLayout = state.styles[state.activeLayout];
+            return {
+              styles: {
+                ...state.styles,
+                [state.activeLayout]: {
+                  ...currentLayout,
+                  showBackground: !currentLayout.showBackground,
+                },
+              },
+            };
+          }
+          return state;
+        }),
     }),
     {
-      name: 'layout-edition-storage',
+      name: 'layout-styles-storage-v2',
       storage: createJSONStorage(() => zustandStorage),
     }
   )

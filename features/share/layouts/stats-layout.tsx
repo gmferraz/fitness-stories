@@ -30,12 +30,12 @@ export function StatsLayout({
   showBackground = true,
 }: StatsLayoutProps) {
   const { t } = useTranslation();
-  const { fontFamily, titleSize, bodySize, labelSize, fontColor, backgroundColor, iconColor } =
-    useLayoutEditionStore();
+  const { styles } = useLayoutEditionStore();
+  const style = styles.stats;
 
-  const textColor = getFontColor(fontColor);
-  const bgColor = getBackgroundColor(backgroundColor);
-  const icon = getIconColor(iconColor);
+  const textColor = getFontColor(style.fontColor);
+  const bgColor = getBackgroundColor(style.backgroundColor);
+  const icon = getIconColor(style.iconColor);
 
   const hasHeartRate = !!activity.average_heartrate && !!activity.max_heartrate;
 
@@ -49,20 +49,20 @@ export function StatsLayout({
       <View>
         <Text
           style={{
-            fontFamily,
+            fontFamily: style.fontFamily,
             color: textColor,
-            fontSize: labelSize,
-            lineHeight: labelSize * 1.2,
+            fontSize: style.labelSize,
+            lineHeight: style.labelSize * 1.2,
           }}
           className="mb-1">
           Total Distance
         </Text>
         <Text
           style={{
-            fontFamily,
+            fontFamily: style.fontFamily,
             color: textColor,
-            fontSize: titleSize,
-            lineHeight: titleSize * 1.2,
+            fontSize: style.titleSize,
+            lineHeight: style.titleSize * 1.2,
           }}
           className="font-black">
           {formatDistance(distance)}
@@ -75,10 +75,10 @@ export function StatsLayout({
             <MaterialCommunityIcons name="clock-outline" size={20} color={icon} />
             <Text
               style={{
-                fontFamily,
+                fontFamily: style.fontFamily,
                 color: textColor,
-                fontSize: labelSize,
-                lineHeight: labelSize * 1.2,
+                fontSize: style.labelSize,
+                lineHeight: style.labelSize * 1.2,
               }}
               className="ml-2">
               Duration
@@ -86,10 +86,10 @@ export function StatsLayout({
           </View>
           <Text
             style={{
-              fontFamily,
+              fontFamily: style.fontFamily,
               color: textColor,
-              fontSize: bodySize,
-              lineHeight: bodySize * 1.2,
+              fontSize: style.bodySize,
+              lineHeight: style.bodySize * 1.2,
             }}
             className="font-bold">
             {formatDuration(duration)}
@@ -101,10 +101,10 @@ export function StatsLayout({
             <MaterialCommunityIcons name="speedometer" size={20} color={icon} />
             <Text
               style={{
-                fontFamily,
+                fontFamily: style.fontFamily,
                 color: textColor,
-                fontSize: labelSize,
-                lineHeight: labelSize * 1.2,
+                fontSize: style.labelSize,
+                lineHeight: style.labelSize * 1.2,
               }}
               className="ml-2">
               Avg Pace
@@ -112,10 +112,10 @@ export function StatsLayout({
           </View>
           <Text
             style={{
-              fontFamily,
+              fontFamily: style.fontFamily,
               color: textColor,
-              fontSize: bodySize,
-              lineHeight: bodySize * 1.2,
+              fontSize: style.bodySize,
+              lineHeight: style.bodySize * 1.2,
             }}
             className="font-bold">
             {pace}
@@ -132,10 +132,10 @@ export function StatsLayout({
                 <MaterialCommunityIcons name="heart-pulse" size={20} color={icon} />
                 <Text
                   style={{
-                    fontFamily,
+                    fontFamily: style.fontFamily,
                     color: textColor,
-                    fontSize: labelSize,
-                    lineHeight: labelSize * 1.2,
+                    fontSize: style.labelSize,
+                    lineHeight: style.labelSize * 1.2,
                   }}
                   className="ml-2">
                   Avg HR
@@ -143,10 +143,10 @@ export function StatsLayout({
               </View>
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: bodySize,
-                  lineHeight: bodySize * 1.2,
+                  fontSize: style.bodySize,
+                  lineHeight: style.bodySize * 1.2,
                 }}
                 className="font-bold">
                 {Math.round(activity.average_heartrate!)} bpm
@@ -158,10 +158,10 @@ export function StatsLayout({
                 <MaterialCommunityIcons name="heart" size={20} color={icon} />
                 <Text
                   style={{
-                    fontFamily,
+                    fontFamily: style.fontFamily,
                     color: textColor,
-                    fontSize: labelSize,
-                    lineHeight: labelSize * 1.2,
+                    fontSize: style.labelSize,
+                    lineHeight: style.labelSize * 1.2,
                   }}
                   className="ml-2">
                   Max HR
@@ -169,10 +169,10 @@ export function StatsLayout({
               </View>
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: bodySize,
-                  lineHeight: bodySize * 1.2,
+                  fontSize: style.bodySize,
+                  lineHeight: style.bodySize * 1.2,
                 }}
                 className="font-bold">
                 {Math.round(activity.max_heartrate!)} bpm

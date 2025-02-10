@@ -26,11 +26,11 @@ export function AestheticLayout({
   showBackground = true,
 }: AestheticLayoutProps) {
   const { t } = useTranslation();
-  const { fontFamily, titleSize, bodySize, labelSize, fontColor, backgroundColor } =
-    useLayoutEditionStore();
+  const { styles } = useLayoutEditionStore();
+  const style = styles.aesthetic;
 
-  const textColor = getFontColor(fontColor);
-  const bgColor = getBackgroundColor(backgroundColor);
+  const textColor = getFontColor(style.fontColor);
+  const bgColor = getBackgroundColor(style.backgroundColor);
 
   return (
     <View
@@ -44,30 +44,30 @@ export function AestheticLayout({
         <View className="items-center">
           <Text
             style={{
-              fontFamily,
+              fontFamily: style.fontFamily,
               color: textColor,
-              fontSize: labelSize,
-              lineHeight: labelSize * 1.2,
+              fontSize: style.labelSize,
+              lineHeight: style.labelSize * 1.2,
             }}
             className="mb-2">
             Distance
           </Text>
           <Text
             style={{
-              fontFamily,
+              fontFamily: style.fontFamily,
               color: textColor,
-              fontSize: titleSize * 1.4,
-              lineHeight: titleSize * 1.6,
+              fontSize: style.titleSize * 1.4,
+              lineHeight: style.titleSize * 1.6,
             }}
             className="font-black">
             {distance}
           </Text>
           <Text
             style={{
-              fontFamily,
+              fontFamily: style.fontFamily,
               color: textColor,
-              fontSize: labelSize,
-              lineHeight: labelSize * 1.2,
+              fontSize: style.labelSize,
+              lineHeight: style.labelSize * 1.2,
             }}>
             {unit}
           </Text>
@@ -80,30 +80,30 @@ export function AestheticLayout({
             <View>
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
                 }}
                 className="mb-1">
                 Avg Pace
               </Text>
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: bodySize,
-                  lineHeight: bodySize * 1.2,
+                  fontSize: style.bodySize,
+                  lineHeight: style.bodySize * 1.2,
                 }}
                 className="font-bold">
                 {pace}
               </Text>
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
                 }}>
                 per {unit}
               </Text>
@@ -112,30 +112,30 @@ export function AestheticLayout({
             <View>
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
                 }}
                 className="mb-1">
                 Duration
               </Text>
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: bodySize,
-                  lineHeight: bodySize * 1.2,
+                  fontSize: style.bodySize,
+                  lineHeight: style.bodySize * 1.2,
                 }}
                 className="font-bold">
                 {formatDuration(duration)}
               </Text>
               <Text
                 style={{
-                  fontFamily,
+                  fontFamily: style.fontFamily,
                   color: textColor,
-                  fontSize: labelSize,
-                  lineHeight: labelSize * 1.2,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
                 }}>
                 total time
               </Text>
