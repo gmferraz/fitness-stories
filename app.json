@@ -30,7 +30,26 @@
             "node_modules/@expo-google-fonts/inter/Inter_600SemiBold.ttf",
             "node_modules/@expo-google-fonts/inter/Inter_700Bold.ttf",
             "node_modules/@expo-google-fonts/inter/Inter_800ExtraBold.ttf",
-            "node_modules/@expo-google-fonts/inter/Inter_900Black.ttf"
+            "node_modules/@expo-google-fonts/inter/Inter_900Black.ttf",
+            "node_modules/@expo-google-fonts/oswald/Oswald_300Light.ttf",
+            "node_modules/@expo-google-fonts/oswald/Oswald_400Regular.ttf",
+            "node_modules/@expo-google-fonts/oswald/Oswald_500Medium.ttf",
+            "node_modules/@expo-google-fonts/oswald/Oswald_600SemiBold.ttf",
+            "node_modules/@expo-google-fonts/oswald/Oswald_700Bold.ttf",
+            "node_modules/@expo-google-fonts/montserrat/Montserrat_300Light.ttf",
+            "node_modules/@expo-google-fonts/montserrat/Montserrat_400Regular.ttf",
+            "node_modules/@expo-google-fonts/montserrat/Montserrat_500Medium.ttf",
+            "node_modules/@expo-google-fonts/montserrat/Montserrat_600SemiBold.ttf",
+            "node_modules/@expo-google-fonts/montserrat/Montserrat_700Bold.ttf",
+            "node_modules/@expo-google-fonts/montserrat/Montserrat_800ExtraBold.ttf",
+            "node_modules/@expo-google-fonts/montserrat/Montserrat_900Black.ttf",
+            "node_modules/@expo-google-fonts/poppins/Poppins_300Light.ttf",
+            "node_modules/@expo-google-fonts/poppins/Poppins_400Regular.ttf",
+            "node_modules/@expo-google-fonts/poppins/Poppins_500Medium.ttf",
+            "node_modules/@expo-google-fonts/poppins/Poppins_600SemiBold.ttf",
+            "node_modules/@expo-google-fonts/poppins/Poppins_700Bold.ttf",
+            "node_modules/@expo-google-fonts/poppins/Poppins_800ExtraBold.ttf",
+            "node_modules/@expo-google-fonts/poppins/Poppins_900Black.ttf"
           ]
         }
       ],
@@ -90,7 +109,8 @@
           "supportsBackgroundPlayback": false,
           "supportsPictureInPicture": false
         }
-      ]
+      ],
+      ["react-native-health"]
     ],
     "experiments": {
       "typedRoutes": true,

@@ -27,6 +27,7 @@ const textVariants = cva('text-foreground', {
       secondary: 'text-secondary-foreground/90',
       tertiary: 'text-muted-foreground/90',
       quarternary: 'text-muted-foreground/50',
+      white: 'text-white',
     },
   },
   defaultVariants: {

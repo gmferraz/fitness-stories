@@ -9,11 +9,13 @@
 
 ## MVP features
 
-- [ ] Add a new screen to show the user's activities
-- [ ] Add apple health integration
+- [x] Add a new screen to show the user's activities
+- [ ] Add Apple Health integration
 - [ ] Add onboarding flow
 - [ ] Add share to instagram logic
 - [ ] Add a bunch of layouts
+- [ ] Translations and workout type translations
+- [ ] Add layouts logic for Week summary
 
 ## Need for launch
 

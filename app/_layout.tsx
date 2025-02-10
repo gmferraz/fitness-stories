@@ -52,7 +52,7 @@ const SCREEN_OPTIONS = {
 
 const INDEX_OPTIONS = {
   headerLargeTitle: true,
-  title: 'My activities',
+  title: 'My Activities',
   headerRight: () => <SettingsIcon />,
 } as const;
 
@@ -60,10 +60,10 @@ function SettingsIcon() {
   const { colors } = useColorScheme();
   return (
     <Link href="/modal" asChild>
-      <Pressable className="opacity-80">
+      <Pressable>
         {({ pressed }) => (
-          <View className={cn(pressed ? 'opacity-50' : 'opacity-90')}>
-            <Icon name="cog-outline" color={colors.foreground} />
+          <View className={cn(pressed ? 'opacity-50' : 'opacity-100')}>
+            <Icon name="cog-outline" size={28} color={colors.foreground} />
           </View>
         )}
       </Pressable>

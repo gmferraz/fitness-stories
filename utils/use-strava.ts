@@ -2,6 +2,8 @@ import * as AuthSession from 'expo-auth-session';
 import { useEffect } from 'react';
 import { MMKV } from 'react-native-mmkv';
 import { useStravaStore } from '../stores/use-strava-store';
+import { decode } from '@googlemaps/polyline-codec';
+import { StravaActivity } from '~/features/home/types/activity';
 
 export const stravaStorage = new MMKV({
   id: 'strava-storage',
@@ -21,53 +23,46 @@ const discovery = {
   revocationEndpoint: 'https://www.strava.com/oauth/deauthorize',
 };
 
-export type StravaActivity = {
-  id: number;
-  name: string;
-  type: string;
-  distance: number;
-  moving_time: number;
-  elapsed_time: number;
-  total_elevation_gain: number;
-  start_date: string;
-  start_date_local: string;
-};
-
 async function maybeRefreshToken() {
   const storedRefreshToken = stravaStorage.getString('strava_refresh_token');
   const storedExpiry = stravaStorage.getNumber('strava_token_expiry');
   if (!storedRefreshToken || !storedExpiry) {
     return null;
   }
+
   const now = Math.floor(Date.now() / 1000);
-  // Use a 5-minute buffer before expiry
-  if (now < storedExpiry - 300) {
+  if (now < storedExpiry - 3600) {
     return stravaStorage.getString('strava_access_token');
   }
+
   try {
-    const tokenResult = await AuthSession.refreshAsync(
-      {
-        clientId: stravaClientId,
-        clientSecret: stravaClientSecret,
-        refreshToken: storedRefreshToken,
-        scopes: ['activity:read_all'],
+    const response = await fetch('https://www.strava.com/oauth/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      discovery
-    );
-    if (!tokenResult) {
-      console.error('Token refresh failed: No token result');
+      body: JSON.stringify({
+        client_id: stravaClientId,
+        client_secret: stravaClientSecret,
+        grant_type: 'refresh_token',
+        refresh_token: storedRefreshToken,
+      }),
+    });
+
+    const tokenResult = await response.json();
+
+    if (!tokenResult.access_token) {
+      console.error('Token refresh failed: No access token in response');
       return null;
     }
-    const { accessToken, refreshToken, expiresIn } = tokenResult;
-    stravaStorage.set('strava_access_token', accessToken);
-    if (refreshToken) {
-      stravaStorage.set('strava_refresh_token', refreshToken);
-    }
-    stravaStorage.set('strava_token_expiry', now + (expiresIn ?? 1));
-    return accessToken;
+
+    stravaStorage.set('strava_access_token', tokenResult.access_token);
+    stravaStorage.set('strava_refresh_token', tokenResult.refresh_token);
+    stravaStorage.set('strava_token_expiry', tokenResult.expires_at);
+
+    return tokenResult.access_token;
   } catch (error) {
     console.error('Token refresh failed:', error);
-    // Optionally clear tokens if refresh fails
     stravaStorage.delete('strava_access_token');
     stravaStorage.delete('strava_refresh_token');
     stravaStorage.delete('strava_token_expiry');
@@ -136,8 +131,29 @@ export const useStrava = () => {
     }
   }, [response, setIsAuthenticated]);
 
-  const handleLinkStrava = () => {
-    promptAsync();
+  const handleLinkStrava = async () => {
+    try {
+      await promptAsync();
+    } catch (error) {
+      console.error('Error linking Strava:', error);
+    }
+  };
+
+  const handleUnlinkStrava = async () => {
+    setIsAuthenticated(false);
+    try {
+      await AuthSession.revokeAsync(
+        {
+          token: stravaStorage.getString('strava_access_token')!,
+        },
+        discovery
+      );
+    } catch (error) {
+      console.error('Error revoking token:', error);
+    }
+    stravaStorage.delete('strava_access_token');
+    stravaStorage.delete('strava_refresh_token');
+    stravaStorage.delete('strava_token_expiry');
   };
 
   const listLast10RunningExercises = async (): Promise<StravaActivity[]> => {
@@ -147,7 +163,7 @@ export const useStrava = () => {
       return [];
     }
     const nowEpoch = Math.floor(Date.now() / 1000);
-    const oneMonthAgoEpoch = nowEpoch - 30 * 24 * 3600; // last 30 days
+    const oneMonthAgoEpoch = nowEpoch - 86400 * 150; // last 150 days
     try {
       const response = await fetch(
         `https://www.strava.com/api/v3/athlete/activities?before=${nowEpoch}&after=${oneMonthAgoEpoch}`,
@@ -162,7 +178,20 @@ export const useStrava = () => {
         return [];
       }
       const activities: StravaActivity[] = await response.json();
-      return activities.filter((activity) => activity.type === 'Run').slice(0, 10);
+      return activities.map((activity) => ({
+        ...activity,
+        id: `strava-${activity.id}`,
+        root: 'strava' as const,
+        map: activity.map && {
+          ...activity.map,
+          coordinates: activity.map.summary_polyline
+            ? decode(activity.map.summary_polyline).map(([lat, lng]) => ({
+                latitude: lat,
+                longitude: lng,
+              }))
+            : undefined,
+        },
+      }));
     } catch (error) {
       console.error('Error fetching activities:', error);
       return [];
@@ -172,6 +201,7 @@ export const useStrava = () => {
   return {
     isAuthenticated,
     handleLinkStrava,
+    handleUnlinkStrava,
     listLast10RunningExercises,
     request,
   };
