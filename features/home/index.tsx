@@ -13,9 +13,8 @@ import { EmptyState } from '~/components/EmptyState';
 import { router } from 'expo-router';
 
 export const HomeScreen = () => {
-  const { activities, isLoading, refreshActivities } = useActivities();
-  const weekSummary = useWeekSummary(activities);
-  const { hasConnectedSource } = useActivities();
+  const { activities, isLoading, refreshActivities, hasConnectedSource } = useActivities();
+  const weekSummary = useWeekSummary();
   const { bottom } = useSafeAreaInsets();
   const [finishedMount, setFinishedMount] = useState(false);
   const { colors } = useColorScheme();
@@ -104,15 +103,13 @@ export const HomeScreen = () => {
                 {weekSummary.weekRange}
               </Text>
             </View>
-            {weekSummary.totalActivities > 0 && (
-              <TouchableOpacity
-                className="rounded-full bg-gray-100 px-4 py-2 dark:bg-gray-800"
-                onPress={() => router.push('/activities-list')}>
-                <Text variant="subhead" color="primary">
-                  See More
-                </Text>
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity
+              className="rounded-full bg-gray-100 px-4 py-2 dark:bg-gray-800"
+              onPress={() => router.push('/weeks-list')}>
+              <Text variant="subhead" color="primary">
+                See All
+              </Text>
+            </TouchableOpacity>
           </View>
           {weekSummary.totalActivities > 0 ? (
             <WeekSummaryCard {...weekSummary} />

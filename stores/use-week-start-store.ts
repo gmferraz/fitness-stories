@@ -7,7 +7,7 @@ interface WeekStartState {
   setWeekStartsOn: (weekStartsOn: 0 | 1) => void;
 }
 
-export const useWeekStartStore = create<WeekStartState>()(
+export const weekStartStore = create<WeekStartState>()(
   persist(
     (set) => ({
       weekStartsOn: 1, // Default to Monday

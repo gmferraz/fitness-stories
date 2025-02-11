@@ -18,7 +18,7 @@ import StravaIcon from '~/assets/svg/strava.svg';
 import AppleHealthIcon from '~/assets/svg/apple-health.svg';
 import { useStravaStore } from '~/stores/use-strava-store';
 import { useStrava } from '~/utils/use-strava';
-import { useWeekStartStore } from '~/stores/use-week-start-store';
+import { weekStartStore } from '~/stores/use-week-start-store';
 import { useAppleHealth } from '~/utils/use-apple-health';
 
 export default function SettingsScreen() {
@@ -28,7 +28,7 @@ export default function SettingsScreen() {
   const { isGui, isPremium, setIsPremium } = useEnvironmentStore();
   const { isAuthenticated: isStravaConnected } = useStravaStore();
   const { handleLinkStrava, handleUnlinkStrava } = useStrava();
-  const { weekStartsOn, setWeekStartsOn } = useWeekStartStore();
+  const { weekStartsOn, setWeekStartsOn } = weekStartStore();
   const {
     isAuthenticated: isAppleHealthConnected,
     isAvailable: isAppleHealthAvailable,

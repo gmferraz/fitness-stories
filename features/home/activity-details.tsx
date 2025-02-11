@@ -23,6 +23,13 @@ interface ActivityDetailsProps {
   id: string;
 }
 
+interface StatItem {
+  icon: string;
+  value: string;
+  label: string;
+  color: string;
+}
+
 export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
   const { activities } = useActivities();
   const { bottom } = useSafeAreaInsets();
@@ -68,37 +75,38 @@ export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
   };
 
   const stats = [
-    {
+    activity.moving_time > 0 && {
       icon: 'stopwatch-outline',
       value: formatDuration(activity.moving_time),
       label: 'Duration',
       color: '#FF2D55',
     },
-    {
+    activity.distance > 0 && {
       icon: 'map-outline',
       value: formatDistance(activity.distance),
       label: 'Distance',
       color: '#5856D6',
     },
-    {
-      icon: 'speedometer-outline',
-      value: formatPace(activity.distance, activity.moving_time),
-      label: 'Avg Pace',
-      color: '#FF9500',
-    },
-    {
+    activity.distance > 0 &&
+      activity.moving_time > 0 && {
+        icon: 'speedometer-outline',
+        value: formatPace(activity.distance, activity.moving_time),
+        label: 'Avg Pace',
+        color: '#FF9500',
+      },
+    activity.total_elevation_gain > 0 && {
       icon: 'trending-up-outline',
       value: `${activity.total_elevation_gain}m`,
       label: 'Elevation',
       color: '#34C759',
     },
-    {
+    (activity.calories ?? 0) > 0 && {
       icon: 'flame-outline',
-      value: `${activity.calories ?? 0}`,
+      value: `${activity.calories}`,
       label: 'Calories',
       color: '#FF3B30',
     },
-  ];
+  ].filter((item): item is StatItem => Boolean(item));
 
   // Additional stats that are shown only if available
   const additionalStats =
@@ -146,7 +154,7 @@ export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
             label: 'Max Cadence',
             color: '#5856D6',
           },
-        ].filter(Boolean)
+        ].filter((item): item is StatItem => Boolean(item))
       : activity.root === 'apple-health'
         ? [
             activity.average_heartrate && {
@@ -179,8 +187,8 @@ export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
               label: 'Max Cadence',
               color: '#5856D6',
             },
-          ]
-        : []; // Remove undefined items
+          ].filter((item): item is StatItem => Boolean(item))
+        : [];
 
   return (
     <ScrollView
