@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
-import { formatDuration } from '~/utils/formatters';
+import { formatDistance, formatDuration } from '~/utils/formatters';
 import {
   useLayoutEditionStore,
   getFontColor,
@@ -28,7 +28,6 @@ export function AestheticLayout({
   const { t } = useTranslation();
   const { styles } = useLayoutEditionStore();
   const style = styles.aesthetic;
-
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);
 
@@ -36,11 +35,10 @@ export function AestheticLayout({
     <View
       className="self-center rounded-2xl p-4"
       style={{
-        height: 320,
         width: 320,
         backgroundColor: showBackground ? bgColor : 'transparent',
       }}>
-      <View className="flex-1 p-6">
+      <View className="flex-col p-4">
         <View className="items-center">
           <Text
             style={{
@@ -60,7 +58,7 @@ export function AestheticLayout({
               lineHeight: style.titleSize * 1.6,
             }}
             className="font-black">
-            {distance}
+            {formatDistance(distance, false)}
           </Text>
           <Text
             style={{
@@ -73,10 +71,10 @@ export function AestheticLayout({
           </Text>
         </View>
 
-        <View className="mt-auto">
+        <View className="mt-8">
           <View className="h-[1px] w-full" style={{ backgroundColor: `${textColor}20` }} />
 
-          <View className="mt-6 flex-row justify-between">
+          <View className="mt-4 flex-row justify-between">
             <View>
               <Text
                 style={{

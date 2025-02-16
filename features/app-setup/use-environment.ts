@@ -92,10 +92,7 @@ export type InitializeEnvironmentStatus =
   | 'doneButLoggedOut'
   | 'failed';
 
-export const useInitializeEnvironment = (options: {
-  onStatusChanged?: (status: InitializeEnvironmentStatus) => void;
-  isLoggedIn: boolean;
-}) => {
+export const useInitializeEnvironment = () => {
   const { userId } = useCurrentUserId();
   const setIsPremium = useEnvironmentStore((s) => s.setIsPremium);
   const [status, setStatus] = useState<InitializeEnvironmentStatus>('pending');
@@ -118,7 +115,7 @@ export const useInitializeEnvironment = (options: {
   useEffect(() => {
     runInitialize();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, options.isLoggedIn]);
+  }, [userId]);
 
   return { status, runInitialize };
 };

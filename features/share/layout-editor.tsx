@@ -12,7 +12,6 @@ import { useColorScheme } from '~/lib/useColorScheme';
 import {
   useLayoutEditionStore,
   FontFamily,
-  ColorScheme,
   BackgroundColor,
   FontColor,
   getFontColor,
@@ -20,35 +19,20 @@ import {
   type IconColor,
   getIconColor,
 } from './utils/use-layout-edition-store';
-import { MinimalLayout } from './layouts/minimal-layout';
-import { SocialLayout } from './layouts/social-layout';
-import { DetailedLayout } from './layouts/detailed-layout';
-import { ProgressLayout } from './layouts/progress-layout';
-import { MapLayout } from './layouts/map-layout';
-import { StatsLayout } from './layouts/stats-layout';
-import { AestheticLayout } from './layouts/aesthetic-layout';
-import { AchievementLayout } from './layouts/achievement-layout';
-import { WeightLayout } from './layouts/weight-layout';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useInstagramShareStore } from './utils/use-instagram-share-store';
 import { formatPace } from '~/utils/formatters';
-import { LayoutType } from './utils/get-available-layouts';
 import { router } from 'expo-router';
 import { getStoredActivityDetails } from '../home/utils/get-stored-activity-details';
+import { getWeekDetails, WeekDetails } from '~/features/home/hooks/get-week-details';
+import { Activity } from '~/features/home/types/activity';
+import { LAYOUT_COMPONENTS } from './components/share-layout-step';
 
 const FONT_FAMILIES: { label: string; value: FontFamily }[] = [
   { label: 'Inter', value: 'Inter' },
   { label: 'Oswald', value: 'Oswald' },
   { label: 'Montserrat', value: 'Montserrat' },
   { label: 'Poppins', value: 'Poppins' },
-];
-
-const COLOR_SCHEMES: { label: string; value: ColorScheme; color: string }[] = [
-  { label: 'Blue', value: 'blue', color: '#007AFF' },
-  { label: 'Purple', value: 'purple', color: '#5856D6' },
-  { label: 'Pink', value: 'pink', color: '#FF2D55' },
-  { label: 'Orange', value: 'orange', color: '#FF9500' },
-  { label: 'Green', value: 'green', color: '#34C759' },
 ];
 
 const BACKGROUND_COLORS: { label: string; value: BackgroundColor }[] = [
@@ -71,19 +55,7 @@ const FONT_COLORS: { label: string; value: FontColor }[] = [
 type EditorSection = 'Style' | 'Sizes' | 'Colors';
 const EDITOR_SECTIONS: EditorSection[] = ['Style', 'Sizes', 'Colors'];
 
-const LAYOUT_COMPONENTS: Record<LayoutType, React.ComponentType<any>> = {
-  minimal: MinimalLayout,
-  social: SocialLayout,
-  detailed: DetailedLayout,
-  progress: ProgressLayout,
-  map: MapLayout,
-  stats: StatsLayout,
-  aesthetic: AestheticLayout,
-  achievement: AchievementLayout,
-  weight: WeightLayout,
-};
-
-export function LayoutEditor({ id }: { id: string }) {
+export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'period' }) {
   const { colors } = useColorScheme();
   const [selectedSection, setSelectedSection] = useState<number>(0);
   const { selectedLayout } = useInstagramShareStore();
@@ -102,20 +74,34 @@ export function LayoutEditor({ id }: { id: string }) {
     }
   }, [selectedLayout, activeLayout, setActiveLayout]);
 
-  const activity = getStoredActivityDetails(id);
+  const entity: WeekDetails | Activity =
+    type === 'activity' ? getStoredActivityDetails(id) : getWeekDetails(id);
 
   const props = useMemo(() => {
-    if (!activity) return null;
-    const { moving_time, distance, name } = activity;
-    return {
-      distance,
-      duration: moving_time,
-      pace: formatPace(distance, moving_time),
-      unit: 'km',
-      title: name,
-      activity,
-    };
-  }, [activity]);
+    if (!entity) return null;
+
+    if (type === 'activity') {
+      const activity = entity as Activity;
+      const { moving_time, distance, name } = activity;
+      return {
+        distance,
+        duration: moving_time,
+        pace: formatPace(distance, moving_time),
+        unit: 'km',
+        title: name,
+        activity,
+      };
+    } else {
+      const weekDetails = entity as WeekDetails;
+      return {
+        weekRange: weekDetails.weekRange,
+        totalActivities: weekDetails.totalActivities ?? 0,
+        totalDistance: weekDetails.totalDistance ?? 0,
+        totalDuration: weekDetails.totalDuration ?? 0,
+        totalCalories: weekDetails.totalCalories ?? 0,
+      };
+    }
+  }, []);
 
   const renderStyleSection = () => (
     <View className="mb-6">
@@ -316,7 +302,7 @@ export function LayoutEditor({ id }: { id: string }) {
   );
 
   const renderPreview = () => {
-    if (!activity || !selectedLayout || !props) return null;
+    if (!entity || !selectedLayout || !props) return null;
     const LayoutComponent = LAYOUT_COMPONENTS[selectedLayout];
     const currentStyle = styles[selectedLayout];
     return <LayoutComponent {...props} showBackground={currentStyle?.showBackground ?? true} />;

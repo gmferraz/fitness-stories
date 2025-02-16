@@ -9,9 +9,11 @@ import { View } from 'moti';
 import { Text } from '~/components/nativewindui/Text';
 
 export default function ShareScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, type } = useLocalSearchParams<{ id: string; type: 'activity' | 'period' }>();
   const { step } = useInstagramShareStore();
   const { colors } = useColorScheme();
+
+  const reformattedId = type === 'activity' ? id : id.replace(/\./g, '/');
 
   return (
     <>
@@ -22,7 +24,7 @@ export default function ShareScreen() {
           headerRight:
             step === 'layout'
               ? () => (
-                  <Link href={`/layout-editor/${id}`} asChild>
+                  <Link href={`/layout-editor/${id}?type=${type}`} asChild>
                     <MotiPressable
                       animate={({ pressed }) => {
                         'worklet';
@@ -47,7 +49,7 @@ export default function ShareScreen() {
               : undefined,
         }}
       />
-      <Share id={id} />
+      <Share type={type} id={reformattedId} />
     </>
   );
 }

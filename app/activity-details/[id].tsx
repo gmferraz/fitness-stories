@@ -12,7 +12,7 @@ export default function ActivityDetailsScreen() {
 
   const activity = getStoredActivityDetails(id);
 
-  const availableLayouts = getAvailableLayouts(activity);
+  const availableLayouts = getAvailableLayouts('activity', activity);
 
   return (
     <>
@@ -23,7 +23,7 @@ export default function ActivityDetailsScreen() {
           headerRight: availableLayouts.length
             ? () => (
                 <MaterialCommunityIcons
-                  onPress={() => router.push(`/share/${id}`)}
+                  onPress={() => router.push(`/share/${id}?type=activity`)}
                   name="instagram"
                   size={28}
                   color={colors.foreground}

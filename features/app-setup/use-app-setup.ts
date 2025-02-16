@@ -23,9 +23,9 @@ export const runSynchronousSetupChores = () => {
   // });
 };
 
-export const useAppSetup = (isLoggedIn: boolean) => {
+export const useAppSetup = () => {
   const [state, setState] = useState<AppSetupState>('pending');
-  const { status } = useInitializeEnvironment({ isLoggedIn });
+  const { status } = useInitializeEnvironment();
   // const { createAppOpenAd } = useAds();
   const isPremium = useEnvironmentStore((state) => state.isPremium);
   const isGui = useEnvironmentStore((state) => state.isGui);
@@ -42,7 +42,7 @@ export const useAppSetup = (isLoggedIn: boolean) => {
         //   appOpenAd?.show();
         // }
         SplashScreen.hideAsync().catch(() => {});
-      }, 1000);
+      }, 500);
     };
 
     runSetup()

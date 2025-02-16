@@ -1,36 +1,26 @@
+import React from 'react';
 import { View } from 'react-native';
-
 import { Text } from '~/components/nativewindui/Text';
-import { formatDistance } from '~/utils/formatters';
-import { Activity } from '~/features/home/types/activity';
 import {
   useLayoutEditionStore,
   getFontColor,
   getBackgroundColor,
 } from '../utils/use-layout-edition-store';
+import { formatTime } from '~/utils/formatters';
+import { Activity } from '~/features/home/types/activity';
 
-interface SocialLayoutProps {
-  pace: string;
-  distance: number;
-  unit: string;
+interface Hiit2LayoutProps {
   activity: Activity;
   showBackground?: boolean;
 }
 
-export function SocialLayout({
-  pace,
-  distance,
-  unit,
-  activity,
-  showBackground = true,
-}: SocialLayoutProps) {
-  const hasHeartRate = !!activity.average_heartrate;
-  const hasElevation = !!activity.total_elevation_gain;
+export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProps) {
   const { styles } = useLayoutEditionStore();
-  const style = styles.social;
-
+  const style = styles.hiit2;
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);
+  const hasHeartRate = !!activity.average_heartrate;
+  const hasMaxHeartRate = !!activity.max_heartrate;
 
   const commonTextStyles = {
     fontFamily: style.fontFamily,
@@ -62,73 +52,75 @@ export function SocialLayout({
           <View className="flex-row justify-between">
             <View className="flex-1">
               <Text style={labelStyles} className="mb-1">
-                Distance
+                Duration
               </Text>
               <Text style={bodyStyles} className="font-bold">
-                {formatDistance(distance)}
+                {formatTime(activity.moving_time)}
               </Text>
             </View>
 
             <View className="flex-1">
               <Text style={labelStyles} className="mb-1">
-                Avg Pace
+                Calories
               </Text>
               <Text style={bodyStyles} className="font-bold">
-                {pace}
+                {activity.calories}
               </Text>
             </View>
           </View>
 
-          <View className="mt-4 flex-row justify-between">
-            <View className="flex-1">
-              <Text style={labelStyles} className="mb-1">
-                Avg HR
-              </Text>
-              <Text style={bodyStyles} className="font-bold">
-                {Math.round(activity.average_heartrate!)} bpm
-              </Text>
-            </View>
-
-            {hasElevation && (
+          {hasHeartRate && (
+            <View className="mt-4 flex-row justify-between">
               <View className="flex-1">
                 <Text style={labelStyles} className="mb-1">
-                  Elevation
+                  Heart Rate
                 </Text>
                 <Text style={bodyStyles} className="font-bold">
-                  {Math.round(activity.total_elevation_gain!)} m
+                  {activity.average_heartrate} bpm
                 </Text>
               </View>
-            )}
-          </View>
+
+              {hasMaxHeartRate && (
+                <View className="flex-1">
+                  <Text style={labelStyles} className="mb-1">
+                    Max Heart Rate
+                  </Text>
+                  <Text style={bodyStyles} className="font-bold">
+                    {activity.max_heartrate} bpm
+                  </Text>
+                </View>
+              )}
+            </View>
+          )}
         </View>
       ) : (
         // Layout without heart rate: single row with consistent gaps
         <View className="flex-row justify-between">
           <View className="w-1/3">
             <Text style={labelStyles} className="mb-1">
-              Distance
+              Duration
             </Text>
             <Text style={bodyStyles} className="font-bold">
-              {formatDistance(distance)}
+              {formatTime(activity.moving_time)}
             </Text>
           </View>
 
           <View className="w-1/3">
             <Text style={labelStyles} className="mb-1 self-center">
-              Avg Pace
+              Calories
             </Text>
             <Text style={bodyStyles} className="self-center font-bold">
-              {pace}
+              {activity.calories}
             </Text>
           </View>
 
-          {hasElevation && (
+          {hasHeartRate && (
             <View className="w-1/3">
               <Text style={labelStyles} className="mb-1 self-end">
-                Elevation
+                Heart Rate
               </Text>
               <Text style={bodyStyles} className="self-end font-bold">
-                {Math.round(activity.total_elevation_gain!)} m
+                {activity.average_heartrate} bpm
               </Text>
             </View>
           )}

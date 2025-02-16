@@ -124,7 +124,7 @@ export function StatsLayout({
       </View>
 
       {hasHeartRate && (
-        <View className="mt-6">
+        <View className="mt-2">
           <View className="h-[1px] w-full" />
           <View className="mt-4 flex-row justify-between">
             <View className="flex-1">

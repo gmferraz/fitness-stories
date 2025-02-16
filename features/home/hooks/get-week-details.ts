@@ -1,8 +1,22 @@
 import { startOfWeek, endOfWeek, parse } from 'date-fns';
 import { weekStartStore } from '~/stores/use-week-start-store';
 import { getStoredActivities } from '../utils/get-stored-activities';
+import { Activity } from '../types/activity';
 
-export const getWeekDetails = (weekRange: string) => {
+export interface WeekDetails {
+  totalDistance: number;
+  totalDuration: number;
+  totalActivities: number;
+  totalElevation: number;
+  weekRange: string;
+  avgPace: number;
+  totalCalories: number;
+  startDate: Date;
+  endDate: Date;
+  activities: Activity[];
+}
+
+export const getWeekDetails = (weekRange: string): WeekDetails => {
   const activities = getStoredActivities();
   const { weekStartsOn } = weekStartStore();
 

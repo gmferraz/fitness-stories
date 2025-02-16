@@ -26,15 +26,22 @@ import { formatPace } from '~/utils/formatters';
 import { Text } from '~/components/nativewindui/Text';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { useMountEffect } from '~/utils/use-mount-effect';
-import { Activity } from '~/features/home/types/activity';
 import { getStoredActivityDetails } from '~/features/home/utils/get-stored-activity-details';
+import { PeriodMinimalLayout } from '../layouts/period-minimal-layout';
+import { PeriodStatsLayout } from '../layouts/period-stats-layout';
+import { PeriodSocialLayout } from '../layouts/period-social-layout';
+import { getWeekDetails, WeekDetails } from '~/features/home/hooks/get-week-details';
+import { Activity } from '~/features/home/types/activity';
+import { HiitLayout } from '../layouts/hiit-layout';
+import { Hiit2Layout } from '../layouts/hiit2-layout';
 
 interface ShareLayoutStepProps {
   previous: () => void;
   id: string;
+  type: 'activity' | 'period';
 }
 
-const LAYOUT_COMPONENTS: Record<LayoutType, React.ComponentType<any>> = {
+export const LAYOUT_COMPONENTS: Record<LayoutType, React.ComponentType<any>> = {
   minimal: MinimalLayout,
   social: SocialLayout,
   detailed: DetailedLayout,
@@ -44,21 +51,30 @@ const LAYOUT_COMPONENTS: Record<LayoutType, React.ComponentType<any>> = {
   aesthetic: AestheticLayout,
   achievement: AchievementLayout,
   weight: WeightLayout,
+  hiit: HiitLayout,
+  hiit2: Hiit2Layout,
+  'period-minimal': PeriodMinimalLayout,
+  'period-stats': PeriodStatsLayout,
+  'period-social': PeriodSocialLayout,
 };
 
-export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
+export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
   const { colors } = useColorScheme();
   const { bottom } = useSafeAreaInsets();
   const [currentPage, setCurrentPage] = useState(0);
   const { selectedImage, setSelectedLayout } = useInstagramShareStore();
   const { lastUsedLayout, setLastUsedLayout, styles, toggleBackground, setActiveLayout } =
     useLayoutEditionStore();
-  const userPreferedMetric = 'km';
   const width = Dimensions.get('window').width;
   const { t } = useTranslation();
   const viewShotRef = useRef<ViewShot>(null);
-  const activity = getStoredActivityDetails(id);
-  const availableLayouts = getAvailableLayouts(activity as Activity);
+
+  const entity: WeekDetails | Activity =
+    type === 'activity' ? getStoredActivityDetails(id) : getWeekDetails(id);
+  const availableLayouts = getAvailableLayouts(
+    type,
+    type === 'activity' ? (entity as Activity) : undefined
+  );
 
   // Get current layout and its style
   const currentLayout = availableLayouts[currentPage];
@@ -71,34 +87,50 @@ export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
     return index >= 0 ? index : 0;
   }, [availableLayouts, lastUsedLayout]);
 
-  // Set initial page and layout
+  const handlePageSelected = (page: number) => {
+    const newLayout = availableLayouts[page];
+    setCurrentPage(page);
+    setSelectedLayout(newLayout);
+    setActiveLayout(newLayout);
+  };
+
+  // Set initial layout and style
   useMountEffect(() => {
+    const initialLayout = availableLayouts[initialIndex];
     setCurrentPage(initialIndex);
-    setSelectedLayout(availableLayouts[initialIndex]);
-    setActiveLayout(availableLayouts[initialIndex]);
+    setSelectedLayout(initialLayout);
+    setActiveLayout(initialLayout);
   });
 
-  if (!selectedImage || !activity) return null;
+  const props = useMemo(() => {
+    if (!entity) return null;
 
-  const unit = userPreferedMetric === 'km' ? 'km' : 'mi';
+    if (type === 'activity') {
+      const activity = entity as Activity;
+      const { moving_time, distance, name } = activity;
+      return {
+        distance,
+        duration: moving_time,
+        pace: formatPace(distance, moving_time),
+        unit: 'km',
+        title: name,
+        activity,
+        showBackground: currentStyle?.showBackground ?? true,
+      };
+    } else {
+      const weekDetails = entity as WeekDetails;
+      return {
+        weekRange: weekDetails.weekRange,
+        totalActivities: weekDetails.totalActivities ?? 0,
+        totalDistance: weekDetails.totalDistance ?? 0,
+        totalDuration: weekDetails.totalDuration ?? 0,
+        totalCalories: weekDetails.totalCalories ?? 0,
+        showBackground: currentStyle?.showBackground ?? true,
+      };
+    }
+  }, [entity, type]);
 
-  const handlePageSelected = (page: number) => {
-    setCurrentPage(page);
-    setSelectedLayout(availableLayouts[page]);
-    setActiveLayout(availableLayouts[page]);
-  };
-
-  const { moving_time, distance, name } = activity;
-
-  const props = {
-    distance,
-    duration: moving_time,
-    pace: formatPace(distance, moving_time),
-    unit,
-    title: name,
-    activity,
-    showBackground: currentStyle?.showBackground ?? true,
-  };
+  if (!selectedImage || !entity) return null;
 
   const handleShare = async () => {
     try {
@@ -123,6 +155,9 @@ export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
     const LayoutComponent = LAYOUT_COMPONENTS[layout];
     const isPremium = layout !== 'minimal' && layout !== 'progress';
     const layoutStyle = styles[layout];
+
+    // Ensure we're using the correct style for the current layout
+    const currentLayoutStyle = index === currentPage ? layoutStyle : styles[layout];
 
     return (
       <View className="px-2">
@@ -150,7 +185,7 @@ export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
             quality: 1,
             result: 'data-uri',
           }}>
-          <LayoutComponent {...props} showBackground={layoutStyle?.showBackground ?? true} />
+          <LayoutComponent {...props} showBackground={currentLayoutStyle?.showBackground ?? true} />
         </ViewShot>
         <MotiPressable
           onPress={toggleBackground}
@@ -163,12 +198,12 @@ export function ShareLayoutStep({ previous, id }: ShareLayoutStepProps) {
           }}>
           <View className="border-border/30 mt-4 flex-row items-center gap-2 self-end rounded-full border px-3 py-1.5">
             <MaterialIcons
-              name={layoutStyle?.showBackground ? 'visibility' : 'visibility-off'}
+              name={currentLayoutStyle?.showBackground ? 'visibility' : 'visibility-off'}
               size={16}
               color={colors.primary}
             />
             <Text color="primary" variant="caption1" className="font-medium">
-              {layoutStyle?.showBackground ? 'Hide background' : 'Show background'}
+              {currentLayoutStyle?.showBackground ? 'Hide background' : 'Show background'}
             </Text>
           </View>
         </MotiPressable>

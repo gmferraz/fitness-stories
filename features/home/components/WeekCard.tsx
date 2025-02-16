@@ -13,6 +13,27 @@ interface WeekCardProps {
 export const WeekCard: React.FC<WeekCardProps> = ({ week }) => {
   const { colors } = useColorScheme();
 
+  const formatWeekRange = (weekRange: string) => {
+    const [start, end] = weekRange.split(' - ');
+    const formatDate = (dateStr: string) => {
+      const [day, month] = dateStr.split('/');
+      // Create a date object for the current year
+      const date = new Date();
+      date.setMonth(parseInt(month, 10) - 1);
+      date.setDate(parseInt(day, 10));
+
+      return new Intl.DateTimeFormat(undefined, {
+        day: 'numeric',
+        month: 'short',
+      })
+        .format(date)
+        .toLowerCase()
+        .replace('.', '');
+    };
+
+    return `${formatDate(start)} - ${formatDate(end)}`;
+  };
+
   const formatDistance = (meters: number) => {
     const kilometers = meters / 1000;
     return `${kilometers.toFixed(2)} km`;
@@ -39,10 +60,10 @@ export const WeekCard: React.FC<WeekCardProps> = ({ week }) => {
         <View className="flex-1">
           <View className="mb-3 flex-row items-center justify-between">
             <Text variant="callout" className="font-medium">
-              {week.weekRange}
+              {formatWeekRange(week.weekRange)}
             </Text>
             <View className="rounded-full bg-gray-100 px-3 py-1 dark:bg-gray-800">
-              <Text variant="caption2" color="secondary">
+              <Text variant="caption2" color="tertiary">
                 {week.totalActivities} {week.totalActivities === 1 ? 'activity' : 'activities'}
               </Text>
             </View>
@@ -51,21 +72,21 @@ export const WeekCard: React.FC<WeekCardProps> = ({ week }) => {
           <View className="flex-row items-center gap-4">
             <View className="flex-row items-center gap-1">
               <Ionicons name="time-outline" size={14} color={colors.grey} />
-              <Text variant="footnote" color="secondary">
+              <Text variant="footnote" color="tertiary">
                 {formatDuration(week.totalDuration)}
               </Text>
             </View>
 
             <View className="flex-row items-center gap-1">
               <Ionicons name="map-outline" size={14} color={colors.grey} />
-              <Text variant="footnote" color="secondary">
+              <Text variant="footnote" color="tertiary">
                 {formatDistance(week.totalDistance)}
               </Text>
             </View>
 
             <View className="flex-row items-center gap-1">
               <Ionicons name="flame-outline" size={14} color={colors.grey} />
-              <Text variant="footnote" color="secondary">
+              <Text variant="footnote" color="tertiary">
                 {week.totalCalories} cal
               </Text>
             </View>

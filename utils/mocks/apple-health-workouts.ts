@@ -9,8 +9,8 @@ export const APPLE_HEALTH_MOCK_WORKOUTS: AppleHealthActivity[] = [
     moving_time: 1800, // 30 minutes
     elapsed_time: 1800,
     total_elevation_gain: 45,
-    start_date: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), // yesterday
-    start_date_local: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+    start_date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // yesterday
+    start_date_local: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
     root: 'apple-health',
     source_name: 'Apple Watch',
     source_id: 'com.apple.health',
@@ -34,21 +34,21 @@ export const APPLE_HEALTH_MOCK_WORKOUTS: AppleHealthActivity[] = [
           latitude: -23.5505,
           longitude: -46.6333,
           altitude: 750,
-          timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+          timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
           speed: 10.4,
         },
         {
           latitude: -23.5515,
           longitude: -46.6343,
           altitude: 755,
-          timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000 + 300000).toISOString(),
+          timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000 + 300000).toISOString(),
           speed: 11.2,
         },
         {
           latitude: -23.5525,
           longitude: -46.6353,
           altitude: 760,
-          timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000 + 600000).toISOString(),
+          timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000 + 600000).toISOString(),
           speed: 12.5,
         },
       ],

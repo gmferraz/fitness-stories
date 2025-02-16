@@ -2,6 +2,7 @@ import { MMKV } from 'react-native-mmkv';
 import { create } from 'zustand';
 import { createJSONStorage, persist, StateStorage } from 'zustand/middleware';
 import { LayoutType } from './get-available-layouts';
+import { Appearance } from 'react-native';
 
 export type FontFamily = 'Inter' | 'Oswald' | 'Montserrat' | 'Poppins';
 export type ColorScheme = 'blue' | 'purple' | 'pink' | 'orange' | 'green';
@@ -61,9 +62,9 @@ const DEFAULT_STYLE: LayoutStyle = {
   titleSize: 28,
   bodySize: 18,
   labelSize: 14,
-  fontColor: 'white',
+  fontColor: Appearance.getColorScheme() === 'dark' ? 'white' : 'black',
   iconColor: 'blue',
-  backgroundColor: 'dark',
+  backgroundColor: Appearance.getColorScheme() === 'dark' ? 'dark' : 'white',
   showBackground: true,
 };
 
@@ -93,7 +94,7 @@ const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
   },
   map: {
     ...DEFAULT_STYLE,
-    fontFamily: 'Oswald',
+    fontFamily: 'Poppins',
     titleSize: 30,
     bodySize: 18,
   },
@@ -121,6 +122,36 @@ const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
     titleSize: 28,
     bodySize: 18,
   },
+  'period-minimal': {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Inter',
+    titleSize: 32,
+    bodySize: 20,
+  },
+  'period-stats': {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Inter',
+    titleSize: 32,
+    bodySize: 24,
+  },
+  'period-social': {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Inter',
+    titleSize: 40,
+    bodySize: 18,
+  },
+  hiit: {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Poppins',
+    titleSize: 32,
+    bodySize: 20,
+  },
+  hiit2: {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Montserrat',
+    titleSize: 36,
+    bodySize: 22,
+  },
 };
 
 export const useLayoutEditionStore = create<LayoutStylesState>()(
@@ -138,13 +169,28 @@ export const useLayoutEditionStore = create<LayoutStylesState>()(
           },
         })),
 
-      setActiveLayout: (layout) => set({ activeLayout: layout }),
+      setActiveLayout: (layout) =>
+        set((state) => {
+          return {
+            activeLayout: layout,
+            styles: {
+              ...state.styles,
+              [layout]: {
+                ...state.styles[layout],
+                showBackground: state.styles[layout]?.showBackground ?? true,
+              },
+            },
+          };
+        }),
 
       resetLayoutStyle: (layout) =>
         set((state) => ({
           styles: {
             ...state.styles,
-            [layout]: DEFAULT_LAYOUT_STYLES[layout],
+            [layout]: {
+              ...DEFAULT_LAYOUT_STYLES[layout],
+              showBackground: state.styles[layout]?.showBackground ?? true,
+            },
           },
         })),
 
@@ -168,7 +214,7 @@ export const useLayoutEditionStore = create<LayoutStylesState>()(
         }),
     }),
     {
-      name: 'layout-styles-storage-v2',
+      name: 'layout-styles-storage-v12',
       storage: createJSONStorage(() => zustandStorage),
     }
   )

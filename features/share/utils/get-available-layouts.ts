@@ -1,15 +1,22 @@
+import { act } from 'react';
+import { Appearance } from 'react-native';
 import { Activity, StravaActivity, AppleHealthActivity } from '~/features/home/types/activity';
 
 export type LayoutType =
   | 'minimal'
+  | 'social'
   | 'detailed'
   | 'progress'
   | 'map'
   | 'stats'
   | 'aesthetic'
-  | 'social'
   | 'achievement'
-  | 'weight';
+  | 'weight'
+  | 'period-minimal'
+  | 'period-stats'
+  | 'period-social'
+  | 'hiit'
+  | 'hiit2';
 
 interface LayoutRequirements {
   minimal: string[];
@@ -21,6 +28,8 @@ interface LayoutRequirements {
   social: string[];
   achievement: string[];
   weight: string[];
+  hiit: string[];
+  hiit2: string[];
 }
 
 const LAYOUT_REQUIREMENTS: LayoutRequirements = {
@@ -33,9 +42,20 @@ const LAYOUT_REQUIREMENTS: LayoutRequirements = {
   detailed: ['distance', 'moving_time', 'average_speed'],
   achievement: ['distance', 'moving_time'],
   weight: ['moving_time'],
+  hiit: ['moving_time', 'calories'],
+  hiit2: ['moving_time', 'calories'],
 };
 
-export function getAvailableLayouts(activity: Activity): LayoutType[] {
+export function getAvailableLayouts(
+  type: 'activity' | 'period' = 'activity',
+  activity?: Activity
+): LayoutType[] {
+  if (type === 'period') {
+    return ['period-minimal', 'period-stats', 'period-social'];
+  }
+
+  if (!activity) return [];
+
   const availableLayouts: LayoutType[] = [];
 
   Object.entries(LAYOUT_REQUIREMENTS).forEach(([layout, requirements]) => {

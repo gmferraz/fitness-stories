@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "fitness-stories",
+    "name": "FitStories",
     "slug": "fitness-stories",
     "version": "1.0.0",
     "scheme": "fitness-stories",
@@ -110,7 +110,19 @@
           "supportsPictureInPicture": false
         }
       ],
-      ["react-native-health"]
+      ["react-native-health"],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#1E90FF",
+          "image": "./assets/splash-icon.png",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "backgroundColor": "#1E90FF"
+          },
+          "imageWidth": 100
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
@@ -119,11 +131,6 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -134,7 +141,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#1E90FF"
       },
       "package": "com.ferrazgui.fitnessstories"
     },

@@ -10,7 +10,7 @@ import { useColorScheme } from '~/lib/useColorScheme';
 
 export default function LayoutEditorScreen() {
   const { activeLayout, resetLayoutStyle } = useLayoutEditionStore();
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, type } = useLocalSearchParams<{ id: string; type: 'activity' | 'period' }>();
 
   const { colors } = useColorScheme();
 
@@ -19,6 +19,8 @@ export default function LayoutEditorScreen() {
       resetLayoutStyle(activeLayout);
     }
   };
+
+  const reformattedId = type === 'activity' ? id : id.replace(/\./g, '/');
 
   return (
     <>
@@ -46,7 +48,7 @@ export default function LayoutEditorScreen() {
           ),
         }}
       />
-      <LayoutEditor id={id} />
+      <LayoutEditor id={reformattedId} type={type} />
     </>
   );
 }

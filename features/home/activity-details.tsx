@@ -207,7 +207,7 @@ export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
               color={colors.primary}
             />
           </View>
-          <View className="flex-row items-center">{getSourceIcon(activity.root)}</View>
+          <View className="flex-row items-center shadow-sm">{getSourceIcon(activity.root)}</View>
         </View>
 
         <Text variant="title1" className="mb-2">

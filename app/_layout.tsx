@@ -17,6 +17,7 @@ import { ThemeToggle } from '~/components/ThemeToggle';
 import { cn } from '~/lib/cn';
 import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
 import { NAV_THEME } from '~/theme';
+import { useAppSetup } from '~/features/app-setup/use-app-setup';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -32,6 +33,9 @@ configureReanimatedLogger({
 export default function RootLayout() {
   useInitialAndroidBarSync();
   const { colorScheme, isDarkColorScheme } = useColorScheme();
+  const { state: setupState } = useAppSetup();
+
+  console.log('setupState', setupState);
 
   return (
     <>

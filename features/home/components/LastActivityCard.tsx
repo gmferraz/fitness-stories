@@ -23,6 +23,8 @@ export const LastActivityCard: React.FC<LastActivityCardProps> = ({ activity, on
       weekday: 'long',
       hour: 'numeric',
       minute: 'numeric',
+      day: 'numeric',
+      month: 'long',
     });
   };
 
@@ -45,7 +47,7 @@ export const LastActivityCard: React.FC<LastActivityCardProps> = ({ activity, on
 
   return (
     <TouchableOpacity onPress={onPress} className="mb-4 overflow-hidden rounded-3xl bg-card">
-      <View className="bg-primary/10 flex-row items-center justify-between p-3">
+      <View className="bg-primary/20 dark:bg-primary/10 flex-row items-center justify-between p-3">
         <View className="flex-row items-center gap-2">
           <View className="bg-primary/20 h-8 w-8 items-center justify-center rounded-full">
             <MaterialCommunityIcons
@@ -58,7 +60,7 @@ export const LastActivityCard: React.FC<LastActivityCardProps> = ({ activity, on
             {activity.type}
           </Text>
         </View>
-        <View className="mr-1 flex-row items-center">{getSourceIcon(activity.root)}</View>
+        <View className="mr-1 flex-row items-center shadow-sm">{getSourceIcon(activity.root)}</View>
       </View>
 
       <View className="p-4">

@@ -1,6 +1,6 @@
-export const formatDistance = (meters: number) => {
+export const formatDistance = (meters: number, showUnit = true) => {
   const kilometers = meters / 1000;
-  return `${kilometers.toFixed(2)} km`;
+  return `${showUnit ? kilometers.toFixed(2) + ' km' : kilometers.toFixed(2)}`;
 };
 
 export const formatDuration = (seconds: number) => {
@@ -10,6 +10,12 @@ export const formatDuration = (seconds: number) => {
     return `${hours}h ${minutes}m`;
   }
   return `${minutes}m`;
+};
+
+export const formatTime = (seconds: number) => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  return `${hours}h ${minutes}m`;
 };
 
 export const formatPace = (meters?: number, seconds?: number) => {

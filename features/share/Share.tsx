@@ -7,14 +7,13 @@ import { useInstagramShareStore } from './utils/use-instagram-share-store';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { useUnmountEffect } from '~/utils/use-mount-effect';
 
-export default function Share({ id }: { id: string }) {
+export default function Share({ id, type }: { id: string; type: 'activity' | 'period' }) {
   const { colors } = useColorScheme();
   const { step, setStep, reset } = useInstagramShareStore();
 
   useUnmountEffect(() => {
     reset();
   });
-
   return (
     <View
       className="flex-1"
@@ -29,7 +28,7 @@ export default function Share({ id }: { id: string }) {
       )}
       {step === 'layout' && (
         <View className="flex-1 px-6">
-          <ShareLayoutStep id={id} previous={() => setStep('photo')} />
+          <ShareLayoutStep id={id} type={type} previous={() => setStep('photo')} />
         </View>
       )}
     </View>

@@ -74,27 +74,27 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => {
             <Text variant="callout" className="mb-1 font-medium">
               {activity.name}
             </Text>
-            <View className="flex-row items-center">{getSourceIcon(activity.root)}</View>
+            <View className="flex-row items-center shadow-sm">{getSourceIcon(activity.root)}</View>
           </View>
 
           <View className="flex-row items-center gap-4">
             <View className="flex-row items-center gap-1">
               <Ionicons name="time-outline" size={14} color={colors.grey} />
-              <Text variant="footnote" color="secondary">
+              <Text variant="footnote" color="tertiary">
                 {formatDuration(activity.moving_time)}
               </Text>
             </View>
 
             <View className="flex-row items-center gap-1">
               <Ionicons name="map-outline" size={14} color={colors.grey} />
-              <Text variant="footnote" color="secondary">
+              <Text variant="footnote" color="tertiary">
                 {formatDistance(activity.distance)}
               </Text>
             </View>
 
             <View className="flex-row items-center gap-1">
               <Ionicons name="calendar-outline" size={14} color={colors.grey} />
-              <Text variant="footnote" color="secondary">
+              <Text variant="footnote" color="tertiary">
                 {formatDate(activity.start_date)}
               </Text>
             </View>

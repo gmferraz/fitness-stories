@@ -44,7 +44,7 @@ export const HomeScreen = () => {
     );
   }
 
-  const lastActivity = activities[0];
+  const lastActivity = activities[2];
 
   return (
     <ScrollView
@@ -69,7 +69,7 @@ export const HomeScreen = () => {
             </Text>
             {activities.length > 0 && (
               <TouchableOpacity
-                className="rounded-full bg-gray-100 px-4 py-2 dark:bg-gray-800"
+                className="rounded-full bg-gray-200 px-4 py-2 dark:bg-gray-800"
                 onPress={() => router.push('/activities-list')}>
                 <Text variant="subhead" color="primary">
                   See All
@@ -104,7 +104,7 @@ export const HomeScreen = () => {
               </Text>
             </View>
             <TouchableOpacity
-              className="rounded-full bg-gray-100 px-4 py-2 dark:bg-gray-800"
+              className="rounded-full bg-gray-200 px-4 py-2 dark:bg-gray-800"
               onPress={() => router.push('/weeks-list')}>
               <Text variant="subhead" color="primary">
                 See All
