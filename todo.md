@@ -3,10 +3,11 @@
 - [x] Setup Posthog for analytics
 - [x] Setup Sentry
 - [x] Setup privacy stuff (privacy policy and terms) -> [Privacy Policy Generator](https://www.privacypolicygenerator.info/)
-- [ ] Setup OTA with Expo EAS
+- [x] Setup OTA with Expo EAS
 - [ ] Setup [AdMob](https://github.com/invertase/react-native-google-mobile-ads)
 - [ ] Setup RevenueCat or Adapty [Here](https://community.revenuecat.com/general-questions-7/looking-for-guidance-on-integrating-subscriptions-in-app-without-login-5330)
 - [x] Request Strava API [Here](https://share.hsforms.com/1VXSwPUYqSH6IxK0y51FjHwcnkd8)
+- [ ] Allow premium for testflight users -> [Here](https://github.com/jeremybarbet/expo-testflight)
 
 ## MVP features
 
