@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
-import { View, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  RefreshControl,
+  ActivityIndicator,
+} from 'react-native';
 import { Text } from '../../components/nativewindui/Text';
 import { LastActivityCard } from './components/LastActivityCard';
 import { WeekSummaryCard } from './components/WeekSummaryCard';
 import { useActivities } from './hooks/use-activities';
 import { useWeekSummary } from './hooks/use-week-summary';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ActivityIndicator } from '~/components/nativewindui/ActivityIndicator';
+import { ActivityIndicator as LoadingIndicator } from '~/components/nativewindui/ActivityIndicator';
 import { useMountEffect } from '~/utils/use-mount-effect';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { EmptyState } from '~/components/EmptyState';
 import { router } from 'expo-router';
+import { useStrava } from '~/utils/use-strava';
+import { useAppleHealth } from '~/utils/use-apple-health';
+import StravaIcon from '~/assets/svg/strava.svg';
+import AppleHealthIcon from '~/assets/svg/apple-health.svg';
+import { Ionicons } from '@expo/vector-icons';
 
 export const HomeScreen = () => {
   const { activities, isLoading, refreshActivities, hasConnectedSource } = useActivities();
@@ -18,6 +29,28 @@ export const HomeScreen = () => {
   const { bottom } = useSafeAreaInsets();
   const [finishedMount, setFinishedMount] = useState(false);
   const { colors } = useColorScheme();
+
+  // Connect apps state and hooks
+  const { isAuthenticated: isStravaConnected, handleLinkStrava } = useStrava();
+  const {
+    isAuthenticated: isAppleHealthConnected,
+    isAvailable: isAppleHealthAvailable,
+    initializeHealthKit,
+  } = useAppleHealth();
+  const [isConnectingStrava, setIsConnectingStrava] = useState(false);
+  const [isConnectingAppleHealth, setIsConnectingAppleHealth] = useState(false);
+
+  const handleStravaConnect = async () => {
+    setIsConnectingStrava(true);
+    await handleLinkStrava();
+    setIsConnectingStrava(false);
+  };
+
+  const handleAppleHealthConnect = async () => {
+    setIsConnectingAppleHealth(true);
+    await initializeHealthKit();
+    setIsConnectingAppleHealth(false);
+  };
 
   useMountEffect(() => {
     setTimeout(() => {
@@ -27,19 +60,81 @@ export const HomeScreen = () => {
 
   if (!hasConnectedSource) {
     return (
-      <View className="flex-1 items-center justify-center px-4">
-        <EmptyState
-          title="No apps connected"
-          subtitle="Connect your Strava or Apple Health to see your activities."
-        />
-      </View>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        className="flex-1 bg-background px-6 pt-6">
+        <View className="w-full space-y-4">
+          <EmptyState
+            title="No connected apps"
+            subtitle="Connect your first app to start tracking your activities."
+            className="mb-6"
+          />
+          <TouchableOpacity
+            onPress={handleStravaConnect}
+            disabled={isStravaConnected}
+            className={`flex-row items-center justify-between rounded-2xl bg-card p-4 ${
+              isStravaConnected ? 'opacity-50' : ''
+            }`}>
+            <View className="flex-row items-center gap-4">
+              <View className="h-12 w-12">
+                <StravaIcon />
+              </View>
+              <View>
+                <Text variant="title2" className="font-semibold">
+                  Strava
+                </Text>
+                <Text variant="subhead" className="text-gray-500">
+                  {isStravaConnected ? 'Connected' : 'Connect'}
+                </Text>
+              </View>
+            </View>
+            {isConnectingStrava ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : isStravaConnected ? (
+              <Ionicons name="checkmark" color="green" size={24} />
+            ) : (
+              <Ionicons name="add-circle-outline" color="gray" size={24} />
+            )}
+          </TouchableOpacity>
+
+          {isAppleHealthAvailable && (
+            <TouchableOpacity
+              onPress={handleAppleHealthConnect}
+              disabled={isAppleHealthConnected}
+              className={`mt-4 flex-row items-center justify-between rounded-2xl bg-card p-4 ${
+                isAppleHealthConnected ? 'opacity-50' : ''
+              }`}>
+              <View className="flex-row items-center gap-4">
+                <View className="h-12 w-12">
+                  <AppleHealthIcon />
+                </View>
+                <View>
+                  <Text variant="title2" className="font-semibold">
+                    Apple Health
+                  </Text>
+                  <Text variant="subhead" className="text-gray-500">
+                    {isAppleHealthConnected ? 'Connected' : 'Connect'}
+                  </Text>
+                </View>
+              </View>
+              {isConnectingAppleHealth ? (
+                <ActivityIndicator size="small" color="white" />
+              ) : isAppleHealthConnected ? (
+                <Ionicons name="checkmark" color="green" size={24} />
+              ) : (
+                <Ionicons name="add-circle-outline" color="gray" size={24} />
+              )}
+            </TouchableOpacity>
+          )}
+        </View>
+      </ScrollView>
     );
   }
 
   if (isLoading && !finishedMount) {
     return (
       <View className="flex-1 items-center justify-center bg-background">
-        <ActivityIndicator />
+        <LoadingIndicator />
       </View>
     );
   }

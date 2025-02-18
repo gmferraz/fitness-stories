@@ -6,7 +6,7 @@
 - [ ] Setup OTA with Expo EAS
 - [ ] Setup [AdMob](https://github.com/invertase/react-native-google-mobile-ads)
 - [ ] Setup RevenueCat or Adapty [Here](https://community.revenuecat.com/general-questions-7/looking-for-guidance-on-integrating-subscriptions-in-app-without-login-5330)
-- [ ] Request Strava API [Here](https://share.hsforms.com/1VXSwPUYqSH6IxK0y51FjHwcnkd8)
+- [x] Request Strava API [Here](https://share.hsforms.com/1VXSwPUYqSH6IxK0y51FjHwcnkd8)
 
 ## MVP features
 
@@ -27,7 +27,7 @@
 - [ ] Check offline mode
 - [ ] Setup app store project
 - [x] Deploy next app with support/terms/privacy
-- [ ] Add import strava/apple health on home when no connected apps
+- [x] Add import strava/apple health on home when no connected apps
 
 ## Premium features - ADD paywall
 
