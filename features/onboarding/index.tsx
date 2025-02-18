@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Dimensions, SafeAreaView } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { MotiView } from 'moti';

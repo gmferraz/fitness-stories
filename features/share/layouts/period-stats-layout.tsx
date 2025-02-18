@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import {
   DEFAULT_LAYOUT_STYLES,
@@ -28,6 +29,7 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
   totalElevation,
   showBackground = true,
 }) => {
+  const { t } = useTranslation();
   const { styles } = useLayoutEditionStore();
   const style = styles['period-stats'].isEdited
     ? styles['period-stats']
@@ -39,22 +41,22 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
     {
       icon: 'barbell-outline',
       value: totalActivities.toString(),
-      label: 'Activities',
+      label: t('share.layouts.common.workouts'),
     },
     {
       icon: 'stopwatch-outline',
       value: formatDuration(totalDuration),
-      label: 'Duration',
+      label: t('share.layouts.common.duration'),
     },
     {
       icon: 'map-outline',
       value: formatDistance(totalDistance),
-      label: 'Distance',
+      label: t('share.layouts.common.distance'),
     },
     {
       icon: 'flame-outline',
       value: `${totalCalories}`,
-      label: 'Calories',
+      label: t('share.layouts.common.calories'),
     },
   ];
 
@@ -74,7 +76,7 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
             lineHeight: style.titleSize * 1.2,
             fontWeight: 'bold',
           }}>
-          My week
+          {t('share.layouts.periodStats.title')}
         </Text>
 
         <View className="flex-1 justify-center">

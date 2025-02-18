@@ -60,7 +60,7 @@ export function DetailedLayout({
                   lineHeight: style.labelSize * 1.2,
                 }}
                 className="ml-1">
-                Distance
+                {t('share.layouts.common.distance')}
               </Text>
             </View>
             <Text
@@ -86,7 +86,7 @@ export function DetailedLayout({
                   lineHeight: style.labelSize * 1.2,
                 }}
                 className="ml-1">
-                Time
+                {t('share.layouts.common.time')}
               </Text>
             </View>
             <Text
@@ -114,7 +114,7 @@ export function DetailedLayout({
                   lineHeight: style.labelSize * 1.2,
                 }}
                 className="ml-1">
-                Pace
+                {t('share.layouts.common.pace')}
               </Text>
             </View>
             <Text
@@ -139,7 +139,7 @@ export function DetailedLayout({
                   lineHeight: style.labelSize * 1.2,
                 }}
                 className="ml-1">
-                Elevation
+                {t('share.layouts.common.elevation')}
               </Text>
             </View>
             <Text

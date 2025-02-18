@@ -1,5 +1,6 @@
 import { View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 import { Text } from '~/components/nativewindui/Text';
 import { formatDuration } from '~/utils/formatters';
@@ -20,6 +21,7 @@ interface WeightLayoutProps {
 }
 
 export function WeightLayout({ duration, activity, showBackground = true }: WeightLayoutProps) {
+  const { t } = useTranslation();
   const language = languageDetector.detect();
   const hasHeartRate = !!activity.average_heartrate;
   const hasCalories = !!activity.calories;
@@ -60,7 +62,7 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
               lineHeight: style.bodySize * 1.2,
             }}
             className="ml-2 font-bold">
-            Weight Training
+            {t('share.layouts.weight.title')}
           </Text>
         </View>
       </View>
@@ -74,7 +76,7 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
             lineHeight: style.labelSize * 1.2,
           }}
           className="mb-1 opacity-60">
-          Duration
+          {t('share.layouts.common.duration')}
         </Text>
         <Text
           style={{
@@ -100,7 +102,7 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
                   lineHeight: style.labelSize * 1.2,
                 }}
                 className="mb-1 opacity-60">
-                Avg HR
+                {t('share.layouts.common.avgHeartRate')}
               </Text>
               <Text
                 style={{
@@ -125,7 +127,7 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
                   lineHeight: style.labelSize * 1.2,
                 }}
                 className="mb-1 opacity-60">
-                Calories
+                {t('share.layouts.common.calories')}
               </Text>
               <Text
                 style={{

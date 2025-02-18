@@ -7,12 +7,13 @@ import { View } from 'moti';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text } from '~/components/nativewindui/Text';
 import { useColorScheme } from '~/lib/useColorScheme';
+import { useTranslation } from 'react-i18next';
 
 export default function LayoutEditorScreen() {
   const { activeLayout, resetLayoutStyle } = useLayoutEditionStore();
   const { id, type } = useLocalSearchParams<{ id: string; type: 'activity' | 'period' }>();
-
   const { colors } = useColorScheme();
+  const { t } = useTranslation();
 
   const handleReset = () => {
     if (activeLayout) {
@@ -26,7 +27,7 @@ export default function LayoutEditorScreen() {
     <>
       <Stack.Screen
         options={{
-          title: 'Editor',
+          title: t('share.editor.title'),
           headerLargeTitle: false,
           headerRight: () => (
             <MotiPressable
@@ -41,7 +42,7 @@ export default function LayoutEditorScreen() {
               <View className="bg-primary/10 flex-row items-center rounded-full px-3 py-1.5">
                 <MaterialCommunityIcons name="refresh" size={16} color={colors.primary} />
                 <Text color="primary" variant="caption1" className="ml-1 font-medium">
-                  Reset
+                  {t('share.editor.reset')}
                 </Text>
               </View>
             </MotiPressable>

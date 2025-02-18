@@ -6,6 +6,7 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '../../components/nativewindui/Text';
 import { LastActivityCard } from './components/LastActivityCard';
 import { WeekSummaryCard } from './components/WeekSummaryCard';
@@ -29,6 +30,7 @@ export const HomeScreen = () => {
   const { bottom } = useSafeAreaInsets();
   const [finishedMount, setFinishedMount] = useState(false);
   const { colors } = useColorScheme();
+  const { t } = useTranslation();
 
   // Connect apps state and hooks
   const { isAuthenticated: isStravaConnected, handleLinkStrava } = useStrava();
@@ -65,8 +67,8 @@ export const HomeScreen = () => {
         className="flex-1 bg-background px-6 pt-6">
         <View className="w-full space-y-4">
           <EmptyState
-            title="No connected apps"
-            subtitle="Connect your first app to start tracking your activities."
+            title={t('home.noConnectedApps.title')}
+            subtitle={t('home.noConnectedApps.subtitle')}
             className="mb-6"
           />
           <TouchableOpacity
@@ -81,10 +83,12 @@ export const HomeScreen = () => {
               </View>
               <View>
                 <Text variant="title2" className="font-semibold">
-                  Strava
+                  {t('home.apps.strava.title')}
                 </Text>
                 <Text variant="subhead" className="text-gray-500">
-                  {isStravaConnected ? 'Connected' : 'Connect'}
+                  {isStravaConnected
+                    ? t('home.apps.strava.connected')
+                    : t('home.apps.strava.connect')}
                 </Text>
               </View>
             </View>
@@ -110,10 +114,12 @@ export const HomeScreen = () => {
                 </View>
                 <View>
                   <Text variant="title2" className="font-semibold">
-                    Apple Health
+                    {t('home.apps.appleHealth.title')}
                   </Text>
                   <Text variant="subhead" className="text-gray-500">
-                    {isAppleHealthConnected ? 'Connected' : 'Connect'}
+                    {isAppleHealthConnected
+                      ? t('home.apps.appleHealth.connected')
+                      : t('home.apps.appleHealth.connect')}
                   </Text>
                 </View>
               </View>
@@ -160,14 +166,14 @@ export const HomeScreen = () => {
         <View className="mb-8">
           <View className="mb-4 flex-row items-center justify-between">
             <Text variant="title1" className="font-semibold">
-              Last Exercise
+              {t('home.lastExercise.title')}
             </Text>
             {activities.length > 0 && (
               <TouchableOpacity
                 className="rounded-full bg-gray-200 px-4 py-2 dark:bg-gray-800"
                 onPress={() => router.push('/activities-list')}>
                 <Text variant="subhead" color="primary">
-                  See All
+                  {t('home.lastExercise.seeAll')}
                 </Text>
               </TouchableOpacity>
             )}
@@ -181,8 +187,8 @@ export const HomeScreen = () => {
             />
           ) : (
             <EmptyState
-              title="You haven't uploaded any activities"
-              subtitle="To track your progress and achieve your goals, please upload your activities and stay healthy."
+              title={t('home.lastExercise.empty.title')}
+              subtitle={t('home.lastExercise.empty.subtitle')}
             />
           )}
         </View>
@@ -192,7 +198,7 @@ export const HomeScreen = () => {
           <View className="mb-4 flex-row items-baseline justify-between">
             <View>
               <Text variant="title1" className="font-semibold">
-                Week Summary
+                {t('home.weekSummary.title')}
               </Text>
               <Text variant="subhead" className="text-gray-500">
                 {weekSummary.weekRange}
@@ -202,7 +208,7 @@ export const HomeScreen = () => {
               className="rounded-full bg-gray-200 px-4 py-2 dark:bg-gray-800"
               onPress={() => router.push('/weeks-list')}>
               <Text variant="subhead" color="primary">
-                See All
+                {t('home.weekSummary.seeAll')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -210,8 +216,8 @@ export const HomeScreen = () => {
             <WeekSummaryCard {...weekSummary} />
           ) : (
             <EmptyState
-              title="No activities this week"
-              subtitle="Complete your first activity this week to see your progress and statistics."
+              title={t('home.weekSummary.empty.title')}
+              subtitle={t('home.weekSummary.empty.subtitle')}
             />
           )}
         </View>

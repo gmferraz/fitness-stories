@@ -7,11 +7,13 @@ import { MotiPressable } from 'moti/interactions';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { View } from 'moti';
 import { Text } from '~/components/nativewindui/Text';
+import { useTranslation } from 'react-i18next';
 
 export default function ShareScreen() {
   const { id, type } = useLocalSearchParams<{ id: string; type: 'activity' | 'period' }>();
   const { step } = useInstagramShareStore();
   const { colors } = useColorScheme();
+  const { t } = useTranslation();
 
   const reformattedId = type === 'activity' ? id : id.replace(/\./g, '/');
 
@@ -19,7 +21,7 @@ export default function ShareScreen() {
     <>
       <Stack.Screen
         options={{
-          title: 'Share',
+          title: t('share.layouts.common.share'),
           headerLargeTitle: false,
           headerRight:
             step === 'layout'
@@ -40,7 +42,7 @@ export default function ShareScreen() {
                           color={colors.primary}
                         />
                         <Text color="primary" variant="caption1" className="ml-1 font-medium">
-                          Edit
+                          {t('share.layouts.common.edit')}
                         </Text>
                       </View>
                     </MotiPressable>

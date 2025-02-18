@@ -153,7 +153,6 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
   const renderItem = ({ index }: { index: number }) => {
     const layout = availableLayouts[index];
     const LayoutComponent = LAYOUT_COMPONENTS[layout];
-    const isPremium = layout !== 'minimal' && layout !== 'progress';
     const layoutStyle = styles[layout];
 
     // Ensure we're using the correct style for the current layout
@@ -161,23 +160,6 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
 
     return (
       <View className="px-2">
-        <View className="mb-3 self-end">
-          {isPremium ? (
-            <View className="border-primary/20 bg-primary/5 flex-row items-center rounded-full border px-3 py-1">
-              <MaterialIcons name="star" size={14} color={colors.primary} />
-              <Text color="primary" variant="caption2" className="ml-1 font-medium">
-                Premium
-              </Text>
-            </View>
-          ) : (
-            <View className="border-primary/20 bg-primary/5 flex-row items-center rounded-full border px-3 py-1">
-              <MaterialIcons name="check" size={14} color={colors.primary} />
-              <Text color="primary" variant="caption2" className="ml-1 font-medium">
-                Free
-              </Text>
-            </View>
-          )}
-        </View>
         <ViewShot
           ref={index === currentPage ? viewShotRef : undefined}
           options={{
@@ -203,7 +185,9 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
               color={colors.primary}
             />
             <Text color="primary" variant="caption1" className="font-medium">
-              {currentLayoutStyle?.showBackground ? 'Hide background' : 'Show background'}
+              {currentLayoutStyle?.showBackground
+                ? t('share.layout.hideBackground')
+                : t('share.layout.showBackground')}
             </Text>
           </View>
         </MotiPressable>
@@ -214,10 +198,10 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
   return (
     <View className="flex-1">
       <Text color="primary" variant="title1" className="mb-2 font-bold">
-        Choose Your Style
+        {t('share.layout.title')}
       </Text>
       <Text color="primary" variant="subhead" className="mb-6 opacity-80">
-        Pick a template that matches your vibe
+        {t('share.layout.description')}
       </Text>
 
       <Carousel
@@ -262,7 +246,7 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
           <View className="border-border/30 flex-row items-center gap-2 rounded-full border px-4 py-2">
             <Icon name="arrow-left" size={20} color={colors.primary} />
             <Text color="primary" variant="callout" className="font-medium">
-              Back
+              {t('share.layout.back')}
             </Text>
           </View>
         </MotiPressable>
@@ -275,7 +259,7 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
             };
           }}>
           <View className="flex-row items-center gap-2 rounded-full bg-primary px-4 py-2">
-            <Text className="font-medium text-white">Share</Text>
+            <Text className="font-medium text-white">{t('share.layout.share')}</Text>
             <MaterialIcons name="share" size={20} color="white" />
           </View>
         </MotiPressable>

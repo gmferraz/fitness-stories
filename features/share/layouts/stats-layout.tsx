@@ -56,7 +56,7 @@ export function StatsLayout({
             lineHeight: style.labelSize * 1.2,
           }}
           className="mb-1">
-          Total Distance
+          {t('share.layouts.common.totalDistance')}
         </Text>
         <Text
           style={{
@@ -82,7 +82,7 @@ export function StatsLayout({
                 lineHeight: style.labelSize * 1.2,
               }}
               className="ml-2">
-              Duration
+              {t('share.layouts.common.duration')}
             </Text>
           </View>
           <Text
@@ -108,7 +108,7 @@ export function StatsLayout({
                 lineHeight: style.labelSize * 1.2,
               }}
               className="ml-2">
-              Avg Pace
+              {t('share.layouts.common.avgPace')}
             </Text>
           </View>
           <Text
@@ -139,7 +139,7 @@ export function StatsLayout({
                     lineHeight: style.labelSize * 1.2,
                   }}
                   className="ml-2">
-                  Avg HR
+                  {t('share.layouts.common.avgHeartRate')}
                 </Text>
               </View>
               <Text
@@ -165,7 +165,7 @@ export function StatsLayout({
                     lineHeight: style.labelSize * 1.2,
                   }}
                   className="ml-2">
-                  Max HR
+                  {t('share.layouts.common.maxHeartRate')}
                 </Text>
               </View>
               <Text

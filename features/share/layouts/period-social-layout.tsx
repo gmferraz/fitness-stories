@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import { Ionicons } from '@expo/vector-icons';
 import {
@@ -28,6 +29,7 @@ export const PeriodSocialLayout: React.FC<PeriodSocialLayoutProps> = ({
   totalCalories,
   showBackground = true,
 }) => {
+  const { t } = useTranslation();
   const { styles } = useLayoutEditionStore();
   const style = styles['period-social'].isEdited
     ? styles['period-social']
@@ -39,24 +41,24 @@ export const PeriodSocialLayout: React.FC<PeriodSocialLayoutProps> = ({
   const mainStat = {
     icon: 'trophy-outline',
     value: totalActivities.toString(),
-    label: `Workout${totalActivities === 1 ? '' : 's'} This Week`,
+    label: t('share.layouts.periodSocial.workoutsThisWeek', { count: totalActivities }),
   };
 
   const stats = [
     {
       icon: 'stopwatch-outline',
       value: formatDuration(totalDuration),
-      label: 'Active Time',
+      label: t('share.layouts.common.duration'),
     },
     {
       icon: 'map-outline',
       value: formatDistance(totalDistance),
-      label: 'Distance',
+      label: t('share.layouts.common.distance'),
     },
     {
       icon: 'flame-outline',
       value: `${totalCalories}`,
-      label: 'Calories',
+      label: t('share.layouts.common.calories'),
     },
   ];
 

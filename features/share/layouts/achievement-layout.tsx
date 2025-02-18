@@ -97,7 +97,7 @@ export function AchievementLayout({
                     fontSize: style.labelSize,
                     lineHeight: style.labelSize * 1.2,
                   }}>
-                  Time
+                  {t('share.layouts.common.time')}
                 </Text>
                 <Text
                   style={{
@@ -119,7 +119,7 @@ export function AchievementLayout({
                     fontSize: style.labelSize,
                     lineHeight: style.labelSize * 1.2,
                   }}>
-                  Avg Pace
+                  {t('share.layouts.common.avgPace')}
                 </Text>
                 <Text
                   style={{

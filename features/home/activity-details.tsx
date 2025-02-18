@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import { useActivities } from './hooks/use-activities';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -34,6 +35,7 @@ export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
   const { activities } = useActivities();
   const { bottom } = useSafeAreaInsets();
   const { colors } = useColorScheme();
+  const { t } = useTranslation();
 
   const activity = activities.find((a) => a.id === id);
 
@@ -78,32 +80,32 @@ export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
     activity.moving_time > 0 && {
       icon: 'stopwatch-outline',
       value: formatDuration(activity.moving_time),
-      label: 'Duration',
+      label: t('home.activityDetails.stats.duration'),
       color: '#FF2D55',
     },
     activity.distance > 0 && {
       icon: 'map-outline',
       value: formatDistance(activity.distance),
-      label: 'Distance',
+      label: t('home.activityDetails.stats.distance'),
       color: '#5856D6',
     },
     activity.distance > 0 &&
       activity.moving_time > 0 && {
         icon: 'speedometer-outline',
         value: formatPace(activity.distance, activity.moving_time),
-        label: 'Avg Pace',
+        label: t('home.activityDetails.stats.avgPace'),
         color: '#FF9500',
       },
     activity.total_elevation_gain > 0 && {
       icon: 'trending-up-outline',
       value: `${activity.total_elevation_gain}m`,
-      label: 'Elevation',
+      label: t('home.activityDetails.stats.elevation'),
       color: '#34C759',
     },
     (activity.calories ?? 0) > 0 && {
       icon: 'flame-outline',
       value: `${activity.calories}`,
-      label: 'Calories',
+      label: t('home.activityDetails.stats.calories'),
       color: '#FF3B30',
     },
   ].filter((item): item is StatItem => Boolean(item));
@@ -115,43 +117,43 @@ export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
           activity.average_heartrate && {
             icon: 'heart-outline',
             value: formatHeartRate(activity.average_heartrate),
-            label: 'Avg Heart Rate',
+            label: t('home.activityDetails.stats.avgHeartRate'),
             color: '#FF3B30',
           },
           activity.max_heartrate && {
             icon: 'heart',
             value: formatHeartRate(activity.max_heartrate),
-            label: 'Max Heart Rate',
+            label: t('home.activityDetails.stats.maxHeartRate'),
             color: '#FF3B30',
           },
           activity.average_watts && {
             icon: 'flash-outline',
             value: formatWatts(activity.average_watts),
-            label: 'Avg Power',
+            label: t('home.activityDetails.stats.avgPower'),
             color: '#007AFF',
           },
           activity.max_watts && {
             icon: 'flash',
             value: formatWatts(activity.max_watts),
-            label: 'Max Power',
+            label: t('home.activityDetails.stats.maxPower'),
             color: '#007AFF',
           },
           activity.weighted_average_watts && {
             icon: 'pulse-outline',
             value: formatWatts(activity.weighted_average_watts),
-            label: 'Normalized Power',
+            label: t('home.activityDetails.stats.normalizedPower'),
             color: '#007AFF',
           },
           activity.average_cadence && {
             icon: 'walk-outline',
             value: formatCadence(activity.average_cadence),
-            label: 'Avg Cadence',
+            label: t('home.activityDetails.stats.avgCadence'),
             color: '#5856D6',
           },
           activity.max_cadence && {
             icon: 'walk',
             value: formatCadence(activity.max_cadence),
-            label: 'Max Cadence',
+            label: t('home.activityDetails.stats.maxCadence'),
             color: '#5856D6',
           },
         ].filter((item): item is StatItem => Boolean(item))
@@ -160,31 +162,31 @@ export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
             activity.average_heartrate && {
               icon: 'heart-outline',
               value: formatHeartRate(activity.average_heartrate),
-              label: 'Avg Heart Rate',
+              label: t('home.activityDetails.stats.avgHeartRate'),
               color: '#FF3B30',
             },
             activity.max_heartrate && {
               icon: 'heart',
               value: formatHeartRate(activity.max_heartrate),
-              label: 'Max Heart Rate',
+              label: t('home.activityDetails.stats.maxHeartRate'),
               color: '#FF3B30',
             },
             activity.total_energy_burned && {
               icon: 'pulse-outline',
               value: formatWatts(activity.total_energy_burned),
-              label: 'Energy Burned',
+              label: t('home.activityDetails.stats.energyBurned'),
               color: '#007AFF',
             },
             activity.average_cadence && {
               icon: 'walk-outline',
               value: formatCadence(activity.average_cadence),
-              label: 'Avg Cadence',
+              label: t('home.activityDetails.stats.avgCadence'),
               color: '#5856D6',
             },
             activity.max_cadence && {
               icon: 'walk',
               value: formatCadence(activity.max_cadence),
-              label: 'Max Cadence',
+              label: t('home.activityDetails.stats.maxCadence'),
               color: '#5856D6',
             },
           ].filter((item): item is StatItem => Boolean(item))
@@ -253,34 +255,31 @@ export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
                 <Text variant="title2" className="font-semibold">
                   {stat.value}
                 </Text>
-                <Text variant="footnote" className="text-gray-500">
+                <Text variant="subhead" className="text-gray-500">
                   {stat.label}
                 </Text>
               </View>
             </View>
           ))}
 
-          {/* Additional Stats (only shown if available) */}
-          {additionalStats.map(
-            (stat) =>
-              stat && (
-                <View key={stat.label} className="w-1/2 p-1">
-                  <View className="rounded-2xl bg-card p-4">
-                    <View
-                      className="mb-3 h-10 w-10 items-center justify-center rounded-xl"
-                      style={{ backgroundColor: `${stat.color}20` }}>
-                      <Ionicons name={stat.icon as any} size={20} color={stat.color} />
-                    </View>
-                    <Text variant="title2" className="font-semibold">
-                      {stat.value}
-                    </Text>
-                    <Text variant="footnote" className="text-gray-500">
-                      {stat.label}
-                    </Text>
-                  </View>
+          {/* Additional Stats */}
+          {additionalStats.map((stat) => (
+            <View key={stat.label} className="w-1/2 p-1">
+              <View className="rounded-2xl bg-card p-4">
+                <View
+                  className="mb-3 h-10 w-10 items-center justify-center rounded-xl"
+                  style={{ backgroundColor: `${stat.color}20` }}>
+                  <Ionicons name={stat.icon as any} size={20} color={stat.color} />
                 </View>
-              )
-          )}
+                <Text variant="title2" className="font-semibold">
+                  {stat.value}
+                </Text>
+                <Text variant="subhead" className="text-gray-500">
+                  {stat.label}
+                </Text>
+              </View>
+            </View>
+          ))}
         </View>
       </View>
     </ScrollView>

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Image } from 'react-native';
 import { MotiView } from 'moti';
 import { MotiPressable } from 'moti/interactions';
+import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import { Icon } from '@roninoss/icons';
 
@@ -10,6 +11,8 @@ interface WelcomeStepProps {
 }
 
 export const WelcomeStep: React.FC<WelcomeStepProps> = ({ onNext }) => {
+  const { t } = useTranslation();
+
   return (
     <View className="flex-1 items-center justify-center px-6">
       <MotiView
@@ -23,11 +26,10 @@ export const WelcomeStep: React.FC<WelcomeStepProps> = ({ onNext }) => {
           resizeMode="contain"
         />
         <Text variant="largeTitle" className="mb-4 text-center font-bold">
-          Welcome to FitStories
+          {t('onboarding.welcome.title')}
         </Text>
         <Text variant="body" className="mb-12 text-center text-gray-500">
-          Transform your fitness activities into beautiful Instagram stories. Connect your favorite
-          fitness apps and share your achievements in style.
+          {t('onboarding.welcome.description')}
         </Text>
       </MotiView>
 
@@ -40,7 +42,7 @@ export const WelcomeStep: React.FC<WelcomeStepProps> = ({ onNext }) => {
           };
         }}>
         <View className="flex-row items-center gap-2 rounded-full bg-primary px-4 py-2">
-          <Text className="font-medium text-white">Get Started</Text>
+          <Text className="font-medium text-white">{t('onboarding.welcome.getStarted')}</Text>
           <Icon name="arrow-right" size={20} color="white" />
         </View>
       </MotiPressable>

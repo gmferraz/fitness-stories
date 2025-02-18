@@ -54,15 +54,14 @@
         }
       ],
       "expo-apple-authentication",
-      // [
-      //   "@sentry/react-native/expo",
-      //   {
-      //     "url": "https://sentry.io/",
-      //     "project": "react-native",
-      //     "organization": "runnerai"
-      //   }
-      // ],
-      // TODO: Change
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "react-native",
+          "organization": "fitstories"
+        }
+      ],
       [
         "react-native-google-mobile-ads",
         {

@@ -3,6 +3,7 @@ import { MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-ic
 import { MotiView } from 'moti';
 import { MotiPressable } from 'moti/interactions';
 import { useState, useMemo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Text } from '~/components/nativewindui/Text';
 import { Slider } from '~/components/nativewindui/Slider';
@@ -35,34 +36,40 @@ const FONT_FAMILIES: { label: string; value: FontFamily }[] = [
   { label: 'Poppins', value: 'Poppins' },
 ];
 
-const BACKGROUND_COLORS: { label: string; value: BackgroundColor }[] = [
-  { label: 'Dark', value: 'dark' },
-  { label: 'White', value: 'white' },
-  { label: 'Blue', value: 'blue-200' },
-  { label: 'Purple', value: 'purple-600' },
-  { label: 'Red', value: 'red-200' },
-  { label: 'Orange', value: 'orange-200' },
-];
-
-const FONT_COLORS: { label: string; value: FontColor }[] = [
-  { label: 'White', value: 'white' },
-  { label: 'Black', value: 'black' },
-  { label: 'Gray 900', value: 'gray-900' },
-  { label: 'Gray 800', value: 'gray-800' },
-  { label: 'Gray 700', value: 'gray-700' },
-];
-
 type EditorSection = 'Style' | 'Sizes' | 'Colors';
-const EDITOR_SECTIONS: EditorSection[] = ['Style', 'Sizes', 'Colors'];
 
 export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'period' }) {
   const { colors } = useColorScheme();
+  const { t } = useTranslation();
   const [selectedSection, setSelectedSection] = useState<number>(0);
   const { selectedLayout } = useInstagramShareStore();
   const { bottom } = useSafeAreaInsets();
 
+  const EDITOR_SECTIONS: EditorSection[] = [
+    t('share.editor.style'),
+    t('share.editor.sizes'),
+    t('share.editor.color'),
+  ];
+
   const { styles, activeLayout, setLayoutStyle, setActiveLayout, toggleBackground } =
     useLayoutEditionStore();
+
+  const BACKGROUND_COLORS: { label: string; value: BackgroundColor }[] = [
+    { label: t('share.editor.colors.dark'), value: 'dark' },
+    { label: t('share.editor.colors.white'), value: 'white' },
+    { label: t('share.editor.colors.blue'), value: 'blue-200' },
+    { label: t('share.editor.colors.purple'), value: 'purple-600' },
+    { label: t('share.editor.colors.red'), value: 'red-200' },
+    { label: t('share.editor.colors.orange'), value: 'orange-200' },
+  ];
+
+  const FONT_COLORS: { label: string; value: FontColor }[] = [
+    { label: t('share.editor.colors.white'), value: 'white' },
+    { label: t('share.editor.colors.black'), value: 'black' },
+    { label: t('share.editor.colors.gray900'), value: 'gray-900' },
+    { label: t('share.editor.colors.gray800'), value: 'gray-800' },
+    { label: t('share.editor.colors.gray700'), value: 'gray-700' },
+  ];
 
   // Get current layout style
   const currentStyle = selectedLayout ? styles[selectedLayout] : null;
@@ -106,7 +113,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
   const renderStyleSection = () => (
     <View className="mb-6">
       <Text color="primary" variant="heading" className="mb-4 font-bold">
-        Font Style
+        {t('share.editor.fontStyle')}
       </Text>
       <View className="flex-col" style={{ gap: 8 }}>
         {FONT_FAMILIES.map((font) => (
@@ -147,7 +154,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
       <View className="mb-6">
         <View className="mb-2 flex-row items-center justify-between">
           <Text color="primary" variant="heading" className="font-bold">
-            Title Size
+            {t('share.editor.titleSize')}
           </Text>
           <Text color="primary" variant="callout" className="font-medium">
             {currentStyle?.titleSize}px
@@ -166,7 +173,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
       <View className="mb-6">
         <View className="mb-2 flex-row items-center justify-between">
           <Text color="primary" variant="heading" className="font-bold">
-            Body Size
+            {t('share.editor.bodySize')}
           </Text>
           <Text color="primary" variant="callout" className="font-medium">
             {currentStyle?.bodySize}px
@@ -185,7 +192,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
       <View>
         <View className="mb-2 flex-row items-center justify-between">
           <Text color="primary" variant="heading" className="font-bold">
-            Label Size
+            {t('share.editor.labelSize')}
           </Text>
           <Text color="primary" variant="callout" className="font-medium">
             {currentStyle?.labelSize}px
@@ -209,7 +216,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
       {/* Font Colors */}
       <View className="mb-8">
         <Text color="primary" variant="heading" className="mb-4 font-bold">
-          Font Color
+          {t('share.editor.fontColor')}
         </Text>
         <View className="flex-row flex-wrap" style={{ gap: 8 }}>
           {FONT_COLORS.map((color) => (
@@ -242,7 +249,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
       {/* Background Colors */}
       <View className="mb-8">
         <Text color="primary" variant="heading" className="mb-4 font-bold">
-          Background Color
+          {t('share.editor.backgroundColor')}
         </Text>
         <View className="flex-row flex-wrap" style={{ gap: 8 }}>
           {BACKGROUND_COLORS.map((color) => (
@@ -275,7 +282,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
       </View>
 
       <View className="mb-6">
-        <Text className="mb-2 font-medium">Icon Color</Text>
+        <Text className="mb-2 font-medium">{t('share.editor.iconColor')}</Text>
         <View className="flex-row flex-wrap gap-2">
           {['blue', 'purple', 'pink', 'orange', 'green', 'white', 'gray'].map((color) => (
             <Pressable
@@ -318,7 +325,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
         <View className="p-6">
           <View className="flex-row items-center justify-between">
             <Text color="primary" variant="title1" className="mb-4 font-bold">
-              Layout Editor
+              {t('share.editor.title')}
             </Text>
             <MotiPressable
               onPress={() => selectedLayout && toggleBackground()}
@@ -336,7 +343,9 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
                   color={colors.primary}
                 />
                 <Text color="primary" variant="caption1" className="font-medium">
-                  {currentStyle?.showBackground ? 'Hide background' : 'Show background'}
+                  {currentStyle?.showBackground
+                    ? t('share.layout.hideBackground')
+                    : t('share.layout.showBackground')}
                 </Text>
               </View>
             </MotiPressable>
@@ -370,7 +379,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
           style={{ paddingBottom: bottom }}
           className="border-border/30 border-t bg-background p-6">
           <Button variant="primary" size="lg" onPress={() => router.back()} className="w-full">
-            <Text className="font-medium">Done</Text>
+            <Text className="font-medium">{t('share.editor.done')}</Text>
           </Button>
         </View>
       </View>

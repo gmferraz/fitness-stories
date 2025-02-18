@@ -3,10 +3,15 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { WeekDetails } from '~/features/home/week-details';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColorScheme } from '~/lib/useColorScheme';
+import { useTranslation } from 'react-i18next';
+import { View } from 'moti';
+import { Text } from '~/components/nativewindui/Text';
+import { MotiPressable } from 'moti/interactions';
 
 export default function Screen() {
   const { weekRange } = useLocalSearchParams<{ weekRange: string }>();
   const { colors } = useColorScheme();
+  const { t } = useTranslation();
 
   const formattedWeekRange = weekRange.replace(/\//g, '.');
 
@@ -14,15 +19,25 @@ export default function Screen() {
     <>
       <Stack.Screen
         options={{
-          title: 'Week Details',
+          title: t('weekDetails.title'),
           headerLargeTitle: true,
           headerRight: () => (
-            <MaterialCommunityIcons
+            <MotiPressable
               onPress={() => router.push(`/share/${formattedWeekRange}?type=period`)}
-              name="instagram"
-              size={28}
-              color={colors.foreground}
-            />
+              animate={({ pressed }) => {
+                'worklet';
+                return {
+                  scale: pressed ? 0.95 : 1,
+                  opacity: pressed ? 0.9 : 1,
+                };
+              }}>
+              <View className="bg-primary/10 flex-row items-center rounded-full px-3 py-1.5">
+                <MaterialCommunityIcons name="instagram" size={16} color={colors.primary} />
+                <Text color="primary" variant="caption1" className="ml-1 font-medium">
+                  {t('activityDetails.shareOnInstagram')}
+                </Text>
+              </View>
+            </MotiPressable>
           ),
         }}
       />

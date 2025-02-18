@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import { Ionicons } from '@expo/vector-icons';
 import {
@@ -28,6 +29,7 @@ export const PeriodMinimalLayout: React.FC<PeriodMinimalLayoutProps> = ({
   totalCalories,
   showBackground = true,
 }) => {
+  const { t } = useTranslation();
   const { styles } = useLayoutEditionStore();
   const style = styles['period-minimal'].isEdited
     ? styles['period-minimal']
@@ -40,22 +42,22 @@ export const PeriodMinimalLayout: React.FC<PeriodMinimalLayoutProps> = ({
     {
       icon: 'barbell-outline',
       value: totalActivities.toString(),
-      label: 'Activities',
+      label: t('share.layouts.common.workouts'),
     },
     {
       icon: 'stopwatch-outline',
       value: formatDuration(totalDuration),
-      label: 'Duration',
+      label: t('share.layouts.common.duration'),
     },
     {
       icon: 'map-outline',
       value: formatDistance(totalDistance),
-      label: 'Distance',
+      label: t('share.layouts.common.distance'),
     },
     {
       icon: 'flame-outline',
       value: `${totalCalories}`,
-      label: 'Calories',
+      label: t('share.layouts.common.calories'),
     },
   ];
 
@@ -75,7 +77,7 @@ export const PeriodMinimalLayout: React.FC<PeriodMinimalLayoutProps> = ({
             lineHeight: style.titleSize * 1.2,
             fontWeight: 'bold',
           }}>
-          Week summary
+          {t('share.layouts.periodMinimal.title')}
         </Text>
 
         <View className="flex-1 justify-center">

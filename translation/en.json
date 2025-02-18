@@ -1,215 +1,464 @@
 {
-  "login": {
-    "title": "Welcome to",
-    "google": "Login with Google",
-    "apple": "Login with Apple",
-    "policyText": {
-      "part1": "By logging in, you agree to our ",
-      "privacyPolicy": "Privacy Policy",
-      "part2": " and ",
-      "terms": "Terms and Conditions",
-      "part3": "."
+  "onboarding": {
+    "welcome": {
+      "title": "Welcome to FitStories",
+      "description": "Transform your fitness activities into beautiful Instagram stories. Connect your favorite fitness apps and share your achievements in style.",
+      "getStarted": "Get Started"
+    },
+    "connectApps": {
+      "title": "Connect Your Apps",
+      "description": "Link your fitness apps to automatically import your activities. You can always connect them later.",
+      "strava": {
+        "title": "Strava",
+        "connected": "Connected",
+        "connect": "Connect"
+      },
+      "appleHealth": {
+        "title": "Apple Health",
+        "connected": "Connected",
+        "connect": "Connect"
+      },
+      "back": "Back",
+      "continue": "Continue"
+    },
+    "createStories": {
+      "title": "Create Stories",
+      "description": "Follow these simple steps to create beautiful Instagram stories",
+      "steps": {
+        "selectActivity": {
+          "title": "Select Activity",
+          "description": "Choose any activity from your connected fitness apps"
+        },
+        "shareToInstagram": {
+          "title": "Share to Instagram",
+          "description": "Tap the Instagram icon to start creating your story"
+        },
+        "chooseBackground": {
+          "title": "Choose Background",
+          "description": "Select a photo or video from your camera roll"
+        },
+        "pickLayout": {
+          "title": "Pick Layout",
+          "description": "Choose from our beautiful layout templates"
+        }
+      },
+      "back": "Back",
+      "continue": "Continue"
+    },
+    "success": {
+      "title": "You're All Set!",
+      "description": "Start sharing your fitness journey with beautiful Instagram stories. Let's inspire others to stay active and healthy!",
+      "back": "Back",
+      "getStarted": "Get Started"
     }
   },
-  "onboarding": {
-    "age": {
-      "title": "How old are you?",
-      "years_old": "years old"
+  "share": {
+    "photo": {
+      "title": "Pick a background",
+      "description": "Choose a background to your story",
+      "change": "Change",
+      "continue": "Continue",
+      "chooseFromLibrary": {
+        "title": "Choose from library",
+        "description": "Select your favorite media from your gallery"
+      },
+      "or": "Or",
+      "takePhoto": {
+        "title": "Take a photo",
+        "description": "Capture a new moment right now"
+      },
+      "cameraPermissionError": "Permission to access camera was denied"
     },
-    "availableDays": {
-      "title": "How many days are you available per week?",
-      "days": "days",
-      "day": "day"
-    },
-    "creating": {
-      "title1": "Analyzing your running goals...",
-      "title2": "Crafting your perfect training schedule...",
-      "title3": "Optimizing your workout intensity...",
-      "title4": "Almost there, finalizing your plan...",
-      "try_again": "Try again",
-      "errorTitle": "Oops, something bad happened =("
-    },
-    "duration": {
-      "title": "How long do you want your running plan to be?",
-      "weeks": "weeks",
-      "choose_weeks": "I want to choose the amount of weeks",
-      "choose_date": "I want to choose a specific date"
-    },
-    "experience": {
-      "title": "How experienced of a runner are you?",
-      "level_1": "Newbie",
-      "level_1_description": "I've never run before, but I'm ready to start!",
-      "level_2": "Beginner",
-      "level_2_description": "I've run a little, but I'm still pretty new to this.",
-      "level_3": "Intermediary",
-      "level_3_description": "I run occasionally, but nothing too serious.",
-      "level_4": "Advanced",
-      "level_4_description": "I run regularly and have a good pace going.",
-      "level_5": "Professional",
-      "level_5_description": "I'm experienced and always up for a new challenge!"
-    },
-    "finish": {
-      "title": "You are all set!",
-      "create_plan": "Create my running plan"
-    },
-    "gender": {
-      "title": "What's your gender?",
-      "man": "Man",
-      "woman": "Woman",
-      "skip": "Skip"
-    },
-    "goal": {
-      "title": "What is your main goal?",
-      "loseWeight": "Lose weight",
-      "improveHealth": "Get healthier",
-      "runSpecificDistance": "Run a specific distance",
-      "improvePace": "Improve my pace",
-      "noGoals": "Just run, no goals"
-    },
-    "start": {
-      "title": "Let's create your custom running plan",
-      "start_now": "Start now"
-    },
-    "strava": {
-      "title": "Do you want to link your Strava account?"
-    },
-    "weight": {
-      "title": "What's your weight?",
-      "kgs": "kgs",
-      "lbs": "lbs"
-    },
-    "next": "Next"
-  },
-  "settings": {
-    "title": "Settings",
-    "language": "Language",
-    "createNewPlan": "Create new running plan",
-    "clearChat": "Clear chat messages",
-    "logout": "Logout",
-    "logoutConfirmTitle": "Confirm logout",
-    "logoutConfirmMessage": "Are you sure you want to log out?",
-    "newPlanConfirmTitle": "Create new plan",
-    "newPlanConfirmMessage": "Creating a new plan will erase your current progress. Are you sure you want to continue?",
-    "disclaimer": "RunnerAI is an AI tool designed to assist with your running development. It does not replace professional coaching.",
-    "version": "Version: {{version}}",
-    "talkWithUs": "Talk with us",
-    "deleteAccount": "Delete account",
-    "deleteAccountConfirmTitle": "Delete account",
-    "deleteAccountConfirmMessage": "Are you sure you want to delete your account? This action cannot be undone.",
-    "deleteAccountEmailSubject": "Delete Account",
-    "deleteAccountEmailBody": "Hello,\n\nI would like to request the deletion of my RunnerAI account associated with the email: {{email}}. Please process this request as soon as possible.\n\nThank you."
-  },
-  "analytics": {
-    "title": "Analytics",
-    "notEnoughWorkouts": "Not enough completed workouts",
-    "completeMoreWorkouts": "Complete {{count}} more day(s) to enable analytics.",
-    "dayNumber": "Day {{number}}",
-    "overallStatistics": "Overall statistics",
-    "totalDistance": "Total distance",
-    "totalDuration": "Total duration",
-    "hours": "{{value}} hours",
-    "averagePace": "Average pace",
-    "completedDays": "Completed days",
-    "workoutDistance": "Workout distance",
-    "lastWorkouts": "Last {{count}} workouts ({{unit}})",
-    "workoutDuration": "Workout duration",
-    "lastWorkoutsMinutes": "Last {{count}} workouts (minutes)",
-    "premiumFeature": "Unlock advanced analytics",
-    "upgradeToAccess": "Upgrade to premium to access this feature.",
-    "upgrade": "Upgrade now"
-  },
-  "chat": {
-    "title": "AI coach",
-    "errorMessage": "Sorry, I encountered an error. Please try again.",
-    "welcomeMessage": "Ask me anything about your running plan!",
-    "inputPlaceholder": "Type a message...",
-    "dailyLimitExceeded": "Something wrong happened... Please try again later."
-  },
-  "runningPlan": {
-    "title": "My running plan",
-    "noPlanAvailable": "No running plan available",
-    "duration": "Duration",
-    "distance": "Distance",
-    "pace": "Pace",
-    "confirm": "Confirm",
-    "skipped": "Skipped",
-    "skip": "Skip",
-    "back": "Back",
-    "done": "Done",
-    "undo": "Undo",
-    "markAsDone": "Mark as Done",
-    "save": "Save",
-    "next": "Next",
-    "week": "Week {{number}}",
-    "distanceUnit": "{{distance}} {{unit}}",
-    "completed": {
-      "title": "Congratulations!",
-      "subtitle": "You've completed your running plan. Ready for a new challenge?",
-      "createNow": "Create new plan"
-    },
-    "share": {
-      "selectTemplate": "Select a template",
-      "selectTemplateDescription": "Select a template for your Instagram story.",
+    "layout": {
+      "title": "Choose Your Style",
+      "description": "Pick a template that matches your vibe",
       "premium": "Premium",
       "free": "Free",
-      "share": "Share",
-      "selectBackground": "Select a background",
-      "selectBackgroundDescription": "Select a photo or video from your library or take a photo with your camera.",
-      "chooseFromLibrary": "Choose from library",
-      "takePhoto": "Take a photo",
-      "or": "or",
+      "hideBackground": "Hide background",
+      "showBackground": "Show background",
       "back": "Back",
-      "continue": "Continue",
-      "cameraPermissionError": "Sorry, we need camera permissions to make this work!",
-      "layouts": {
-        "avgPace": "Avg Pace",
+      "share": "Share"
+    },
+    "layouts": {
+      "common": {
+        "avgPace": "Avg pace",
         "time": "Time",
-        "completed": "Completed",
-        "remaining": "Remaining",
-        "total": "Total",
-        "currentWeek": "Week {{current}} of {{total}}",
-        "progress": "Progress",
-        "stats": "Stats",
+        "elevation": "Elevation",
         "distance": "Distance",
         "duration": "Duration",
-        "pace": "Pace"
+        "calories": "Calories",
+        "heartRate": "Heart Rate",
+        "power": "Power",
+        "cadence": "Cadence",
+        "speed": "Speed",
+        "avgSpeed": "Avg Speed",
+        "maxSpeed": "Max Speed",
+        "avgHeartRate": "Avg Heart Rate",
+        "maxHeartRate": "Max Heart Rate",
+        "avgPower": "Avg Power",
+        "maxPower": "Max Power",
+        "normalizedPower": "Normalized Power",
+        "avgCadence": "Avg Cadence",
+        "maxCadence": "Max Cadence",
+        "totalActivities": "Total Activities",
+        "totalDistance": "Total Distance",
+        "totalDuration": "Total Duration",
+        "totalCalories": "Total Calories",
+        "totalElevation": "Total Elevation",
+        "weekRange": "Week Range",
+        "weight": "Weight",
+        "bmi": "BMI",
+        "bodyFat": "Body Fat",
+        "muscleMass": "Muscle Mass",
+        "boneMass": "Bone Mass",
+        "bodyWater": "Body Water",
+        "visceralFat": "Visceral Fat",
+        "metabolicAge": "Metabolic Age",
+        "basalMetabolism": "Basal Metabolism",
+        "proteinPercentage": "Protein %",
+        "subcutaneousFat": "Subcutaneous Fat",
+        "skeletalMuscle": "Skeletal Muscle",
+        "bodyScore": "Body Score",
+        "bodyAge": "Body Age",
+        "bodyType": "Body Type",
+        "fatMass": "Fat Mass",
+        "leanMass": "Lean Mass",
+        "bodyMassIndex": "Body Mass Index",
+        "restingEnergy": "Resting Energy",
+        "activeEnergy": "Active Energy",
+        "steps": "Steps",
+        "flights": "Flights",
+        "workouts": "Workouts",
+        "standHours": "Stand Hours",
+        "exerciseMinutes": "Exercise Minutes",
+        "restingHeartRate": "Resting Heart Rate",
+        "walkingHeartRate": "Walking Heart Rate",
+        "heartRateVariability": "Heart Rate Variability",
+        "vo2Max": "VO2 Max",
+        "walkingSpeed": "Walking Speed",
+        "walkingDoubleSupportTime": "Walking Double Support Time",
+        "walkingAsymmetry": "Walking Asymmetry",
+        "walkingStepLength": "Walking Step Length",
+        "runningStrideLength": "Running Stride Length",
+        "runningVerticalOscillation": "Running Vertical Oscillation",
+        "runningGroundContactTime": "Running Ground Contact Time",
+        "pushes": "Pushes",
+        "swimStrokes": "Swim Strokes",
+        "swolfScore": "Swolf Score",
+        "laps": "Laps",
+        "sets": "Sets",
+        "reps": "Reps",
+        "restTime": "Rest Time",
+        "intensity": "Intensity",
+        "effort": "Effort",
+        "zone": "Zone",
+        "pace": "Pace",
+        "split": "Split",
+        "splitTime": "Split Time",
+        "splitDistance": "Split Distance",
+        "splitPace": "Split Pace",
+        "splitSpeed": "Split Speed",
+        "splitHeartRate": "Split Heart Rate",
+        "splitPower": "Split Power",
+        "splitCadence": "Split Cadence",
+        "splitElevation": "Split Elevation",
+        "splitCalories": "Split Calories",
+        "totalTime": "Total Time",
+        "elapsedTime": "Elapsed Time",
+        "movingTime": "Moving Time",
+        "stoppedTime": "Stopped Time",
+        "startTime": "Start Time",
+        "endTime": "End Time",
+        "date": "Date",
+        "edit": "Edit",
+        "share": "Share",
+        "per": "per"
       },
-      "showBackground": "Show background",
-      "hideBackground": "Hide background"
+      "minimal": {
+        "title": "Minimal"
+      },
+      "detailed": {
+        "title": "Detailed"
+      },
+      "progress": {
+        "title": "Progress"
+      },
+      "map": {
+        "title": "Map"
+      },
+      "stats": {
+        "title": "Stats"
+      },
+      "aesthetic": {
+        "title": "Aesthetic"
+      },
+      "social": {
+        "title": "Social"
+      },
+      "achievement": {
+        "title": "Achievement",
+        "congratulations": "Congratulations!",
+        "newRecord": "New Record!"
+      },
+      "weight": {
+        "title": "Weight"
+      },
+      "hiit": {
+        "title": "HIIT"
+      },
+      "hiit2": {
+        "title": "HIIT 2"
+      },
+      "periodMinimal": {
+        "title": "Week Summary"
+      },
+      "periodStats": {
+        "title": "My Week"
+      },
+      "periodSocial": {
+        "title": "Social Period",
+        "workoutsThisWeek_one": "Workout this week",
+        "workoutsThisWeek_other": "Workouts this week"
+      }
+    },
+    "editor": {
+      "title": "Edit Layout",
+      "fontStyle": "Font Style",
+      "titleSize": "Title Size",
+      "bodySize": "Body Size",
+      "labelSize": "Label Size",
+      "fontColor": "Font Color",
+      "backgroundColor": "Background Color",
+      "iconColor": "Icon Color",
+      "done": "Done",
+      "colors": {
+        "dark": "Dark",
+        "white": "White",
+        "blue": "Blue",
+        "purple": "Purple",
+        "red": "Red",
+        "orange": "Orange",
+        "black": "Black",
+        "gray900": "Gray 900",
+        "gray800": "Gray 800",
+        "gray700": "Gray 700"
+      },
+      "reset": "Reset",
+      "style": "Style",
+      "sizes": "Sizes",
+      "color": "Colors"
     }
   },
-  "common": {
-    "cancel": "Cancel",
-    "create": "Create",
-    "logout": "Logout",
-    "delete": "Delete",
-    "recommended": "Recommended"
-  },
-  "newRunningPlan": {
-    "title": "Choose your new running plan",
-    "beginner": "Beginner",
-    "intermediate": "Intermediate",
-    "advanced": "Advanced",
-    "beginnerDescription": "Perfect for those new to running or getting back into it.",
-    "intermediateDescription": "For runners with some experience looking to improve.",
-    "advancedDescription": "Challenging plan for experienced runners aiming to push their limits.",
-    "create": "Create plan",
-    "duration": "Duration: {{weeks}} weeks",
-    "goalDistance": "Goal distance: {{distance}}{{unit}}",
-    "custom": "Custom Plan",
-    "customDescription": "Create a fully personalized plan tailored to your specific needs and goals."
-  },
-  "paywall": {
-    "title": "Unlock premium to speed up your progress",
-    "benefits": {
-      "aiCoach": "Get real-time advice and support from our AI coach.",
-      "advancedAnalytics": "Track your improvements with in-depth analytics and insights that keep you motivated.",
-      "customPlan": "Tailored training schedules designed to meet your unique goals and fitness level.",
-      "noAds": "Enjoy an ad-free experience."
+  "home": {
+    "noConnectedApps": {
+      "title": "No connected apps",
+      "subtitle": "Connect your first app to start tracking your activities."
     },
-    "annual": "Annual",
-    "monthly": "Monthly",
-    "freeTrial": "Includes 1 week free trial",
-    "subscribe": "Subscribe Now"
+    "apps": {
+      "strava": {
+        "title": "Strava",
+        "connected": "Connected",
+        "connect": "Connect"
+      },
+      "appleHealth": {
+        "title": "Apple Health",
+        "connected": "Connected",
+        "connect": "Connect"
+      }
+    },
+    "lastExercise": {
+      "title": "Last Exercise",
+      "seeAll": "See All",
+      "empty": {
+        "title": "You haven't uploaded any activities",
+        "subtitle": "To track your progress and achieve your goals, please upload your activities and stay healthy."
+      }
+    },
+    "weekSummary": {
+      "title": "Week Summary",
+      "seeAll": "See All",
+      "empty": {
+        "title": "No activities this week",
+        "subtitle": "Complete your first activity this week to see your progress and statistics."
+      }
+    },
+    "activityDetails": {
+      "stats": {
+        "duration": "Duration",
+        "distance": "Distance",
+        "avgPace": "Avg Pace",
+        "elevation": "Elevation",
+        "calories": "Calories",
+        "avgHeartRate": "Avg Heart Rate",
+        "maxHeartRate": "Max Heart Rate",
+        "avgPower": "Avg Power",
+        "maxPower": "Max Power",
+        "normalizedPower": "Normalized Power",
+        "avgCadence": "Avg Cadence",
+        "maxCadence": "Max Cadence",
+        "energyBurned": "Energy Burned"
+      }
+    },
+    "weekDetails": {
+      "title": "Summary",
+      "stats": {
+        "totalActivities": "Total Activities",
+        "duration": "Duration",
+        "distance": "Distance",
+        "avgPace": "Avg Pace",
+        "elevation": "Elevation",
+        "calories": "Calories"
+      },
+      "activities": "Activities"
+    },
+    "weeksList": {
+      "empty": {
+        "title": "No weeks data available",
+        "subtitle": "Your weekly summaries will appear here once you have activities."
+      }
+    }
+  },
+  "settings": {
+    "sections": {
+      "general": "General",
+      "premium": "Premium",
+      "connectedApps": "Connected apps"
+    },
+    "language": {
+      "title": "Language",
+      "options": {
+        "en": "English",
+        "pt": "Português",
+        "es": "Español",
+        "fr": "Français"
+      }
+    },
+    "weekStart": {
+      "title": "Week starts on",
+      "options": {
+        "monday": "Monday",
+        "sunday": "Sunday"
+      }
+    },
+    "talkWithUs": {
+      "title": "Talk with us"
+    },
+    "premium": {
+      "title": "Premium"
+    },
+    "apps": {
+      "strava": {
+        "title": "Strava"
+      },
+      "appleHealth": {
+        "title": "Apple Health"
+      }
+    }
+  },
+  "activityDetails": {
+    "title": "Activity Details",
+    "shareOnInstagram": "Share",
+    "stats": {
+      "avgHeartRate": "Avg Heart Rate",
+      "maxHeartRate": "Max Heart Rate",
+      "avgCadence": "Avg Cadence",
+      "maxCadence": "Max Cadence",
+      "energyBurned": "Energy Burned"
+    }
+  },
+  "weeksList": {
+    "title": "Weeks",
+    "last12Weeks": "Last 12 Weeks"
+  },
+  "layout": {
+    "title": "My Activities",
+    "settings": "Settings"
+  },
+  "activitiesList": {
+    "title": "All Activities",
+    "last90Days": "Last 90 Days"
+  },
+  "weekDetails": {
+    "title": "Week Details",
+    "activities": "Activities",
+    "stats": {
+      "totalActivities": "Activities",
+      "duration": "Duration",
+      "distance": "Distance",
+      "avgPace": "Avg Pace",
+      "elevation": "Elevation",
+      "calories": "Calories"
+    }
+  },
+  "weekCard": {
+    "activity_one": "activity",
+    "activity_other": "activities"
+  },
+  "lastActivityCard": {
+    "title": "Last Exercise",
+    "seeAll": "See all",
+    "empty": {
+      "title": "No activities yet",
+      "subtitle": "Your activities will appear here"
+    },
+    "stats": {
+      "distance": "Distance",
+      "duration": "Duration",
+      "avgPace": "Avg Pace",
+      "elevation": "Elevation",
+      "calories": "Calories"
+    }
+  },
+  "sportTypes": {
+    "AlpineSki": "Alpine Ski",
+    "BackcountrySki": "Backcountry Ski",
+    "Badminton": "Badminton",
+    "Canoeing": "Canoeing",
+    "Crossfit": "Crossfit",
+    "EBikeRide": "E-Bike Ride",
+    "Elliptical": "Elliptical",
+    "EMountainBikeRide": "E-Mountain Bike Ride",
+    "Golf": "Golf",
+    "GravelRide": "Gravel Ride",
+    "Handcycle": "Handcycle",
+    "HighIntensityIntervalTraining": "HIIT",
+    "Hike": "Hike",
+    "IceSkate": "Ice Skate",
+    "InlineSkate": "Inline Skate",
+    "Kayaking": "Kayaking",
+    "Kitesurf": "Kitesurf",
+    "MountainBikeRide": "Mountain Bike Ride",
+    "NordicSki": "Nordic Ski",
+    "Pickleball": "Pickleball",
+    "Pilates": "Pilates",
+    "Racquetball": "Racquetball",
+    "Ride": "Ride",
+    "RockClimbing": "Rock Climbing",
+    "RollerSki": "Roller Ski",
+    "Rowing": "Rowing",
+    "Run": "Run",
+    "Sail": "Sail",
+    "Skateboard": "Skateboard",
+    "Snowboard": "Snowboard",
+    "Snowshoe": "Snowshoe",
+    "Soccer": "Soccer",
+    "Squash": "Squash",
+    "StairStepper": "Stair Stepper",
+    "StandUpPaddling": "Stand Up Paddling",
+    "Surfing": "Surfing",
+    "Swim": "Swim",
+    "TableTennis": "Table Tennis",
+    "Tennis": "Tennis",
+    "TrailRun": "Trail Run",
+    "Velomobile": "Velomobile",
+    "VirtualRide": "Virtual Ride",
+    "VirtualRow": "Virtual Row",
+    "VirtualRun": "Virtual Run",
+    "Walk": "Walk",
+    "WeightTraining": "Weight Training",
+    "Wheelchair": "Wheelchair",
+    "Windsurf": "Windsurf",
+    "Workout": "Workout",
+    "Yoga": "Yoga"
   }
 }

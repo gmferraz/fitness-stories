@@ -1,4 +1,5 @@
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { Text } from '~/components/nativewindui/Text';
 import { formatDistance } from '~/utils/formatters';
@@ -25,6 +26,7 @@ export function SocialLayout({
   activity,
   showBackground = true,
 }: SocialLayoutProps) {
+  const { t } = useTranslation();
   const hasHeartRate = !!activity.average_heartrate;
   const hasElevation = !!activity.total_elevation_gain;
   const { styles } = useLayoutEditionStore();
@@ -63,7 +65,7 @@ export function SocialLayout({
           <View className="flex-row justify-between">
             <View className="flex-1">
               <Text style={labelStyles} className="mb-1">
-                Distance
+                {t('share.layouts.common.distance')}
               </Text>
               <Text style={bodyStyles} className="font-bold">
                 {formatDistance(distance)}
@@ -72,7 +74,7 @@ export function SocialLayout({
 
             <View className="flex-1">
               <Text style={labelStyles} className="mb-1">
-                Avg Pace
+                {t('share.layouts.common.avgPace')}
               </Text>
               <Text style={bodyStyles} className="font-bold">
                 {pace}
@@ -83,7 +85,7 @@ export function SocialLayout({
           <View className="mt-4 flex-row justify-between">
             <View className="flex-1">
               <Text style={labelStyles} className="mb-1">
-                Avg HR
+                {t('share.layouts.common.avgHeartRate')}
               </Text>
               <Text style={bodyStyles} className="font-bold">
                 {Math.round(activity.average_heartrate!)} bpm
@@ -93,7 +95,7 @@ export function SocialLayout({
             {hasElevation && (
               <View className="flex-1">
                 <Text style={labelStyles} className="mb-1">
-                  Elevation
+                  {t('share.layouts.common.elevation')}
                 </Text>
                 <Text style={bodyStyles} className="font-bold">
                   {Math.round(activity.total_elevation_gain!)} m
@@ -107,7 +109,7 @@ export function SocialLayout({
         <View className="flex-row justify-between">
           <View className="w-1/3">
             <Text style={labelStyles} className="mb-1">
-              Distance
+              {t('share.layouts.common.distance')}
             </Text>
             <Text style={bodyStyles} className="font-bold">
               {formatDistance(distance)}
@@ -116,7 +118,7 @@ export function SocialLayout({
 
           <View className="w-1/3">
             <Text style={labelStyles} className="mb-1 self-center">
-              Avg Pace
+              {t('share.layouts.common.avgPace')}
             </Text>
             <Text style={bodyStyles} className="self-center font-bold">
               {pace}
@@ -126,7 +128,7 @@ export function SocialLayout({
           {hasElevation && (
             <View className="w-1/3">
               <Text style={labelStyles} className="mb-1 self-end">
-                Elevation
+                {t('share.layouts.common.elevation')}
               </Text>
               <Text style={bodyStyles} className="self-end font-bold">
                 {Math.round(activity.total_elevation_gain!)} m

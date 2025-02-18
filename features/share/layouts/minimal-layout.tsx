@@ -82,7 +82,7 @@ export function MinimalLayout({
               fontSize: style.labelSize,
               lineHeight: style.labelSize * 1.2,
             }}>
-            Avg pace
+            {t('share.layouts.common.avgPace')}
           </Text>
           <Text
             className="font-bold"
@@ -104,7 +104,7 @@ export function MinimalLayout({
               fontSize: style.labelSize,
               lineHeight: style.labelSize * 1.2,
             }}>
-            Time
+            {t('share.layouts.common.time')}
           </Text>
           <Text
             className="font-bold"
@@ -127,7 +127,7 @@ export function MinimalLayout({
                 fontSize: style.labelSize,
                 lineHeight: style.labelSize * 1.2,
               }}>
-              Elevation
+              {t('share.layouts.common.elevation')}
             </Text>
             <Text
               className="font-bold"

@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { Text } from '~/components/nativewindui/Text';
-import { formatDistance, formatDuration } from '~/utils/formatters';
+import { formatDistance, formatDuration, formatPace } from '~/utils/formatters';
 import { SkiaMap } from '~/components/SkiaMap';
 import { Activity, StravaActivity, AppleHealthActivity } from '~/features/home/types/activity';
 import {
@@ -83,7 +83,7 @@ export function MapLayout({
                   lineHeight: style.labelSize * 1.2,
                 }}
                 className="mb-1">
-                Avg Pace
+                {t('share.layouts.common.avgPace')}
               </Text>
               <Text
                 style={{
@@ -93,7 +93,7 @@ export function MapLayout({
                   lineHeight: style.bodySize * 1.2,
                 }}
                 className="font-bold">
-                {pace} /{unit}
+                {formatPace(distance, duration)}
               </Text>
             </View>
             <View className="ml-3 flex-1">
@@ -105,7 +105,7 @@ export function MapLayout({
                   lineHeight: style.labelSize * 1.2,
                 }}
                 className="mb-1">
-                Time
+                {t('share.layouts.common.time')}
               </Text>
               <Text
                 style={{
@@ -131,7 +131,7 @@ export function MapLayout({
                     lineHeight: style.labelSize * 1.2,
                   }}
                   className="mb-1">
-                  Avg HR
+                  {t('share.layouts.common.avgHeartRate')}
                 </Text>
                 <Text
                   style={{
@@ -154,7 +154,7 @@ export function MapLayout({
                       lineHeight: style.labelSize * 1.2,
                     }}
                     className="mb-1">
-                    Max HR
+                    {t('share.layouts.common.maxHeartRate')}
                   </Text>
                   <Text
                     style={{

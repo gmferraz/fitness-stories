@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon } from '@roninoss/icons';
 import { Link, Redirect, Stack } from 'expo-router';
 import { Pressable, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { ThemeToggle } from '~/components/ThemeToggle';
 import { cn } from '~/lib/cn';
@@ -15,6 +16,7 @@ export {
 
 export default function AppLayout() {
   const { isCompleted: isOnboardingCompleted } = useOnboardingStore();
+  const { t } = useTranslation();
 
   if (!isOnboardingCompleted) {
     return <Redirect href="/onboarding" />;
@@ -22,8 +24,8 @@ export default function AppLayout() {
 
   return (
     <Stack screenOptions={SCREEN_OPTIONS}>
-      <Stack.Screen name="index" options={INDEX_OPTIONS} />
-      <Stack.Screen name="modal" options={MODAL_OPTIONS} />
+      <Stack.Screen name="index" options={{ ...INDEX_OPTIONS, title: t('layout.title') }} />
+      <Stack.Screen name="modal" options={{ ...MODAL_OPTIONS, title: t('layout.settings') }} />
     </Stack>
   );
 }
@@ -34,7 +36,6 @@ const SCREEN_OPTIONS = {
 
 const INDEX_OPTIONS = {
   headerLargeTitle: true,
-  title: 'My Activities',
   headerRight: () => <SettingsIcon />,
 } as const;
 
@@ -56,6 +57,5 @@ function SettingsIcon() {
 const MODAL_OPTIONS = {
   presentation: 'modal',
   animation: 'fade_from_bottom', // for android
-  title: 'Settings',
   headerRight: () => <ThemeToggle />,
 } as const;

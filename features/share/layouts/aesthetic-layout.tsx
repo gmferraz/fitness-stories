@@ -49,7 +49,7 @@ export function AestheticLayout({
               lineHeight: style.labelSize * 1.2,
             }}
             className="mb-2">
-            Distance
+            {t('share.layouts.common.distance')}
           </Text>
           <Text
             style={{
@@ -85,7 +85,7 @@ export function AestheticLayout({
                   lineHeight: style.labelSize * 1.2,
                 }}
                 className="mb-1">
-                Avg Pace
+                {t('share.layouts.common.avgPace')}
               </Text>
               <Text
                 style={{
@@ -104,7 +104,7 @@ export function AestheticLayout({
                   fontSize: style.labelSize,
                   lineHeight: style.labelSize * 1.2,
                 }}>
-                per {unit}
+                {t('share.layouts.common.per')} {unit}
               </Text>
             </View>
 
@@ -117,7 +117,7 @@ export function AestheticLayout({
                   lineHeight: style.labelSize * 1.2,
                 }}
                 className="mb-1">
-                Duration
+                {t('share.layouts.common.duration')}
               </Text>
               <Text
                 style={{
@@ -136,7 +136,7 @@ export function AestheticLayout({
                   fontSize: style.labelSize,
                   lineHeight: style.labelSize * 1.2,
                 }}>
-                total time
+                {t('share.layouts.common.totalTime')}
               </Text>
             </View>
           </View>

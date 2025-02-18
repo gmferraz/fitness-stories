@@ -9,6 +9,9 @@ import AppleHealthIcon from '~/assets/svg/apple-health.svg';
 import type { SvgProps } from 'react-native-svg';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { formatDistance, formatDuration, formatPace } from '~/utils/formatters';
+import { useTranslation } from 'react-i18next';
+import { translateSportType } from '../utils/translate-sport-type';
+
 interface LastActivityCardProps {
   activity: Activity;
   onPress: () => void;
@@ -16,6 +19,7 @@ interface LastActivityCardProps {
 
 export const LastActivityCard: React.FC<LastActivityCardProps> = ({ activity, onPress }) => {
   const { colors } = useColorScheme();
+  const { t } = useTranslation();
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -57,7 +61,7 @@ export const LastActivityCard: React.FC<LastActivityCardProps> = ({ activity, on
             />
           </View>
           <Text variant="callout" className="font-medium">
-            {activity.type}
+            {translateSportType(t, activity.type)}
           </Text>
         </View>
         <View className="mr-1 flex-row items-center shadow-sm">{getSourceIcon(activity.root)}</View>
@@ -75,7 +79,7 @@ export const LastActivityCard: React.FC<LastActivityCardProps> = ({ activity, on
           {!!activity.distance && (
             <View className="w-1/2">
               <Text variant="footnote" className="mb-1 text-gray-500 dark:text-gray-400">
-                Distance
+                {t('lastActivityCard.stats.distance')}
               </Text>
               <Text variant="title3" className="font-semibold">
                 {formatDistance(activity.distance)}
@@ -86,7 +90,7 @@ export const LastActivityCard: React.FC<LastActivityCardProps> = ({ activity, on
           {!!activity.moving_time && (
             <View className="w-1/2">
               <Text variant="footnote" className="mb-1 text-gray-500 dark:text-gray-400">
-                Duration
+                {t('lastActivityCard.stats.duration')}
               </Text>
               <Text variant="title3" className="font-semibold">
                 {formatDuration(activity.moving_time)}
@@ -97,7 +101,7 @@ export const LastActivityCard: React.FC<LastActivityCardProps> = ({ activity, on
           {!!activity.distance && !!activity.moving_time && (
             <View className="w-1/2">
               <Text variant="footnote" className="mb-1 text-gray-500 dark:text-gray-400">
-                Avg. Pace
+                {t('lastActivityCard.stats.avgPace')}
               </Text>
               <Text variant="title3" className="font-semibold">
                 {formatPace(activity.distance, activity.moving_time)}
@@ -108,7 +112,7 @@ export const LastActivityCard: React.FC<LastActivityCardProps> = ({ activity, on
           {!!activity.total_elevation_gain && (
             <View className="w-1/2">
               <Text variant="footnote" className="mb-1 text-gray-500 dark:text-gray-400">
-                Elevation
+                {t('lastActivityCard.stats.elevation')}
               </Text>
               <Text variant="title3" className="font-semibold">
                 {activity.total_elevation_gain}m
@@ -119,7 +123,7 @@ export const LastActivityCard: React.FC<LastActivityCardProps> = ({ activity, on
           {!!activity.calories && !activity.total_elevation_gain && (
             <View className="w-1/2">
               <Text variant="footnote" className="mb-1 text-gray-500 dark:text-gray-400">
-                Calories
+                {t('lastActivityCard.stats.calories')}
               </Text>
               <Text variant="title3" className="font-semibold">
                 {activity.calories}kcal

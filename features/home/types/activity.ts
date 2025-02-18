@@ -106,7 +106,7 @@ export type StravaActivity = {
   root: 'strava';
   id: string;
   name: string;
-  type: string;
+  type: SportType;
   sport_type: string; // More specific than type
   distance: number;
   moving_time: number;

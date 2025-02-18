@@ -1,7 +1,7 @@
 ## Basic configuration
 
-- [ ] Setup Posthog for analytics
-- [ ] Setup Sentry
+- [x] Setup Posthog for analytics
+- [x] Setup Sentry
 - [x] Setup privacy stuff (privacy policy and terms) -> [Privacy Policy Generator](https://www.privacypolicygenerator.info/)
 - [ ] Setup OTA with Expo EAS
 - [ ] Setup [AdMob](https://github.com/invertase/react-native-google-mobile-ads)
@@ -15,7 +15,7 @@
 - [x] Add onboarding flow
 - [x] Add share to instagram logic
 - [x] Add a bunch of layouts
-- [ ] Translations and workout type translations
+- [x] Translations and workout type translations
 - [x] Add layouts logic for Week summary
 
 ## Need for launch

@@ -42,7 +42,7 @@ export function ProgressLayout({
             fontFamily: style.fontFamily,
             color: textColor,
             fontSize: style.bodySize,
-            lineHeight: style.labelSize * 1.2,
+            lineHeight: style.bodySize * 1.2,
           }}
           className="mb-2"
           numberOfLines={3}>
@@ -70,7 +70,7 @@ export function ProgressLayout({
                 lineHeight: style.labelSize * 1.2,
               }}
               className="mb-1">
-              Avg Pace
+              {t('share.layouts.common.avgPace')}
             </Text>
             <Text
               style={{
@@ -92,7 +92,7 @@ export function ProgressLayout({
                 lineHeight: style.labelSize * 1.2,
               }}
               className="mb-1">
-              Time
+              {t('share.layouts.common.time')}
             </Text>
             <Text
               style={{

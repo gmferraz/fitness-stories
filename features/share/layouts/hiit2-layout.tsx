@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import {
   useLayoutEditionStore,
@@ -16,6 +17,7 @@ interface Hiit2LayoutProps {
 }
 
 export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProps) {
+  const { t } = useTranslation();
   const { styles } = useLayoutEditionStore();
   const style = styles.hiit2.isEdited ? styles.hiit2 : DEFAULT_LAYOUT_STYLES.hiit2;
   const textColor = getFontColor(style.fontColor);
@@ -53,7 +55,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
           <View className="flex-row justify-between">
             <View className="flex-1">
               <Text style={labelStyles} className="mb-1">
-                Duration
+                {t('share.layouts.common.duration')}
               </Text>
               <Text style={bodyStyles} className="font-bold">
                 {formatTime(activity.moving_time)}
@@ -62,7 +64,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
 
             <View className="flex-1">
               <Text style={labelStyles} className="mb-1">
-                Calories
+                {t('share.layouts.common.calories')}
               </Text>
               <Text style={bodyStyles} className="font-bold">
                 {activity.calories}
@@ -74,7 +76,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
             <View className="mt-4 flex-row justify-between">
               <View className="flex-1">
                 <Text style={labelStyles} className="mb-1">
-                  Heart Rate
+                  {t('share.layouts.common.heartRate')}
                 </Text>
                 <Text style={bodyStyles} className="font-bold">
                   {activity.average_heartrate} bpm
@@ -84,7 +86,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
               {hasMaxHeartRate && (
                 <View className="flex-1">
                   <Text style={labelStyles} className="mb-1">
-                    Max Heart Rate
+                    {t('share.layouts.common.maxHeartRate')}
                   </Text>
                   <Text style={bodyStyles} className="font-bold">
                     {activity.max_heartrate} bpm
@@ -99,7 +101,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
         <View className="flex-row justify-between">
           <View className="w-1/3">
             <Text style={labelStyles} className="mb-1">
-              Duration
+              {t('share.layouts.common.duration')}
             </Text>
             <Text style={bodyStyles} className="font-bold">
               {formatTime(activity.moving_time)}
@@ -108,7 +110,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
 
           <View className="w-1/3">
             <Text style={labelStyles} className="mb-1 self-center">
-              Calories
+              {t('share.layouts.common.calories')}
             </Text>
             <Text style={bodyStyles} className="self-center font-bold">
               {activity.calories}
@@ -118,7 +120,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
           {hasHeartRate && (
             <View className="w-1/3">
               <Text style={labelStyles} className="mb-1 self-end">
-                Heart Rate
+                {t('share.layouts.common.heartRate')}
               </Text>
               <Text style={bodyStyles} className="self-end font-bold">
                 {activity.average_heartrate} bpm

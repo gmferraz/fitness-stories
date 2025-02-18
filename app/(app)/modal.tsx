@@ -1,9 +1,7 @@
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Icon } from '@roninoss/icons';
-import { router, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { usePostHog } from 'posthog-react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Linking, Platform, Pressable, ScrollView, TouchableOpacity, View } from 'react-native';
 import * as DropdownMenu from 'zeego/dropdown-menu';
@@ -40,21 +38,6 @@ export default function SettingsScreen() {
   const [isConnectingStrava, setIsConnectingStrava] = useState(false);
   const [isConnectingAppleHealth, setIsConnectingAppleHealth] = useState(false);
 
-  // const pathname = usePathname();
-  // const posthog = usePostHog();
-
-  // useEffect(() => {
-  //   posthog.capture('$pageview', {
-  //     $current_url: pathname,
-  //   });
-
-  //   return () => {
-  //     posthog.capture('$pageleave', {
-  //       $current_url: pathname,
-  //     });
-  //   };
-  // }, [pathname]);
-
   const handleTalkWithUs = () => {
     Linking.openURL('mailto:guilherme@runnerai.xyz');
   };
@@ -73,7 +56,7 @@ export default function SettingsScreen() {
       <ScrollView className="flex-1 bg-background">
         <View className="px-4 py-6">
           <Text variant="footnote" className="mb-2 px-4 text-gray-500">
-            General
+            {t('settings.sections.general')}
           </Text>
 
           <View className="mb-6 rounded-lg bg-card">
@@ -82,19 +65,13 @@ export default function SettingsScreen() {
                 <View className="h-8 w-8 items-center justify-center rounded-md bg-purple-400 shadow-sm">
                   <MaterialCommunityIcons name="earth" size={24} color="white" />
                 </View>
-                <Text variant="body">Language</Text>
+                <Text variant="body">{t('settings.language.title')}</Text>
               </View>
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger>
                   <Pressable className="android:gap-3 flex-row items-center gap-1.5">
                     <Text variant="subhead" color="primary">
-                      {language === 'en'
-                        ? 'English'
-                        : language === 'pt'
-                          ? 'Português'
-                          : language === 'es'
-                            ? 'Español'
-                            : 'Français'}
+                      {t(`settings.language.options.${language}`)}
                     </Text>
                     <View className="pl-0.5">
                       <Icon name="chevron-down" color={colors.grey} size={21} />
@@ -107,28 +84,36 @@ export default function SettingsScreen() {
                     value={language === 'en'}
                     onValueChange={() => handleLanguageChange('en')}>
                     <DropdownMenu.ItemIndicator />
-                    <DropdownMenu.ItemTitle>English</DropdownMenu.ItemTitle>
+                    <DropdownMenu.ItemTitle>
+                      {t('settings.language.options.en')}
+                    </DropdownMenu.ItemTitle>
                   </DropdownMenu.CheckboxItem>
                   <DropdownMenu.CheckboxItem
                     key="pt"
                     value={language === 'pt'}
                     onValueChange={() => handleLanguageChange('pt')}>
                     <DropdownMenu.ItemIndicator />
-                    <DropdownMenu.ItemTitle>Português</DropdownMenu.ItemTitle>
+                    <DropdownMenu.ItemTitle>
+                      {t('settings.language.options.pt')}
+                    </DropdownMenu.ItemTitle>
                   </DropdownMenu.CheckboxItem>
                   <DropdownMenu.CheckboxItem
                     key="es"
                     value={language === 'es'}
                     onValueChange={() => handleLanguageChange('es')}>
                     <DropdownMenu.ItemIndicator />
-                    <DropdownMenu.ItemTitle>Español</DropdownMenu.ItemTitle>
+                    <DropdownMenu.ItemTitle>
+                      {t('settings.language.options.es')}
+                    </DropdownMenu.ItemTitle>
                   </DropdownMenu.CheckboxItem>
                   <DropdownMenu.CheckboxItem
                     key="fr"
                     value={language === 'fr'}
                     onValueChange={() => handleLanguageChange('fr')}>
                     <DropdownMenu.ItemIndicator />
-                    <DropdownMenu.ItemTitle>Français</DropdownMenu.ItemTitle>
+                    <DropdownMenu.ItemTitle>
+                      {t('settings.language.options.fr')}
+                    </DropdownMenu.ItemTitle>
                   </DropdownMenu.CheckboxItem>
                 </DropdownMenu.Content>
               </DropdownMenu.Root>
@@ -139,13 +124,13 @@ export default function SettingsScreen() {
                 <View className="h-8 w-8 items-center justify-center rounded-md bg-orange-400 shadow-sm">
                   <MaterialCommunityIcons name="calendar" size={24} color="white" />
                 </View>
-                <Text variant="body">Week starts on</Text>
+                <Text variant="body">{t('settings.weekStart.title')}</Text>
               </View>
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger>
                   <Pressable className="android:gap-3 flex-row items-center gap-1.5">
                     <Text variant="subhead" color="primary">
-                      {weekStartsOn === 1 ? 'Monday' : 'Sunday'}
+                      {t(`settings.weekStart.options.${weekStartsOn === 1 ? 'monday' : 'sunday'}`)}
                     </Text>
                     <View className="pl-0.5">
                       <Icon name="chevron-down" color={colors.grey} size={21} />
@@ -158,14 +143,18 @@ export default function SettingsScreen() {
                     value={weekStartsOn === 1}
                     onValueChange={() => setWeekStartsOn(1)}>
                     <DropdownMenu.ItemIndicator />
-                    <DropdownMenu.ItemTitle>Monday</DropdownMenu.ItemTitle>
+                    <DropdownMenu.ItemTitle>
+                      {t('settings.weekStart.options.monday')}
+                    </DropdownMenu.ItemTitle>
                   </DropdownMenu.CheckboxItem>
                   <DropdownMenu.CheckboxItem
                     key="sunday"
                     value={weekStartsOn === 0}
                     onValueChange={() => setWeekStartsOn(0)}>
                     <DropdownMenu.ItemIndicator />
-                    <DropdownMenu.ItemTitle>Sunday</DropdownMenu.ItemTitle>
+                    <DropdownMenu.ItemTitle>
+                      {t('settings.weekStart.options.sunday')}
+                    </DropdownMenu.ItemTitle>
                   </DropdownMenu.CheckboxItem>
                 </DropdownMenu.Content>
               </DropdownMenu.Root>
@@ -178,14 +167,14 @@ export default function SettingsScreen() {
                 <View className="h-8 w-8 items-center justify-center rounded-md bg-blue-400 shadow-sm">
                   <MaterialCommunityIcons name="email-outline" size={24} color="white" />
                 </View>
-                <Text variant="body">Talk with us</Text>
+                <Text variant="body">{t('settings.talkWithUs.title')}</Text>
               </View>
               <Icon name="chevron-right" size={20} color={colors.grey} />
             </TouchableOpacity>
           </View>
 
           <Text variant="footnote" className="mb-2  px-4 text-gray-500">
-            Premium
+            {t('settings.sections.premium')}
           </Text>
           <TouchableOpacity className="mb-6 flex-row items-center justify-between rounded-lg bg-card px-4 py-3">
             <View className="flex-row items-center gap-3">
@@ -194,7 +183,7 @@ export default function SettingsScreen() {
               </View>
 
               <Text variant="body" color="primary">
-                Premium
+                {t('settings.premium.title')}
               </Text>
             </View>
             <Toggle
@@ -205,7 +194,7 @@ export default function SettingsScreen() {
           </TouchableOpacity>
 
           <Text variant="footnote" className="mb-2 px-4 text-gray-500">
-            Connected apps
+            {t('settings.sections.connectedApps')}
           </Text>
           <View className="mb-6 rounded-lg bg-card">
             <View className="flex-row items-center justify-between border-b border-gray-400/20 px-4 py-3 dark:border-gray-200/10">
@@ -213,7 +202,7 @@ export default function SettingsScreen() {
                 <View className="h-8 w-8 rounded-sm shadow-sm">
                   <StravaIcon />
                 </View>
-                <Text variant="body">Strava</Text>
+                <Text variant="body">{t('settings.apps.strava.title')}</Text>
               </View>
               <Toggle
                 value={isStravaConnected || isConnectingStrava}
@@ -238,7 +227,7 @@ export default function SettingsScreen() {
                     <AppleHealthIcon />
                   </View>
                   <View>
-                    <Text variant="body">Apple Health</Text>
+                    <Text variant="body">{t('settings.apps.appleHealth.title')}</Text>
                   </View>
                 </View>
                 <Toggle

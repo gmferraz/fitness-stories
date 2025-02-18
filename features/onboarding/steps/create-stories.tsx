@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Image, useWindowDimensions } from 'react-native';
 import { MotiView } from 'moti';
 import { MotiPressable } from 'moti/interactions';
+import { useTranslation } from 'react-i18next';
 import Carousel from 'react-native-reanimated-carousel';
 import { Text } from '~/components/nativewindui/Text';
 import { Icon } from '@roninoss/icons';
@@ -14,23 +15,19 @@ interface CreateStoriesStepProps {
 
 const steps = [
   {
-    title: 'Select Activity',
-    description: 'Choose any activity from your connected fitness apps',
+    key: 'selectActivity',
     image: require('~/assets/onboarding/card.png'),
   },
   {
-    title: 'Share to Instagram',
-    description: 'Tap the Instagram icon to start creating your story',
+    key: 'shareToInstagram',
     image: require('~/assets/onboarding/details.png'),
   },
   {
-    title: 'Choose Background',
-    description: 'Select a photo or video from your camera roll',
+    key: 'chooseBackground',
     image: require('~/assets/onboarding/background.png'),
   },
   {
-    title: 'Pick Layout',
-    description: 'Choose from our beautiful layout templates',
+    key: 'pickLayout',
     image: require('~/assets/onboarding/layout.png'),
   },
 ];
@@ -39,6 +36,7 @@ export const CreateStoriesStep: React.FC<CreateStoriesStepProps> = ({ onNext, on
   const { width } = useWindowDimensions();
   const [activeIndex, setActiveIndex] = useState(0);
   const { colors } = useColorScheme();
+  const { t } = useTranslation();
   const [hasViewedAll, setHasViewedAll] = useState(false);
 
   const handleSnapToItem = (index: number) => {
@@ -56,10 +54,10 @@ export const CreateStoriesStep: React.FC<CreateStoriesStepProps> = ({ onNext, on
         transition={{ type: 'timing', duration: 1000 }}
         className="w-full items-center">
         <Text variant="largeTitle" className="mb-4 text-center font-bold">
-          Create Stories
+          {t('onboarding.createStories.title')}
         </Text>
         <Text variant="body" className="mb-8 text-center text-gray-500">
-          Follow these simple steps to create beautiful Instagram stories
+          {t('onboarding.createStories.description')}
         </Text>
 
         <View className="mt-4 h-[400px] w-full">
@@ -95,7 +93,7 @@ export const CreateStoriesStep: React.FC<CreateStoriesStepProps> = ({ onNext, on
                   resizeMode="contain"
                 />
                 <Text variant="body" color="primary" className="text-center text-xl">
-                  {item.description}
+                  {t(`onboarding.createStories.steps.${item.key}.description`)}
                 </Text>
               </MotiView>
             )}
@@ -128,7 +126,7 @@ export const CreateStoriesStep: React.FC<CreateStoriesStepProps> = ({ onNext, on
           <View className="border-border/30 flex-row items-center gap-2 rounded-full border px-4 py-2">
             <Icon name="arrow-left" size={20} color={colors.primary} />
             <Text color="primary" variant="callout" className="font-medium">
-              Back
+              {t('onboarding.createStories.back')}
             </Text>
           </View>
         </MotiPressable>
@@ -143,7 +141,7 @@ export const CreateStoriesStep: React.FC<CreateStoriesStepProps> = ({ onNext, on
             };
           }}>
           <View className="flex-row items-center gap-2 rounded-full bg-primary px-4 py-2">
-            <Text className="font-medium text-white">Continue</Text>
+            <Text className="font-medium text-white">{t('onboarding.createStories.continue')}</Text>
             <Icon name="arrow-right" size={20} color="white" />
           </View>
         </MotiPressable>

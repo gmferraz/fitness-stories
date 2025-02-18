@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dimensions, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import {
   useLayoutEditionStore,
@@ -17,6 +18,7 @@ interface HiitLayoutProps {
 }
 
 export function HiitLayout({ activity, showBackground = true }: HiitLayoutProps) {
+  const { t } = useTranslation();
   const { styles } = useLayoutEditionStore();
   const style = styles.hiit.isEdited ? styles.hiit : DEFAULT_LAYOUT_STYLES.hiit;
   const textColor = getFontColor(style.fontColor);
@@ -66,7 +68,7 @@ export function HiitLayout({ activity, showBackground = true }: HiitLayoutProps)
               fontSize: style.labelSize,
               lineHeight: style.labelSize * 1.2,
             }}>
-            Calories
+            {t('share.layouts.common.calories')}
           </Text>
           <Text
             className="font-bold"
@@ -89,7 +91,7 @@ export function HiitLayout({ activity, showBackground = true }: HiitLayoutProps)
                 fontSize: style.labelSize,
                 lineHeight: style.labelSize * 1.2,
               }}>
-              Heart rate
+              {t('share.layouts.common.heartRate')}
             </Text>
             <Text
               className="font-bold"
@@ -99,7 +101,17 @@ export function HiitLayout({ activity, showBackground = true }: HiitLayoutProps)
                 lineHeight: style.bodySize * 1.2,
                 color: textColor,
               }}>
-              {activity.average_heartrate}
+              {activity.average_heartrate}{' '}
+              <Text
+                style={{
+                  fontSize: style.labelSize,
+                  fontFamily: style.fontFamily,
+                  lineHeight: style.labelSize * 1.2,
+                  color: textColor,
+                }}
+                variant="caption2">
+                bpm
+              </Text>
             </Text>
           </View>
         )}

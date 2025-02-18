@@ -39,7 +39,7 @@ export function SharePhotoStep({ next }: SharePhotoStepProps) {
   const takePhoto = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== 'granted') {
-      alert(t('runningPlan.share.cameraPermissionError'));
+      alert(t('share.photo.cameraPermissionError'));
       return;
     }
 
@@ -73,10 +73,10 @@ export function SharePhotoStep({ next }: SharePhotoStepProps) {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'timing', duration: 300 }}>
       <Text color="primary" variant="title1" className="font-bold">
-        Pick a background
+        {t('share.photo.title')}
       </Text>
       <Text color="primary" variant="subhead" className="mb-6 mt-2 opacity-80">
-        Choose a background to your story
+        {t('share.photo.description')}
       </Text>
       {selectedImage ? (
         <MotiView
@@ -110,7 +110,7 @@ export function SharePhotoStep({ next }: SharePhotoStepProps) {
               <View className="border-border/30 flex-row items-center gap-2 rounded-full border px-4 py-2">
                 <Icon name="arrow-left" size={20} color={colors.primary} />
                 <Text color="primary" variant="callout" className="font-medium">
-                  Change
+                  {t('share.photo.change')}
                 </Text>
               </View>
             </MotiPressable>
@@ -123,7 +123,7 @@ export function SharePhotoStep({ next }: SharePhotoStepProps) {
                 };
               }}>
               <View className="flex-row items-center gap-2 rounded-full bg-primary px-4 py-2">
-                <Text className="font-medium text-white">Continue</Text>
+                <Text className="font-medium text-white">{t('share.photo.continue')}</Text>
                 <Icon name="arrow-right" size={20} color="white" />
               </View>
             </MotiPressable>
@@ -149,19 +149,19 @@ export function SharePhotoStep({ next }: SharePhotoStepProps) {
                 <Ionicons name="images" size={32} color={colors.primary} />
               </View>
               <Text variant="title2" className="font-semibold" style={{ color: colors.foreground }}>
-                Choose from library
+                {t('share.photo.chooseFromLibrary.title')}
               </Text>
               <Text
                 variant="subhead"
                 className="mt-2 text-center opacity-60"
                 style={{ color: colors.foreground }}>
-                Select your favorite media from your gallery
+                {t('share.photo.chooseFromLibrary.description')}
               </Text>
             </View>
           </MotiPressable>
 
           <Text color="primary" variant="title3" className="self-center font-medium opacity-60">
-            Or
+            {t('share.photo.or')}
           </Text>
 
           <MotiPressable
@@ -177,13 +177,13 @@ export function SharePhotoStep({ next }: SharePhotoStepProps) {
                 <Ionicons name="camera" size={32} color={colors.primary} />
               </View>
               <Text variant="title2" className="font-semibold" style={{ color: colors.foreground }}>
-                Take a photo
+                {t('share.photo.takePhoto.title')}
               </Text>
               <Text
                 variant="subhead"
                 className="mt-2 text-center opacity-60"
                 style={{ color: colors.foreground }}>
-                Capture a new moment right now
+                {t('share.photo.takePhoto.description')}
               </Text>
             </View>
           </MotiPressable>

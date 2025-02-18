@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, RefreshControl } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { WeekCard } from '~/features/home/components/WeekCard';
 import { useWeeks } from '~/features/home/hooks/use-weeks';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -10,6 +11,7 @@ export const WeeksList = () => {
   const { weeks, isLoading, refreshWeeks } = useWeeks();
   const { bottom } = useSafeAreaInsets();
   const { colors } = useColorScheme();
+  const { t } = useTranslation();
 
   return (
     <FlatList
@@ -32,8 +34,8 @@ export const WeeksList = () => {
       }
       ListEmptyComponent={
         <EmptyState
-          title="No weeks data available"
-          subtitle="Your weekly summaries will appear here once you have activities."
+          title={t('home.weeksList.empty.title')}
+          subtitle={t('home.weeksList.empty.subtitle')}
           className="mt-8"
         />
       }

@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { MotiView } from 'moti';
 import { MotiPressable } from 'moti/interactions';
+import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import { Icon } from '@roninoss/icons';
 import { useColorScheme } from '~/lib/useColorScheme';
@@ -13,6 +14,7 @@ interface SuccessStepProps {
 
 export const SuccessStep: React.FC<SuccessStepProps> = ({ onNext, onBack }) => {
   const { colors } = useColorScheme();
+  const { t } = useTranslation();
 
   return (
     <View className="flex-1 items-center justify-between px-6 py-12">
@@ -34,11 +36,10 @@ export const SuccessStep: React.FC<SuccessStepProps> = ({ onNext, onBack }) => {
         </MotiView>
 
         <Text variant="largeTitle" className="mb-4 text-center font-bold">
-          You're All Set!
+          {t('onboarding.success.title')}
         </Text>
         <Text variant="body" className="mb-12 text-center text-gray-500">
-          Start sharing your fitness journey with beautiful Instagram stories. Let's inspire others
-          to stay active and healthy!
+          {t('onboarding.success.description')}
         </Text>
       </MotiView>
 
@@ -54,7 +55,7 @@ export const SuccessStep: React.FC<SuccessStepProps> = ({ onNext, onBack }) => {
           <View className="border-border/30 flex-row items-center gap-2 rounded-full border px-4 py-2">
             <Icon name="arrow-left" size={20} color={colors.primary} />
             <Text color="primary" variant="callout" className="font-medium">
-              Back
+              {t('onboarding.success.back')}
             </Text>
           </View>
         </MotiPressable>
@@ -67,7 +68,7 @@ export const SuccessStep: React.FC<SuccessStepProps> = ({ onNext, onBack }) => {
             };
           }}>
           <View className="flex-row items-center gap-2 rounded-full bg-primary px-4 py-2">
-            <Text className="font-medium text-white">Get Started</Text>
+            <Text className="font-medium text-white">{t('onboarding.success.getStarted')}</Text>
             <Icon name="arrow-right" size={20} color="white" />
           </View>
         </MotiPressable>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ActivityCard } from '~/features/home/components/ActivityCard';
@@ -12,43 +13,44 @@ export const WeekDetails = ({ weekRange }: { weekRange: string }) => {
   const weekDetails = getWeekDetails(weekRange);
   const { bottom } = useSafeAreaInsets();
   const { colors } = useColorScheme();
+  const { t } = useTranslation();
 
   const stats = [
     weekDetails.totalActivities > 0 && {
       icon: 'podium-outline',
       value: `${weekDetails.totalActivities}`,
-      label: 'Total Activities',
+      label: t('home.weekDetails.stats.totalActivities'),
       color: '#007AFF',
     },
     weekDetails.totalDuration > 0 && {
       icon: 'stopwatch-outline',
       value: formatDuration(weekDetails.totalDuration),
-      label: 'Duration',
+      label: t('home.weekDetails.stats.duration'),
       color: '#FF2D55',
     },
     weekDetails.totalDistance > 0 && {
       icon: 'map-outline',
       value: formatDistance(weekDetails.totalDistance),
-      label: 'Distance',
+      label: t('home.weekDetails.stats.distance'),
       color: '#5856D6',
     },
     weekDetails.totalDistance > 0 &&
       weekDetails.totalDuration > 0 && {
         icon: 'speedometer-outline',
         value: formatPace(weekDetails.totalDistance, weekDetails.totalDuration),
-        label: 'Avg Pace',
+        label: t('home.weekDetails.stats.avgPace'),
         color: '#FF9500',
       },
     weekDetails.totalElevation > 0 && {
       icon: 'trending-up-outline',
       value: `${weekDetails.totalElevation}m`,
-      label: 'Elevation',
+      label: t('home.weekDetails.stats.elevation'),
       color: '#34C759',
     },
     weekDetails.totalCalories > 0 && {
       icon: 'flame-outline',
       value: `${weekDetails.totalCalories}`,
-      label: 'Calories',
+      label: t('home.weekDetails.stats.calories'),
       color: '#FF3B30',
     },
   ].filter((item): item is NonNullable<typeof item> => Boolean(item));
@@ -69,7 +71,7 @@ export const WeekDetails = ({ weekRange }: { weekRange: string }) => {
         </View>
 
         <Text variant="title1" className="mb-2">
-          Summary
+          {t('home.weekDetails.title')}
         </Text>
         <Text variant="subhead" className="text-gray-500">
           {weekDetails.weekRange}
@@ -92,7 +94,7 @@ export const WeekDetails = ({ weekRange }: { weekRange: string }) => {
                   <Text variant="title2" className="font-semibold">
                     {stat.value}
                   </Text>
-                  <Text variant="footnote" className="text-gray-500">
+                  <Text variant="subhead" className="text-gray-500">
                     {stat.label}
                   </Text>
                 </View>
@@ -106,7 +108,7 @@ export const WeekDetails = ({ weekRange }: { weekRange: string }) => {
       {!!weekDetails.activities?.length && (
         <View className="px-4">
           <Text variant="title2" className="mb-4 font-semibold">
-            Activities
+            {t('home.weekDetails.activities')}
           </Text>
           {weekDetails.activities?.map((activity) => (
             <ActivityCard key={activity.id} activity={activity} />

@@ -1,215 +1,465 @@
 {
-  "login": {
-    "title": "Bienvenue sur",
-    "google": "Se connecter avec Google",
-    "apple": "Se connecter avec Apple",
-    "policyText": {
-      "part1": "En vous connectant, vous acceptez notre ",
-      "privacyPolicy": "Politique de confidentialité",
-      "part2": " et nos ",
-      "terms": "Conditions d'utilisation",
-      "part3": "."
-    }
-  },
-  "onboarding": {
-    "age": {
-      "title": "Quel âge avez-vous ?",
-      "years_old": "ans"
-    },
-    "availableDays": {
-      "title": "Combien de jours êtes-vous disponible par semaine ?",
-      "days": "jours",
-      "day": "jour"
-    },
-    "creating": {
-      "title1": "Analyse de vos objectifs de course...",
-      "title2": "Création de votre calendrier d'entraînement idéal...",
-      "title3": "Optimisation de l'intensité de vos exercices...",
-      "title4": "Presque terminé, finalisation de votre plan...",
-      "try_again": "Réessayer",
-      "errorTitle": "Oups, quelque chose s'est mal passé =("
-    },
-    "duration": {
-      "title": "Quelle durée souhaitez-vous pour votre plan de course ?",
-      "weeks": "semaines",
-      "choose_weeks": "Je veux choisir le nombre de semaines",
-      "choose_date": "Je veux choisir une date spécifique"
-    },
-    "experience": {
-      "title": "Quel est votre niveau d'expérience en course à pied ?",
-      "level_1": "Débutant",
-      "level_1_description": "Je n'ai jamais couru, mais je suis prêt à commencer !",
-      "level_2": "Novice",
-      "level_2_description": "J'ai un peu couru, mais je suis encore assez nouveau.",
-      "level_3": "Intermédiaire",
-      "level_3_description": "Je cours occasionnellement, mais rien de trop sérieux.",
-      "level_4": "Avancé",
-      "level_4_description": "Je cours régulièrement et j'ai un bon rythme.",
-      "level_5": "Professionnel",
-      "level_5_description": "Je suis expérimenté et toujours prêt pour un nouveau défi !"
-    },
-    "finish": {
-      "title": "Tout est prêt !",
-      "create_plan": "Créer mon plan de course"
-    },
-    "gender": {
-      "title": "Quel est votre genre ?",
-      "man": "Homme",
-      "woman": "Femme",
-      "skip": "Passer"
-    },
-    "goal": {
-      "title": "Quel est votre objectif principal ?",
-      "loseWeight": "Perdre du poids",
-      "improveHealth": "Améliorer ma santé",
-      "runSpecificDistance": "Courir une distance spécifique",
-      "improvePace": "Améliorer mon rythme",
-      "noGoals": "Juste courir, sans objectifs"
-    },
-    "start": {
-      "title": "Créons votre plan de course personnalisé",
-      "start_now": "Commencer maintenant"
-    },
-    "strava": {
-      "title": "Voulez-vous lier votre compte Strava ?"
-    },
-    "weight": {
-      "title": "Quel est votre poids ?",
-      "kgs": "kg",
-      "lbs": "lbs"
-    },
-    "next": "Suivant"
-  },
-  "settings": {
-    "title": "Paramètres",
-    "language": "Langue",
-    "createNewPlan": "Créer un nouveau plan de course",
-    "clearChat": "Effacer les messages du chat",
-    "logout": "Déconnexion",
-    "logoutConfirmTitle": "Confirmer la déconnexion",
-    "logoutConfirmMessage": "Êtes-vous sûr de vouloir vous déconnecter ?",
-    "newPlanConfirmTitle": "Créer un nouveau plan",
-    "newPlanConfirmMessage": "La création d'un nouveau plan effacera votre progression actuelle. Êtes-vous sûr de vouloir continuer ?",
-    "disclaimer": "RunnerAI est un outil d'IA conçu pour vous aider dans votre développement en course à pied. Il ne remplace pas un coaching professionnel.",
-    "version": "Version : {{version}}",
-    "talkWithUs": "Parlez-nous",
-    "deleteAccount": "Supprimer le compte",
-    "deleteAccountConfirmTitle": "Supprimer le compte",
-    "deleteAccountConfirmMessage": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.",
-    "deleteAccountEmailSubject": "Suppression de compte",
-    "deleteAccountEmailBody": "Bonjour,\n\nJe souhaite demander la suppression de mon compte RunnerAI associé à l'adresse e-mail : {{email}}. Veuillez traiter cette demande dès que possible.\n\nMerci."
-  },
-  "analytics": {
-    "title": "Analyses",
-    "notEnoughWorkouts": "Pas assez d'entraînements terminés",
-    "completeMoreWorkouts": "Terminez {{count}} jour(s) supplémentaire(s) pour activer les analyses.",
-    "dayNumber": "Jour {{number}}",
-    "overallStatistics": "Statistiques globales",
-    "totalDistance": "Distance totale",
-    "totalDuration": "Durée totale",
-    "hours": "{{value}} heures",
-    "averagePace": "Rythme moyen",
-    "completedDays": "Jours terminés",
-    "workoutDistance": "Distance d'entraînement",
-    "lastWorkouts": "{{count}} derniers entraînements ({{unit}})",
-    "workoutDuration": "Durée d'entraînement",
-    "lastWorkoutsMinutes": "{{count}} derniers entraînements (minutes)",
-    "premiumFeature": "Débloquer les analyses avancées",
-    "upgradeToAccess": "Passez à la version premium pour accéder à cette fonctionnalité.",
-    "upgrade": "Passer à la version premium"
-  },
-  "chat": {
-    "title": "Coach IA",
-    "errorMessage": "Désolé, j'ai rencontré une erreur. Veuillez réessayer.",
-    "welcomeMessage": "Posez-moi n'importe quelle question sur votre plan de course !",
-    "inputPlaceholder": "Tapez un message...",
-    "dailyLimitExceeded": "Quelque chose s'est mal passé... Veuillez réessayer plus tard."
-  },
-  "runningPlan": {
-    "title": "Mon plan de course",
-    "noPlanAvailable": "Aucun plan de course disponible",
-    "duration": "Durée",
-    "distance": "Distance",
-    "pace": "Rythme",
-    "confirm": "Confirmer",
-    "skipped": "Ignoré",
-    "skip": "Ignorer",
-    "back": "Retour",
-    "done": "Terminé",
-    "undo": "Annuler",
-    "markAsDone": "Marquer comme terminé",
-    "save": "Enregistrer",
-    "next": "Suivant",
-    "week": "Semaine {{number}}",
-    "distanceUnit": "{{distance}} {{unit}}",
-    "completed": {
-      "title": "Félicitations !",
-      "subtitle": "Vous avez terminé votre plan de course. Prêt pour un nouveau défi ?",
-      "createNow": "Créer un nouveau plan"
+    "onboarding": {
+      "welcome": {
+        "title": "Bienvenue sur FitStories",
+        "description": "Transformez vos activités de fitness en belles histoires Instagram. Connectez vos applications de fitness préférées et partagez vos exploits avec style.",
+        "getStarted": "Commencer"
+      },
+      "connectApps": {
+        "title": "Connectez vos applications",
+        "description": "Liez vos applications de fitness pour importer automatiquement vos activités. Vous pourrez toujours les connecter plus tard.",
+        "strava": {
+          "title": "Strava",
+          "connected": "Connecté",
+          "connect": "Connecter"
+        },
+        "appleHealth": {
+          "title": "Apple Health",
+          "connected": "Connecté",
+          "connect": "Connecter"
+        },
+        "back": "Retour",
+        "continue": "Continuer"
+      },
+      "createStories": {
+        "title": "Créer des histoires",
+        "description": "Suivez ces étapes simples pour créer de belles histoires Instagram",
+        "steps": {
+          "selectActivity": {
+            "title": "Sélectionner une activité",
+            "description": "Choisissez une activité parmi celles de vos applications de fitness connectées"
+          },
+          "shareToInstagram": {
+            "title": "Partager sur Instagram",
+            "description": "Appuyez sur l'icône Instagram pour commencer à créer votre histoire"
+          },
+          "chooseBackground": {
+            "title": "Choisir un fond",
+            "description": "Sélectionnez une photo ou une vidéo depuis votre galerie"
+          },
+          "pickLayout": {
+            "title": "Choisir la mise en page",
+            "description": "Choisissez parmi nos magnifiques modèles de mise en page"
+          }
+        },
+        "back": "Retour",
+        "continue": "Continuer"
+      },
+      "success": {
+        "title": "Tout est prêt !",
+        "description": "Commencez à partager votre parcours fitness avec de belles histoires Instagram. Inspirons les autres à rester actifs et en bonne santé !",
+        "back": "Retour",
+        "getStarted": "Commencer"
+      }
     },
     "share": {
-      "selectTemplate": "Sélectionner un modèle",
-      "selectTemplateDescription": "Sélectionnez un modèle pour votre story Instagram.",
-      "premium": "Premium",
-      "free": "Gratuit",
-      "share": "Partager",
-      "selectBackground": "Sélectionner un arrière-plan",
-      "selectBackgroundDescription": "Sélectionnez une photo ou un vidéo de votre bibliothèque ou prenez une photo avec votre appareil.",
-      "chooseFromLibrary": "Choisir dans la bibliothèque",
-      "takePhoto": "Prendre une photo",
-      "or": "ou",
-      "back": "Retour",
-      "continue": "Continuer",
-      "cameraPermissionError": "Désolé, nous avons besoin des autorisations de l'appareil photo pour que cela fonctionne !",
+      "photo": {
+        "title": "Choisissez un fond",
+        "description": "Choisissez un fond pour votre histoire",
+        "change": "Changer",
+        "continue": "Continuer",
+        "chooseFromLibrary": {
+          "title": "Choisir depuis la bibliothèque",
+          "description": "Sélectionnez votre média préféré dans votre galerie"
+        },
+        "or": "Ou",
+        "takePhoto": {
+          "title": "Prendre une photo",
+          "description": "Capturez un nouveau moment dès maintenant"
+        },
+        "cameraPermissionError": "L'autorisation d'accéder à la caméra a été refusée"
+      },
+      "layout": {
+        "title": "Choisissez votre style",
+        "description": "Choisissez un modèle qui correspond à votre ambiance",
+        "premium": "Premium",
+        "free": "Gratuit",
+        "hideBackground": "Cacher le fond",
+        "showBackground": "Afficher le fond",
+        "back": "Retour",
+        "share": "Partager"
+      },
       "layouts": {
-        "avgPace": "Rythme",
-        "time": "Temps",
-        "completed": "Terminé",
-        "remaining": "Restant",
-        "total": "Total",
-        "currentWeek": "Semaine {{current}} sur {{total}}",
-        "progress": "Progrès",
-        "stats": "Statistiques",
+        "common": {
+          "avgPace": "Allure moyenne",
+          "time": "Temps",
+          "elevation": "Élévation",
+          "distance": "Distance",
+          "duration": "Durée",
+          "calories": "Calories",
+          "heartRate": "Fréquence cardiaque",
+          "power": "Puissance",
+          "cadence": "Cadence",
+          "speed": "Vitesse",
+          "avgSpeed": "Vitesse moyenne",
+          "maxSpeed": "Vitesse maximale",
+          "avgHeartRate": "FC moyenne",
+          "maxHeartRate": "FC maximale",
+          "avgPower": "Puissance moyenne",
+          "maxPower": "Puissance maximale",
+          "normalizedPower": "Puissance normalisée",
+          "avgCadence": "Cadence moyenne",
+          "maxCadence": "Cadence maximale",
+          "totalActivities": "Activités totales",
+          "totalDistance": "Distance totale",
+          "totalDuration": "Durée totale",
+          "totalCalories": "Calories totales",
+          "totalElevation": "Élévation totale",
+          "weekRange": "Plage de semaine",
+          "weight": "Poids",
+          "bmi": "IMC",
+          "bodyFat": "Masse grasse",
+          "muscleMass": "Masse musculaire",
+          "boneMass": "Masse osseuse",
+          "bodyWater": "Eau corporelle",
+          "visceralFat": "Graisse viscérale",
+          "metabolicAge": "Âge métabolique",
+          "basalMetabolism": "Métabolisme de base",
+          "proteinPercentage": "Pourcentage de protéines",
+          "subcutaneousFat": "Graisse sous-cutanée",
+          "skeletalMuscle": "Muscle squelettique",
+          "bodyScore": "Score corporel",
+          "bodyAge": "Âge corporel",
+          "bodyType": "Type de corps",
+          "fatMass": "Masse grasse",
+          "leanMass": "Masse maigre",
+          "bodyMassIndex": "Indice de masse corporelle",
+          "restingEnergy": "Énergie au repos",
+          "activeEnergy": "Énergie active",
+          "steps": "Pas",
+          "flights": "Escaliers",
+          "workouts": "Entraînements",
+          "standHours": "Heures debout",
+          "exerciseMinutes": "Minutes d'exercice",
+          "restingHeartRate": "FC au repos",
+          "walkingHeartRate": "FC en marchant",
+          "heartRateVariability": "Variabilité de la FC",
+          "vo2Max": "VO2 Max",
+          "walkingSpeed": "Vitesse en marchant",
+          "walkingDoubleSupportTime": "Temps de double appui en marchant",
+          "walkingAsymmetry": "Asymétrie en marchant",
+          "walkingStepLength": "Longueur de foulée en marchant",
+          "runningStrideLength": "Longueur de foulée en course",
+          "runningVerticalOscillation": "Oscillation verticale en course",
+          "runningGroundContactTime": "Temps de contact au sol en course",
+          "pushes": "Pompes",
+          "swimStrokes": "Nages",
+          "swolfScore": "Score Swolf",
+          "laps": "Tours",
+          "sets": "Séries",
+          "reps": "Répétitions",
+          "restTime": "Temps de repos",
+          "intensity": "Intensité",
+          "effort": "Effort",
+          "zone": "Zone",
+          "pace": "Allure",
+          "split": "Fraction",
+          "splitTime": "Temps fractionné",
+          "splitDistance": "Distance fractionnée",
+          "splitPace": "Allure fractionnée",
+          "splitSpeed": "Vitesse fractionnée",
+          "splitHeartRate": "FC fractionnée",
+          "splitPower": "Puissance fractionnée",
+          "splitCadence": "Cadence fractionnée",
+          "splitElevation": "Élévation fractionnée",
+          "splitCalories": "Calories fractionnées",
+          "totalTime": "Temps total",
+          "elapsedTime": "Temps écoulé",
+          "movingTime": "Temps en mouvement",
+          "stoppedTime": "Temps arrêté",
+          "startTime": "Heure de début",
+          "endTime": "Heure de fin",
+          "date": "Date",
+          "edit": "Modifier",
+          "share": "Partager",
+          "per": "par"
+        },
+        "minimal": {
+          "title": "Minimal"
+        },
+        "detailed": {
+          "title": "Détaillé"
+        },
+        "progress": {
+          "title": "Progression"
+        },
+        "map": {
+          "title": "Carte"
+        },
+        "stats": {
+          "title": "Statistiques"
+        },
+        "aesthetic": {
+          "title": "Esthétique"
+        },
+        "social": {
+          "title": "Social"
+        },
+        "achievement": {
+          "title": "Réussite",
+          "congratulations": "Félicitations !",
+          "newRecord": "Nouveau record !"
+        },
+        "weight": {
+          "title": "Poids"
+        },
+        "hiit": {
+          "title": "HIIT"
+        },
+        "hiit2": {
+          "title": "HIIT 2"
+        },
+        "periodMinimal": {
+          "title": "Résumé de la Semaine"
+        },
+        "periodStats": {
+          "title": "Ma Semaine"
+        },
+        "periodSocial": {
+          "title": "Période Sociale",
+          "workoutsThisWeek_one": "Entraînement cette semaine",
+          "workoutsThisWeek_other": "Entraînements cette semaine"
+        }
+      },
+      "editor": {
+        "title": "Modifier la Mise en Page",
+        "fontStyle": "Style de Police",
+        "titleSize": "Taille du Titre",
+        "bodySize": "Taille du Corps",
+        "labelSize": "Taille de l'Étiquette",
+        "fontColor": "Couleur de Police",
+        "backgroundColor": "Couleur de Fond",
+        "iconColor": "Couleur d'Icône",
+        "done": "Terminé",
+        "colors": {
+          "dark": "Sombre",
+          "white": "Blanc",
+          "blue": "Bleu",
+          "purple": "Violet",
+          "red": "Rouge",
+          "orange": "Orange",
+          "black": "Noir",
+          "gray900": "Gris 900",
+          "gray800": "Gris 800",
+          "gray700": "Gris 700"
+        },
+        "reset": "Réinitialiser",
+        "style": "Style",
+        "sizes": "Tailles",
+        "color": "Couleurs"
+      }
+    },
+    "home": {
+      "noConnectedApps": {
+        "title": "Aucune application connectée",
+        "subtitle": "Connectez votre première application pour commencer à suivre vos activités."
+      },
+      "apps": {
+        "strava": {
+          "title": "Strava",
+          "connected": "Connecté",
+          "connect": "Connecter"
+        },
+        "appleHealth": {
+          "title": "Apple Health",
+          "connected": "Connecté",
+          "connect": "Connecter"
+        }
+      },
+      "lastExercise": {
+        "title": "Dernier exercice",
+        "seeAll": "Voir tout",
+        "empty": {
+          "title": "Vous n'avez pas encore téléchargé d'activité",
+          "subtitle": "Pour suivre vos progrès et atteindre vos objectifs, veuillez télécharger vos activités et rester en forme."
+        }
+      },
+      "weekSummary": {
+        "title": "Résumé de la semaine",
+        "seeAll": "Voir tout",
+        "empty": {
+          "title": "Aucune activité cette semaine",
+          "subtitle": "Complétez votre première activité de la semaine pour voir vos progrès et statistiques."
+        }
+      },
+      "activityDetails": {
+        "stats": {
+          "duration": "Durée",
+          "distance": "Distance",
+          "avgPace": "Allure moyenne",
+          "elevation": "Élévation",
+          "calories": "Calories",
+          "avgHeartRate": "FC moyenne",
+          "maxHeartRate": "FC maximale",
+          "avgPower": "Puissance moyenne",
+          "maxPower": "Puissance maximale",
+          "normalizedPower": "Puissance normalisée",
+          "avgCadence": "Cadence moyenne",
+          "maxCadence": "Cadence maximale",
+          "energyBurned": "Énergie brûlée"
+        }
+      },
+      "weekDetails": {
+        "title": "Résumé",
+        "stats": {
+          "totalActivities": "Activités totales",
+          "duration": "Durée",
+          "distance": "Distance",
+          "avgPace": "Allure moyenne",
+          "elevation": "Élévation",
+          "calories": "Calories"
+        },
+        "activities": "Activités"
+      },
+      "weeksList": {
+        "empty": {
+          "title": "Aucune donnée hebdomadaire disponible",
+          "subtitle": "Vos résumés hebdomadaires apparaîtront ici une fois que vous aurez des activités."
+        }
+      }
+    },
+    "settings": {
+      "sections": {
+        "general": "Général",
+        "premium": "Premium",
+        "connectedApps": "Applications connectées"
+      },
+      "language": {
+        "title": "Langue",
+        "options": {
+          "en": "English",
+          "pt": "Português",
+          "es": "Español",
+          "fr": "Français"
+        }
+      },
+      "weekStart": {
+        "title": "La semaine commence le",
+        "options": {
+          "monday": "Lundi",
+          "sunday": "Dimanche"
+        }
+      },
+      "talkWithUs": {
+        "title": "Contactez-nous"
+      },
+      "premium": {
+        "title": "Premium"
+      },
+      "apps": {
+        "strava": {
+          "title": "Strava"
+        },
+        "appleHealth": {
+          "title": "Apple Health"
+        }
+      }
+    },
+    "activityDetails": {
+      "title": "Détails de l'Activité",
+      "shareOnInstagram": "Partager",
+      "stats": {
+        "avgHeartRate": "FC Moyenne",
+        "maxHeartRate": "FC Maximale",
+        "avgCadence": "Cadence Moyenne",
+        "maxCadence": "Cadence Maximale",
+        "energyBurned": "Énergie Brûlée"
+      }
+    },
+    "weekDetails": {
+      "title": "Détails de la Semaine",
+      "activities": "Activités",
+      "stats": {
+        "totalActivities": "Activités",
+        "duration": "Durée",
+        "distance": "Distance",
+        "avgPace": "Allure Moyenne",
+        "elevation": "Dénivelé",
+        "calories": "Calories"
+      }
+    },
+    "weekCard": {
+      "activity_one": "activité",
+      "activity_other": "activités"
+    },
+    "lastActivityCard": {
+      "title": "Dernier Exercice",
+      "seeAll": "Voir tout",
+      "empty": {
+        "title": "Pas encore d'activités",
+        "subtitle": "Vos activités apparaîtront ici"
+      },
+      "stats": {
         "distance": "Distance",
         "duration": "Durée",
-        "pace": "Rythme"
-      },
-      "showBackground": "Afficher l'arrière-plan",
-      "hideBackground": "Masquer l'arrière-plan"
-    }
-  },
-  "common": {
-    "cancel": "Annuler",
-    "create": "Créer",
-    "logout": "Déconnexion",
-    "delete": "Supprimer",
-    "recommended": "Recommandé"
-  },
-  "newRunningPlan": {
-    "title": "Choisissez votre nouveau plan de course",
-    "beginner": "Débutant",
-    "intermediate": "Intermédiaire",
-    "advanced": "Avancé",
-    "beginnerDescription": "Parfait pour ceux qui débutent la course ou qui reprennent.",
-    "intermediateDescription": "Pour les coureurs ayant une certaine expérience et cherchant à s'améliorer.",
-    "advancedDescription": "Plan stimulant pour les coureurs expérimentés visant à repousser leurs limites.",
-    "create": "Créer le plan",
-    "duration": "Durée : {{weeks}} semaines",
-    "goalDistance": "Distance objectif : {{distance}}{{unit}}",
-    "custom": "Plan personnalisé",
-    "customDescription": "Créez un plan entièrement personnalisé adapté à vos besoins et objectifs spécifiques."
-  },
-  "paywall": {
-    "title": "Débloquez la version premium pour accélérer vos progrès",
-    "benefits": {
-      "aiCoach": "Obtenez des conseils et un soutien en temps réel de notre coach IA.",
-      "advancedAnalytics": "Suivez vos améliorations avec des analyses approfondies et des insights qui vous motivent.",
-      "customPlan": "Des programmes d'entraînement sur mesure conçus pour répondre à vos objectifs uniques et à votre niveau de forme.",
-      "noAds": "Profitez d'une expérience sans publicité."
+        "avgPace": "Allure Moyenne",
+        "elevation": "Dénivelé",
+        "calories": "Calories"
+      }
     },
-    "annual": "Annuel",
-    "monthly": "Mensuel",
-    "freeTrial": "Inclut 1 semaine d'essai gratuit",
-    "subscribe": "S'abonner maintenant"
+    "weeksList": {
+      "title": "Semaines",
+      "last12Weeks": "12 Dernières Semaines"
+    },
+    "layout": {
+      "title": "Mes Activités",
+      "settings": "Paramètres"
+    },
+    "activitiesList": {
+      "title": "Toutes les Activités",
+      "last90Days": "90 Derniers Jours"
+    },
+    "sportTypes": {
+      "AlpineSki": "Ski Alpin",
+      "BackcountrySki": "Ski de Randonnée",
+      "Badminton": "Badminton",
+      "Canoeing": "Canoë",
+      "Crossfit": "Crossfit",
+      "EBikeRide": "Vélo Électrique",
+      "Elliptical": "Vélo Elliptique",
+      "EMountainBikeRide": "VTT Électrique",
+      "Golf": "Golf",
+      "GravelRide": "Vélo Gravel",
+      "Handcycle": "Vélo à Main",
+      "HighIntensityIntervalTraining": "HIIT",
+      "Hike": "Randonnée",
+      "IceSkate": "Patinage sur Glace",
+      "InlineSkate": "Roller",
+      "Kayaking": "Kayak",
+      "Kitesurf": "Kitesurf",
+      "MountainBikeRide": "VTT",
+      "NordicSki": "Ski Nordique",
+      "Pickleball": "Pickleball",
+      "Pilates": "Pilates",
+      "Racquetball": "Racquetball",
+      "Ride": "Vélo",
+      "RockClimbing": "Escalade",
+      "RollerSki": "Ski à Roulettes",
+      "Rowing": "Aviron",
+      "Run": "Course à Pied",
+      "Sail": "Voile",
+      "Skateboard": "Skateboard",
+      "Snowboard": "Snowboard",
+      "Snowshoe": "Raquettes",
+      "Soccer": "Football",
+      "Squash": "Squash",
+      "StairStepper": "Stepper",
+      "StandUpPaddling": "Paddle",
+      "Surfing": "Surf",
+      "Swim": "Natation",
+      "TableTennis": "Tennis de Table",
+      "Tennis": "Tennis",
+      "TrailRun": "Trail",
+      "Velomobile": "Vélomobile",
+      "VirtualRide": "Vélo Virtuel",
+      "VirtualRow": "Aviron Virtuel",
+      "VirtualRun": "Course Virtuelle",
+      "Walk": "Marche",
+      "WeightTraining": "Musculation",
+      "Wheelchair": "Fauteuil Roulant",
+      "Windsurf": "Planche à Voile",
+      "Workout": "Entraînement",
+      "Yoga": "Yoga"
+    }
   }
-}
+  
