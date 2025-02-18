@@ -109,7 +109,9 @@
           "supportsPictureInPicture": false
         }
       ],
-      ["react-native-health"],
+      [
+        "react-native-health"
+      ],
       [
         "expo-splash-screen",
         {
@@ -135,14 +137,28 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.ferrazgui.fitnessstories"
+      "bundleIdentifier": "com.ferrazgui.fitnessstories",
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": [
+          "instagram",
+          "instagram-stories"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#1E90FF"
       },
-      "package": "com.ferrazgui.fitnessstories"
+      "package": "com.ferrazgui.fitnessstories",
+      "permissions": [
+        "com.google.android.gms.permission.AD_ID",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA",
+        "com.google.android.gms.permission.AD_ID",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA"
+      ]
     },
     "extra": {
       "router": {
@@ -151,6 +167,12 @@
       "eas": {
         "projectId": "24724a80-f715-4b5a-a613-d80b00a4016e"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/24724a80-f715-4b5a-a613-d80b00a4016e"
     }
   }
 }
