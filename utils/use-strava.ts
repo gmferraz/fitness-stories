@@ -106,6 +106,7 @@ export const useStrava = () => {
               code,
               extraParams: {
                 client_secret: stravaClientSecret,
+                grant_type: 'authorization_code',
               },
             },
             { tokenEndpoint: 'https://www.strava.com/oauth/token' }
