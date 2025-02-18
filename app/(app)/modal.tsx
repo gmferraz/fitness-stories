@@ -189,7 +189,7 @@ export default function SettingsScreen() {
           </Text>
           <TouchableOpacity className="mb-6 flex-row items-center justify-between rounded-lg bg-card px-4 py-3">
             <View className="flex-row items-center gap-3">
-              <View className="h-8 w-8 items-center justify-center rounded-md bg-red-400 shadow-sm">
+              <View className="h-8 w-8 items-center justify-center rounded-md bg-[#DAA520] shadow-sm">
                 <Icon name="star" size={24} color="white" />
               </View>
 

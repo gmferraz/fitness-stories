@@ -9,6 +9,7 @@ import {
   getFontColor,
   getBackgroundColor,
   getIconColor,
+  DEFAULT_LAYOUT_STYLES,
 } from '../utils/use-layout-edition-store';
 
 interface AchievementLayoutProps {
@@ -30,7 +31,9 @@ export function AchievementLayout({
 }: AchievementLayoutProps) {
   const { t } = useTranslation();
   const { styles } = useLayoutEditionStore();
-  const style = styles.achievement;
+  const style = styles.achievement.isEdited
+    ? styles.achievement
+    : DEFAULT_LAYOUT_STYLES.achievement;
 
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);

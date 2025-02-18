@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Text } from '~/components/nativewindui/Text';
 import {
+  DEFAULT_LAYOUT_STYLES,
   getBackgroundColor,
   getFontColor,
   useLayoutEditionStore,
@@ -28,7 +29,9 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
   showBackground = true,
 }) => {
   const { styles } = useLayoutEditionStore();
-  const style = styles['period-stats'];
+  const style = styles['period-stats'].isEdited
+    ? styles['period-stats']
+    : DEFAULT_LAYOUT_STYLES['period-stats'];
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);
 

@@ -7,6 +7,7 @@ import {
   useLayoutEditionStore,
   getFontColor,
   getBackgroundColor,
+  DEFAULT_LAYOUT_STYLES,
 } from '../utils/use-layout-edition-store';
 
 interface SocialLayoutProps {
@@ -27,7 +28,7 @@ export function SocialLayout({
   const hasHeartRate = !!activity.average_heartrate;
   const hasElevation = !!activity.total_elevation_gain;
   const { styles } = useLayoutEditionStore();
-  const style = styles.social;
+  const style = styles.social.isEdited ? styles.social : DEFAULT_LAYOUT_STYLES.social;
 
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);

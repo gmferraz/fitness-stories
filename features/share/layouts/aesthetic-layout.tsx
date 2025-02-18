@@ -6,6 +6,7 @@ import {
   useLayoutEditionStore,
   getFontColor,
   getBackgroundColor,
+  DEFAULT_LAYOUT_STYLES,
 } from '../utils/use-layout-edition-store';
 
 interface AestheticLayoutProps {
@@ -27,7 +28,7 @@ export function AestheticLayout({
 }: AestheticLayoutProps) {
   const { t } = useTranslation();
   const { styles } = useLayoutEditionStore();
-  const style = styles.aesthetic;
+  const style = styles.aesthetic.isEdited ? styles.aesthetic : DEFAULT_LAYOUT_STYLES.aesthetic;
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);
 

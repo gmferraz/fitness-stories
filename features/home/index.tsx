@@ -29,8 +29,8 @@ export const HomeScreen = () => {
     return (
       <View className="flex-1 items-center justify-center px-4">
         <EmptyState
-          title="No app connected"
-          subtitle="Connect your Strava or Apple Health to see your activities"
+          title="No apps connected"
+          subtitle="Connect your Strava or Apple Health to see your activities."
         />
       </View>
     );
@@ -44,7 +44,7 @@ export const HomeScreen = () => {
     );
   }
 
-  const lastActivity = activities[2];
+  const lastActivity = activities[0];
 
   return (
     <ScrollView

@@ -5,6 +5,7 @@ import {
   useLayoutEditionStore,
   getFontColor,
   getBackgroundColor,
+  DEFAULT_LAYOUT_STYLES,
 } from '../utils/use-layout-edition-store';
 import { formatTime } from '~/utils/formatters';
 import { Activity } from '~/features/home/types/activity';
@@ -16,7 +17,7 @@ interface Hiit2LayoutProps {
 
 export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProps) {
   const { styles } = useLayoutEditionStore();
-  const style = styles.hiit2;
+  const style = styles.hiit2.isEdited ? styles.hiit2 : DEFAULT_LAYOUT_STYLES.hiit2;
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);
   const hasHeartRate = !!activity.average_heartrate;

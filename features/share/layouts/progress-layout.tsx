@@ -8,6 +8,7 @@ import {
   useLayoutEditionStore,
   getFontColor,
   getBackgroundColor,
+  DEFAULT_LAYOUT_STYLES,
 } from '../utils/use-layout-edition-store';
 
 interface ProgressLayoutProps {
@@ -26,7 +27,7 @@ export function ProgressLayout({
   const width = Dimensions.get('window').width;
   const { t } = useTranslation();
   const { styles } = useLayoutEditionStore();
-  const style = styles.progress;
+  const style = styles.progress.isEdited ? styles.progress : DEFAULT_LAYOUT_STYLES.progress;
 
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);

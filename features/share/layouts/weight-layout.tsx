@@ -10,6 +10,7 @@ import {
   getFontColor,
   getBackgroundColor,
   getIconColor,
+  DEFAULT_LAYOUT_STYLES,
 } from '../utils/use-layout-edition-store';
 
 interface WeightLayoutProps {
@@ -23,7 +24,7 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
   const hasHeartRate = !!activity.average_heartrate;
   const hasCalories = !!activity.calories;
   const { styles } = useLayoutEditionStore();
-  const style = styles.weight;
+  const style = styles.weight.isEdited ? styles.weight : DEFAULT_LAYOUT_STYLES.weight;
 
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);

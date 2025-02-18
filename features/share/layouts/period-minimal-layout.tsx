@@ -7,6 +7,7 @@ import {
   getFontColor,
   getBackgroundColor,
   getIconColor,
+  DEFAULT_LAYOUT_STYLES,
 } from '../utils/use-layout-edition-store';
 import { formatDistance, formatDuration } from '~/utils/formatters';
 
@@ -28,7 +29,9 @@ export const PeriodMinimalLayout: React.FC<PeriodMinimalLayoutProps> = ({
   showBackground = true,
 }) => {
   const { styles } = useLayoutEditionStore();
-  const style = styles['period-minimal'];
+  const style = styles['period-minimal'].isEdited
+    ? styles['period-minimal']
+    : DEFAULT_LAYOUT_STYLES['period-minimal'];
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);
   const icon = getIconColor(style.iconColor);

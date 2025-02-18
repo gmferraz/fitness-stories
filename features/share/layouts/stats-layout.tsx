@@ -10,6 +10,7 @@ import {
   getFontColor,
   getBackgroundColor,
   getIconColor,
+  DEFAULT_LAYOUT_STYLES,
 } from '../utils/use-layout-edition-store';
 
 interface StatsLayoutProps {
@@ -31,7 +32,7 @@ export function StatsLayout({
 }: StatsLayoutProps) {
   const { t } = useTranslation();
   const { styles } = useLayoutEditionStore();
-  const style = styles.stats;
+  const style = styles.stats.isEdited ? styles.stats : DEFAULT_LAYOUT_STYLES.stats;
 
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);

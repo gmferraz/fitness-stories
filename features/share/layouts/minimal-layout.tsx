@@ -8,6 +8,7 @@ import {
   useLayoutEditionStore,
   getFontColor,
   getBackgroundColor,
+  DEFAULT_LAYOUT_STYLES,
 } from '../utils/use-layout-edition-store';
 import { Activity } from '~/features/home/types/activity';
 
@@ -33,7 +34,7 @@ export function MinimalLayout({
   const width = Dimensions.get('window').width;
   const { t } = useTranslation();
   const { styles } = useLayoutEditionStore();
-  const style = styles.minimal;
+  const style = styles.minimal.isEdited ? styles.minimal : DEFAULT_LAYOUT_STYLES.minimal;
 
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);

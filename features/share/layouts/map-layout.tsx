@@ -10,6 +10,7 @@ import {
   getFontColor,
   getBackgroundColor,
   getIconColor,
+  DEFAULT_LAYOUT_STYLES,
 } from '../utils/use-layout-edition-store';
 
 interface MapLayoutProps {
@@ -31,7 +32,7 @@ export function MapLayout({
 }: MapLayoutProps) {
   const { t } = useTranslation();
   const { styles } = useLayoutEditionStore();
-  const style = styles.map;
+  const style = styles.map.isEdited ? styles.map : DEFAULT_LAYOUT_STYLES.map;
 
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);

@@ -73,10 +73,10 @@ export function SharePhotoStep({ next }: SharePhotoStepProps) {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'timing', duration: 300 }}>
       <Text color="primary" variant="title1" className="font-bold">
-        Share Your Achievement
+        Pick a background
       </Text>
       <Text color="primary" variant="subhead" className="mb-6 mt-2 opacity-80">
-        Choose a background to make your story stand out
+        Choose a background to your story
       </Text>
       {selectedImage ? (
         <MotiView

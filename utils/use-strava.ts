@@ -115,6 +115,12 @@ export const useStrava = () => {
             return;
           }
           const { accessToken, refreshToken, expiresIn } = tokenResult;
+
+          if (!accessToken) {
+            console.error('Token exchange failed: No access token in response');
+            return;
+          }
+
           stravaStorage.set('strava_access_token', accessToken);
           stravaStorage.set('strava_refresh_token', refreshToken ?? '');
           stravaStorage.set(

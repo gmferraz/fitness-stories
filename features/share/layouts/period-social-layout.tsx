@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { Text } from '~/components/nativewindui/Text';
 import { Ionicons } from '@expo/vector-icons';
 import {
+  DEFAULT_LAYOUT_STYLES,
   getBackgroundColor,
   getFontColor,
   getIconColor,
@@ -28,7 +29,9 @@ export const PeriodSocialLayout: React.FC<PeriodSocialLayoutProps> = ({
   showBackground = true,
 }) => {
   const { styles } = useLayoutEditionStore();
-  const style = styles['period-social'];
+  const style = styles['period-social'].isEdited
+    ? styles['period-social']
+    : DEFAULT_LAYOUT_STYLES['period-social'];
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);
   const icon = getIconColor(style.iconColor);

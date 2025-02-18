@@ -10,6 +10,7 @@ import {
   getFontColor,
   getBackgroundColor,
   getIconColor,
+  DEFAULT_LAYOUT_STYLES,
 } from '../utils/use-layout-edition-store';
 
 interface WorkoutLayoutProps {
@@ -31,7 +32,7 @@ export function DetailedLayout({
   const width = Dimensions.get('window').width;
   const { t } = useTranslation();
   const { styles } = useLayoutEditionStore();
-  const style = styles.detailed;
+  const style = styles.detailed.isEdited ? styles.detailed : DEFAULT_LAYOUT_STYLES.detailed;
 
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor);

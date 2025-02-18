@@ -42,6 +42,7 @@ interface LayoutStyle {
   iconColor: IconColor;
   backgroundColor: BackgroundColor;
   showBackground: boolean;
+  isEdited: boolean;
 }
 
 interface LayoutStylesState {
@@ -66,9 +67,10 @@ const DEFAULT_STYLE: LayoutStyle = {
   iconColor: 'blue',
   backgroundColor: Appearance.getColorScheme() === 'dark' ? 'dark' : 'white',
   showBackground: true,
+  isEdited: false,
 };
 
-const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
+export const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
   minimal: {
     ...DEFAULT_STYLE,
     titleSize: 24,
@@ -165,7 +167,7 @@ export const useLayoutEditionStore = create<LayoutStylesState>()(
         set((state) => ({
           styles: {
             ...state.styles,
-            [layout]: { ...state.styles[layout], ...style },
+            [layout]: { ...state.styles[layout], ...style, isEdited: true },
           },
         })),
 
@@ -190,6 +192,7 @@ export const useLayoutEditionStore = create<LayoutStylesState>()(
             [layout]: {
               ...DEFAULT_LAYOUT_STYLES[layout],
               showBackground: state.styles[layout]?.showBackground ?? true,
+              isEdited: false,
             },
           },
         })),
@@ -214,7 +217,7 @@ export const useLayoutEditionStore = create<LayoutStylesState>()(
         }),
     }),
     {
-      name: 'layout-styles-storage-v12',
+      name: 'layout-styles-storage-v13',
       storage: createJSONStorage(() => zustandStorage),
     }
   )
