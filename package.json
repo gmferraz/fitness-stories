@@ -109,5 +109,8 @@
       "import/order": "off"
     }
   },
-  "private": true
+  "private": true,
+  "patchedDependencies": {
+    "react-native-share@12.0.3": "patches/react-native-share@12.0.3.patch"
+  }
 }

@@ -58,7 +58,7 @@ export const useWeeks = () => {
     setIsLoading(true);
     await refreshActivities();
     setIsLoading(false);
-  }, [refreshActivities]);
+  }, []);
 
   return {
     weeks: getWeeks(),
