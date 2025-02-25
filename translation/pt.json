@@ -27,7 +27,7 @@
         "steps": {
           "selectActivity": {
             "title": "Selecionar Atividade",
-            "description": "Escolha qualquer atividade dos seus apps de fitness conectados"
+            "description": "Escolha qualquer atividade dos seus aplicativos conectados"
           },
           "shareToInstagram": {
             "title": "Compartilhar",
@@ -397,16 +397,24 @@
         "calories": "Calorias"
       }
     },
+    "weekSummaryCard": {
+      "stats": {
+        "activeTime": "Tempo Ativo",
+        "distance": "Distância",
+        "avgPace": "Ritmo Médio",
+        "calories": "Calorias"
+      }
+    },
     "weeksList": {
       "title": "Semanas",
       "last12Weeks": "Últimas 12 Semanas"
     },
     "layout": {
-      "title": "Minhas Atividades",
+      "title": "FitStories",
       "settings": "Configurações"
     },
     "activitiesList": {
-      "title": "Todas as Atividades",
+      "title": "Atividades",
       "last90Days": "Últimos 90 Dias"
     },
     "sportTypes": {

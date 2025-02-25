@@ -25,7 +25,9 @@ import AppleHealthIcon from '~/assets/svg/apple-health.svg';
 import { Ionicons } from '@expo/vector-icons';
 
 export const HomeScreen = () => {
-  const { activities, isLoading, refreshActivities, hasConnectedSource } = useActivities();
+  const { activities, isLoading, refreshActivities, hasConnectedSource } = useActivities({
+    origin: 'home',
+  });
   const weekSummary = useWeekSummary();
   const { bottom } = useSafeAreaInsets();
   const [finishedMount, setFinishedMount] = useState(false);
@@ -62,23 +64,24 @@ export const HomeScreen = () => {
 
   if (!hasConnectedSource) {
     return (
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        className="flex-1 bg-background px-6 pt-6">
-        <View className="w-full space-y-4">
+      <ScrollView contentInsetAdjustmentBehavior="automatic" className="flex-1 bg-background">
+        <View className="w-full space-y-6 px-6 pt-10">
           <EmptyState
             title={t('home.noConnectedApps.title')}
             subtitle={t('home.noConnectedApps.subtitle')}
-            className="mb-6"
+            className="mb-8 shadow-lg"
           />
+          <Text variant="title2" className="mb-2 text-center font-semibold">
+            {t('home.apps.connectPrompt')}
+          </Text>
           <TouchableOpacity
             onPress={handleStravaConnect}
             disabled={isStravaConnected}
-            className={`flex-row items-center justify-between rounded-2xl bg-card p-4 ${
+            className={`flex-row items-center justify-between rounded-2xl bg-card p-5 shadow-md ${
               isStravaConnected ? 'opacity-50' : ''
             }`}>
             <View className="flex-row items-center gap-4">
-              <View className="h-12 w-12">
+              <View className="h-12 w-12 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900/30">
                 <StravaIcon />
               </View>
               <View>
@@ -95,9 +98,13 @@ export const HomeScreen = () => {
             {isConnectingStrava ? (
               <ActivityIndicator size="small" color="white" />
             ) : isStravaConnected ? (
-              <Ionicons name="checkmark" color="green" size={24} />
+              <View className="h-8 w-8 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
+                <Ionicons name="checkmark" color="green" size={20} />
+              </View>
             ) : (
-              <Ionicons name="add-circle-outline" color="gray" size={24} />
+              <View className="bg-primary/10 h-8 w-8 items-center justify-center rounded-full">
+                <Ionicons name="add" color={colors.primary} size={20} />
+              </View>
             )}
           </TouchableOpacity>
 
@@ -105,11 +112,11 @@ export const HomeScreen = () => {
             <TouchableOpacity
               onPress={handleAppleHealthConnect}
               disabled={isAppleHealthConnected}
-              className={`mt-4 flex-row items-center justify-between rounded-2xl bg-card p-4 ${
+              className={`mt-4 flex-row items-center justify-between rounded-2xl bg-card p-5 shadow-md ${
                 isAppleHealthConnected ? 'opacity-50' : ''
               }`}>
               <View className="flex-row items-center gap-4">
-                <View className="h-12 w-12">
+                <View className="h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
                   <AppleHealthIcon />
                 </View>
                 <View>
@@ -126,9 +133,13 @@ export const HomeScreen = () => {
               {isConnectingAppleHealth ? (
                 <ActivityIndicator size="small" color="white" />
               ) : isAppleHealthConnected ? (
-                <Ionicons name="checkmark" color="green" size={24} />
+                <View className="h-8 w-8 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
+                  <Ionicons name="checkmark" color="green" size={20} />
+                </View>
               ) : (
-                <Ionicons name="add-circle-outline" color="gray" size={24} />
+                <View className="bg-primary/10 h-8 w-8 items-center justify-center rounded-full">
+                  <Ionicons name="add" color={colors.primary} size={20} />
+                </View>
               )}
             </TouchableOpacity>
           )}
@@ -137,7 +148,7 @@ export const HomeScreen = () => {
     );
   }
 
-  if (isLoading && !finishedMount) {
+  if (isLoading && !finishedMount && !hasConnectedSource) {
     return (
       <View className="flex-1 items-center justify-center bg-background">
         <LoadingIndicator />
@@ -162,17 +173,17 @@ export const HomeScreen = () => {
       }
       contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={false}>
-      <View className="px-4 pt-6">
+      <View className="px-5 pt-4">
         <View className="mb-8">
           <View className="mb-4 flex-row items-center justify-between">
-            <Text variant="title1" className="font-semibold">
+            <Text variant="title1" className="font-bold">
               {t('home.lastExercise.title')}
             </Text>
             {activities.length > 0 && (
               <TouchableOpacity
-                className="rounded-full bg-gray-200 px-4 py-2 dark:bg-gray-800"
+                className="rounded-full px-4 py-2"
                 onPress={() => router.push('/activities-list')}>
-                <Text variant="subhead" color="primary">
+                <Text variant="subhead" color="primary" className="font-medium">
                   {t('home.lastExercise.seeAll')}
                 </Text>
               </TouchableOpacity>
@@ -189,6 +200,7 @@ export const HomeScreen = () => {
             <EmptyState
               title={t('home.lastExercise.empty.title')}
               subtitle={t('home.lastExercise.empty.subtitle')}
+              className="shadow-lg"
             />
           )}
         </View>
@@ -197,7 +209,7 @@ export const HomeScreen = () => {
         <View>
           <View className="mb-4 flex-row items-baseline justify-between">
             <View>
-              <Text variant="title1" className="font-semibold">
+              <Text variant="title1" className="font-bold">
                 {t('home.weekSummary.title')}
               </Text>
               <Text variant="subhead" className="text-gray-500">
@@ -205,9 +217,9 @@ export const HomeScreen = () => {
               </Text>
             </View>
             <TouchableOpacity
-              className="rounded-full bg-gray-200 px-4 py-2 dark:bg-gray-800"
+              className="rounded-full px-4 py-2"
               onPress={() => router.push('/weeks-list')}>
-              <Text variant="subhead" color="primary">
+              <Text variant="subhead" color="primary" className="font-medium">
                 {t('home.weekSummary.seeAll')}
               </Text>
             </TouchableOpacity>
@@ -218,6 +230,7 @@ export const HomeScreen = () => {
             <EmptyState
               title={t('home.weekSummary.empty.title')}
               subtitle={t('home.weekSummary.empty.subtitle')}
+              className="shadow-lg"
             />
           )}
         </View>

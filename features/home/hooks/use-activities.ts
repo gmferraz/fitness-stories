@@ -11,7 +11,11 @@ export const activityStorage = new MMKV({
 // Set to true to prevent API requests and only use stored activities
 const isDev = __DEV__;
 
-export const useActivities = () => {
+interface UseActivitiesProps {
+  origin?: 'home' | 'activities-list' | 'activity-details';
+}
+
+export const useActivities = ({ origin = 'home' }: UseActivitiesProps) => {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated: isStravaAuthenticated, listLast10RunningExercises } = useStrava();
@@ -56,6 +60,7 @@ export const useActivities = () => {
           (a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime()
         );
         setActivities(sortedActivities);
+        storeActivities(sortedActivities);
       }
     } catch (error) {
       console.error('Error fetching activities:', error);
@@ -95,7 +100,9 @@ export const useActivities = () => {
     if (hasConnectedSource) {
       const stored = getStoredActivities();
       setActivities(stored);
-      fetchAndUpdateActivities();
+      if (origin === 'home') {
+        fetchAndUpdateActivities();
+      }
     }
   }, [isStravaAuthenticated, isAppleHealthAuthenticated]);
 

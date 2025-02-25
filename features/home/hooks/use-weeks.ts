@@ -6,7 +6,7 @@ import { weekStartStore } from '~/stores/use-week-start-store';
 
 export const useWeeks = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { activities, refreshActivities } = useActivities();
+  const { activities, refreshActivities } = useActivities({ origin: 'activity-details' });
   const { weekStartsOn } = weekStartStore();
 
   const getWeeks = useCallback(() => {

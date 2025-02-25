@@ -1,13 +1,14 @@
+diff --git a/node_modules/react-native-share/.bun-tag-6da9bcb0574b8a6d b/.bun-tag-6da9bcb0574b8a6d
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
 diff --git a/ios/InstagramStories.m b/ios/InstagramStories.m
-index fd2c2c710d3880fb869d681cbd3f2debe1bdd0e9..f57df7b03cc5356aa0f82b6c133c7667ebd7097b 100644
+index fd2c2c710d3880fb869d681cbd3f2debe1bdd0e9..b1fe6f17045f236a6e305d0489f163a1b48875cb 100644
 --- a/ios/InstagramStories.m
 +++ b/ios/InstagramStories.m
-@@ -83,56 +83,17 @@ - (void)shareSingle:(NSDictionary *)options
-         [items setObject: linkText forKey: @"com.instagram.sharedSticker.linkText"];
-     }
+@@ -85,52 +85,16 @@ - (void)shareSingle:(NSDictionary *)options
  
--    if(![options[@"backgroundVideo"] isEqual:[NSNull null]] && options[@"backgroundVideo"] != nil) {
--        NSURL *backgroundVideoURL = [RCTConvert NSURL:options[@"backgroundVideo"]];
+     if(![options[@"backgroundVideo"] isEqual:[NSNull null]] && options[@"backgroundVideo"] != nil) {
+         NSURL *backgroundVideoURL = [RCTConvert NSURL:options[@"backgroundVideo"]];
 -        NSString *urlString = backgroundVideoURL.absoluteString;
 -        NSURLComponents *components = [[NSURLComponents alloc] initWithString:urlString];
 -        NSString *assetId = nil;
@@ -52,19 +53,16 @@ index fd2c2c710d3880fb869d681cbd3f2debe1bdd0e9..f57df7b03cc5356aa0f82b6c133c7667
 -               NSLog(@"Could not find asset with ID: %@", assetId);
 -               [self openInstagramWithItems:items urlScheme:urlScheme resolve:resolve];
 -           }
--        }
-+if(![options[@"backgroundVideo"] isEqual:[NSNull null]] && options[@"backgroundVideo"] != nil) {
-+    NSURL *backgroundVideoURL = [RCTConvert NSURL:options[@"backgroundVideo"]];
-+    NSData *videoData = [NSData dataWithContentsOfURL:backgroundVideoURL];
-+    
-+    if (videoData) {
-+        [items setObject:videoData forKey:@"com.instagram.sharedSticker.backgroundVideo"];
++        NSData *videoData = [NSData dataWithContentsOfURL:backgroundVideoURL];
++        
++        if (videoData) {
++            [items setObject:videoData forKey:@"com.instagram.sharedSticker.backgroundVideo"];
++        } else {
++            NSLog(@"Failed to load video data from URL");
+         }
++        [self openInstagramWithItems:items urlScheme:urlScheme resolve:resolve];
      } else {
--        [self openInstagramWithItems:items urlScheme:urlScheme resolve:resolve];
-+        NSLog(@"Failed to load video data from URL");
++        // Add this else block to handle image-only sharing
+         [self openInstagramWithItems:items urlScheme:urlScheme resolve:resolve];
      }
-+    [self openInstagramWithItems:items urlScheme:urlScheme resolve:resolve];
-+}
  }
- 
- - (NSError*)fallbackInstagram {

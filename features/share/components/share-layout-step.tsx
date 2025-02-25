@@ -136,13 +136,19 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
     try {
       if (!viewShotRef.current?.capture) return;
       const stickerUri = await viewShotRef.current.capture();
+      const isVideoFile =
+        selectedImage.toLowerCase().endsWith('.mp4') ||
+        selectedImage.toLowerCase().endsWith('.mov') ||
+        selectedImage.toLowerCase().endsWith('.avi') ||
+        selectedImage.toLowerCase().includes('video/');
+
       if (stickerUri) {
         // Store the current layout as the last used layout before sharing
         setLastUsedLayout(availableLayouts[currentPage]);
         await handleShareToInstagram({
           backgroundUri: selectedImage,
           stickerUri,
-          isVideo: false,
+          isVideo: isVideoFile,
         });
       }
     } catch (error) {

@@ -1,14 +1,18 @@
 import React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { Text } from '../../../components/nativewindui/Text';
 import { Ionicons } from '@expo/vector-icons';
 import { formatDistance, formatPace, formatDuration } from '~/utils/formatters';
+import { useColorScheme } from '~/lib/useColorScheme';
+import { useTranslation } from 'react-i18next';
+import { router } from 'expo-router';
 
 interface WeekSummaryCardProps {
   totalDistance: number;
   totalDuration: number;
   totalCalories: number;
   avgPace: number;
+  weekRange: string;
 }
 
 export const WeekSummaryCard: React.FC<WeekSummaryCardProps> = ({
@@ -16,46 +20,59 @@ export const WeekSummaryCard: React.FC<WeekSummaryCardProps> = ({
   totalDuration,
   totalCalories,
   avgPace,
+  weekRange,
 }) => {
+  const { colors } = useColorScheme();
+  const { t } = useTranslation();
+
   const stats = [
     {
       icon: 'stopwatch-outline',
       value: formatDuration(totalDuration),
-      label: 'Active Time',
+      label: t('weekSummaryCard.stats.activeTime'),
       color: '#FF2D55',
     },
     {
       icon: 'map-outline',
       value: formatDistance(totalDistance),
-      label: 'km Total',
+      label: t('weekSummaryCard.stats.distance'),
       color: '#5856D6',
     },
     {
       icon: 'speedometer-outline',
       value: formatPace(totalDistance, totalDuration),
-      label: 'Avg Pace',
+      label: t('weekSummaryCard.stats.avgPace'),
       color: '#FF9500',
     },
     {
       icon: 'flame-outline',
       value: totalCalories.toString(),
-      label: 'Calories',
+      label: t('weekSummaryCard.stats.calories'),
       color: '#34C759',
     },
   ];
 
   return (
-    <View className="rounded-3xl bg-card p-4">
+    <TouchableOpacity
+      onPress={() => router.push(`/week-details/${encodeURIComponent(weekRange)}`)}
+      className="overflow-hidden rounded-3xl bg-card p-4"
+      style={{
+        shadowColor: colors.primary,
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 4 },
+        elevation: 5,
+      }}>
       <View className="flex-row flex-wrap">
         {stats.map((stat, index) => (
           <View key={stat.label} className="w-1/2 p-2">
             <View className="rounded-2xl bg-gray-50 p-3 dark:bg-gray-800/50">
               <View
-                className="mb-2 h-8 w-8 items-center justify-center rounded-full"
+                className="mb-3 h-10 w-10 items-center justify-center rounded-full"
                 style={{ backgroundColor: `${stat.color}20` }}>
-                <Ionicons name={stat.icon as any} size={20} color={stat.color} />
+                <Ionicons name={stat.icon as any} size={22} color={stat.color} />
               </View>
-              <Text variant="title2" className="font-semibold">
+              <Text variant="title2" className="font-bold">
                 {stat.value}
               </Text>
               <Text variant="footnote" className="text-gray-500 dark:text-gray-400">
@@ -65,6 +82,6 @@ export const WeekSummaryCard: React.FC<WeekSummaryCardProps> = ({
           </View>
         ))}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };

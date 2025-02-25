@@ -397,12 +397,20 @@
         "calories": "Calories"
       }
     },
+    "weekSummaryCard": {
+      "stats": {
+        "activeTime": "Temps Actif",
+        "distance": "Distance",
+        "avgPace": "Allure Moyenne",
+        "calories": "Calories"
+      }
+    },
     "weeksList": {
       "title": "Semaines",
       "last12Weeks": "12 Dernières Semaines"
     },
     "layout": {
-      "title": "Mes Activités",
+      "title": "FitStories",
       "settings": "Paramètres"
     },
     "activitiesList": {

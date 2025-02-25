@@ -2,12 +2,12 @@
     "onboarding": {
       "welcome": {
         "title": "Bienvenido a FitStories",
-        "description": "Transforma tus actividades de fitness en hermosas historias de Instagram. Conecta tus apps de fitness favoritas y comparte tus logros con estilo.",
+        "description": "Transforma tus actividades de fitness en hermosas historias de Instagram. Conecta tus apps favoritas y comparte tus logros con estilo.",
         "getStarted": "Comenzar"
       },
       "connectApps": {
         "title": "Conecta tus Apps",
-        "description": "Vincula tus apps de fitness para importar automáticamente tus actividades. Siempre puedes conectarlas más tarde.",
+        "description": "Vincula tus apps para importar automáticamente tus actividades. Siempre puedes conectarlas más tarde.",
         "strava": {
           "title": "Strava",
           "connected": "Conectado",
@@ -27,7 +27,7 @@
         "steps": {
           "selectActivity": {
             "title": "Selecciona Actividad",
-            "description": "Elige cualquier actividad de tus apps de fitness conectadas"
+            "description": "Elige cualquier actividad de tus apps conectadas"
           },
           "shareToInstagram": {
             "title": "Compartir en Instagram",
@@ -392,8 +392,16 @@
       "stats": {
         "distance": "Distancia",
         "duration": "Duración",
-        "avgPace": "Ritmo Promedio",
+        "avgPace": "Ritmo Medio",
         "elevation": "Elevación",
+        "calories": "Calorías"
+      }
+    },
+    "weekSummaryCard": {
+      "stats": {
+        "activeTime": "Tiempo Activo",
+        "distance": "Distancia",
+        "avgPace": "Ritmo Medio",
         "calories": "Calorías"
       }
     },
@@ -402,7 +410,7 @@
       "last12Weeks": "Últimas 12 Semanas"
     },
     "layout": {
-      "title": "Mis Actividades",
+      "title": "FitStories",
       "settings": "Ajustes"
     },
     "activitiesList": {

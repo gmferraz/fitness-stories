@@ -41,7 +41,9 @@ export const PeriodSocialLayout: React.FC<PeriodSocialLayoutProps> = ({
   const mainStat = {
     icon: 'trophy-outline',
     value: totalActivities.toString(),
-    label: t('share.layouts.periodSocial.workoutsThisWeek', { count: totalActivities }),
+    label: t(
+      `share.layouts.periodSocial.workoutsThisWeek_${totalActivities === 1 ? 'one' : 'other'}`
+    ),
   };
 
   const stats = [

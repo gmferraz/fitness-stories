@@ -7,7 +7,9 @@ import { useColorScheme } from '~/lib/useColorScheme';
 import { EmptyState } from '~/components/EmptyState';
 
 export const ActivitiesList: React.FC = () => {
-  const { activities, isLoading, refreshActivities } = useActivities();
+  const { activities, isLoading, refreshActivities } = useActivities({
+    origin: 'activities-list',
+  });
   const { bottom } = useSafeAreaInsets();
   const { colors } = useColorScheme();
 

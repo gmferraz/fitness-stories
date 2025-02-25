@@ -2,9 +2,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { Icon } from '@roninoss/icons';
 import * as ImagePicker from 'expo-image-picker';
 import { VideoView, useVideoPlayer } from 'expo-video';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, View } from 'react-native';
+import { ActivityIndicator, Image, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MotiView } from 'moti';
 import { MotiPressable } from 'moti/interactions';
@@ -23,16 +23,22 @@ export function SharePhotoStep({ next }: SharePhotoStepProps) {
   const { selectedImage, setSelectedImage } = useInstagramShareStore();
   const { bottom } = useSafeAreaInsets();
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images', 'videos'],
-      aspect: [3, 4],
-      quality: 1,
-    });
+    setIsLoading(true);
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['images', 'videos'],
+        aspect: [3, 4],
+        quality: 1,
+      });
 
-    if (!result.canceled) {
-      setSelectedImage(result.assets[0].uri);
+      if (!result.canceled) {
+        setSelectedImage(result.assets[0].uri);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -43,15 +49,19 @@ export function SharePhotoStep({ next }: SharePhotoStepProps) {
       return;
     }
 
-    const result = await ImagePicker.launchCameraAsync({
-      aspect: [3, 4],
-      quality: 1,
-      allowsEditing: true,
-      videoMaxDuration: 15,
-    });
+    setIsLoading(true);
+    try {
+      const result = await ImagePicker.launchCameraAsync({
+        aspect: [3, 4],
+        quality: 1,
+        mediaTypes: ['images', 'videos'],
+      });
 
-    if (!result.canceled) {
-      setSelectedImage(result.assets[0].uri);
+      if (!result.canceled) {
+        setSelectedImage(result.assets[0].uri);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -78,7 +88,12 @@ export function SharePhotoStep({ next }: SharePhotoStepProps) {
       <Text color="primary" variant="subhead" className="mb-6 mt-2 opacity-80">
         {t('share.photo.description')}
       </Text>
-      {selectedImage ? (
+
+      {isLoading ? (
+        <View className="flex-1 items-center justify-center">
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      ) : selectedImage ? (
         <MotiView
           className="flex-1 justify-center"
           from={{ translateY: 20, opacity: 0 }}

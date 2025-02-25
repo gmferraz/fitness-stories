@@ -39,7 +39,7 @@ export default function SettingsScreen() {
   const [isConnectingAppleHealth, setIsConnectingAppleHealth] = useState(false);
 
   const handleTalkWithUs = () => {
-    Linking.openURL('mailto:guilherme@runnerai.xyz');
+    Linking.openURL('mailto:gmedeirosferraz@me.com');
   };
 
   const handleLanguageChange = (newLanguage: string) => {

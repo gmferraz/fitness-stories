@@ -13,20 +13,26 @@ export const handleShareToInstagram = async ({
   stickerUri,
   isVideo,
 }: ShareToInstagramProps) => {
-  const shareOptions: ShareSingleOptions = {
-    stickerImage: stickerUri,
-    backgroundBottomColor: 'rgb(0, 0, 0)',
-    backgroundTopColor: 'rgb(139, 144, 160)',
-    appId: FACEBOOK_APP_ID,
-    attributionURL: 'https://runnerai.xyz/',
-    social: Social.InstagramStories,
-  };
+  try {
+    const shareOptions: ShareSingleOptions = {
+      stickerImage: stickerUri,
+      backgroundBottomColor: 'rgb(0, 0, 0)',
+      backgroundTopColor: 'rgb(139, 144, 160)',
+      appId: FACEBOOK_APP_ID,
+      attributionURL: 'https://fitstories-drab.vercel.app/',
+      social: Social.InstagramStories,
+    };
 
-  if (isVideo) {
-    shareOptions.backgroundVideo = backgroundUri;
-  } else {
-    shareOptions.backgroundImage = backgroundUri;
+    if (isVideo) {
+      shareOptions.backgroundVideo = backgroundUri;
+    } else {
+      shareOptions.backgroundImage = backgroundUri;
+    }
+
+    console.log('shareOptions', shareOptions);
+
+    await Share.shareSingle(shareOptions);
+  } catch (error) {
+    console.error('Error in handleShareToInstagram:', error);
   }
-
-  await Share.shareSingle(shareOptions);
 };

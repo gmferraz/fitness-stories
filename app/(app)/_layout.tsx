@@ -1,8 +1,8 @@
 import React from 'react';
-import { Icon } from '@roninoss/icons';
 import { Link, Redirect, Stack } from 'expo-router';
 import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Ionicons } from '@expo/vector-icons';
 
 import { ThemeToggle } from '~/components/ThemeToggle';
 import { cn } from '~/lib/cn';
@@ -24,7 +24,14 @@ export default function AppLayout() {
 
   return (
     <Stack screenOptions={SCREEN_OPTIONS}>
-      <Stack.Screen name="index" options={{ ...INDEX_OPTIONS, title: t('layout.title') }} />
+      <Stack.Screen
+        name="index"
+        options={{
+          ...INDEX_OPTIONS,
+          title: t('layout.title'),
+          headerTitleStyle: { fontSize: 22, fontWeight: '900' },
+        }}
+      />
       <Stack.Screen name="modal" options={{ ...MODAL_OPTIONS, title: t('layout.settings') }} />
     </Stack>
   );
@@ -35,7 +42,7 @@ const SCREEN_OPTIONS = {
 } as const;
 
 const INDEX_OPTIONS = {
-  headerLargeTitle: true,
+  headerLargeTitle: false,
   headerRight: () => <SettingsIcon />,
 } as const;
 
@@ -46,7 +53,7 @@ function SettingsIcon() {
       <Pressable>
         {({ pressed }) => (
           <View className={cn(pressed ? 'opacity-50' : 'opacity-100')}>
-            <Icon name="cog-outline" size={28} color={colors.foreground} />
+            <Ionicons name="cog-outline" size={26} color={colors.foreground} />
           </View>
         )}
       </Pressable>

@@ -4,6 +4,7 @@ import { MMKV } from 'react-native-mmkv';
 import { useStravaStore } from '../stores/use-strava-store';
 import { decode } from '@googlemaps/polyline-codec';
 import { StravaActivity } from '~/features/home/types/activity';
+import * as Sentry from '@sentry/react-native';
 
 export const stravaStorage = new MMKV({
   id: 'strava-storage',
@@ -27,6 +28,10 @@ async function maybeRefreshToken() {
   const storedRefreshToken = stravaStorage.getString('strava_refresh_token');
   const storedExpiry = stravaStorage.getNumber('strava_token_expiry');
   if (!storedRefreshToken || !storedExpiry) {
+    Sentry.captureMessage('No stored refresh token or expiry found', {
+      level: 'warning',
+      tags: { action: 'strava_token_refresh' },
+    });
     return null;
   }
 
@@ -34,6 +39,12 @@ async function maybeRefreshToken() {
   if (now < storedExpiry - 3600) {
     return stravaStorage.getString('strava_access_token');
   }
+
+  Sentry.addBreadcrumb({
+    category: 'auth',
+    message: 'Refreshing Strava token',
+    level: 'info',
+  });
 
   try {
     const response = await fetch('https://www.strava.com/oauth/token', {
@@ -52,7 +63,13 @@ async function maybeRefreshToken() {
     const tokenResult = await response.json();
 
     if (!tokenResult.access_token) {
-      console.error('Token refresh failed: No access token in response');
+      const errorMsg = 'Token refresh failed: No access token in response';
+      console.error(errorMsg);
+      Sentry.captureMessage(errorMsg, {
+        level: 'error',
+        tags: { action: 'strava_token_refresh' },
+        extra: { response: JSON.stringify(tokenResult) },
+      });
       return null;
     }
 
@@ -60,9 +77,19 @@ async function maybeRefreshToken() {
     stravaStorage.set('strava_refresh_token', tokenResult.refresh_token);
     stravaStorage.set('strava_token_expiry', tokenResult.expires_at);
 
+    Sentry.addBreadcrumb({
+      category: 'auth',
+      message: 'Strava token refreshed successfully',
+      level: 'info',
+    });
+
     return tokenResult.access_token;
   } catch (error) {
     console.error('Token refresh failed:', error);
+    Sentry.captureException(error, {
+      tags: { action: 'strava_token_refresh' },
+      extra: { refresh_token: storedRefreshToken ? 'present' : 'missing' },
+    });
     stravaStorage.delete('strava_access_token');
     stravaStorage.delete('strava_refresh_token');
     stravaStorage.delete('strava_token_expiry');
@@ -75,8 +102,14 @@ export const useStrava = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
+      Sentry.addBreadcrumb({
+        category: 'auth',
+        message: 'Checking Strava authentication status',
+        level: 'info',
+      });
       const token = await maybeRefreshToken();
       setIsAuthenticated(!!token);
+      Sentry.setTag('strava_authenticated', !!token);
     };
     checkAuth();
   }, [setIsAuthenticated]);
@@ -97,6 +130,12 @@ export const useStrava = () => {
   useEffect(() => {
     if (response?.type === 'success') {
       const { code } = response.params;
+      Sentry.addBreadcrumb({
+        category: 'auth',
+        message: 'Strava auth successful, exchanging token',
+        level: 'info',
+      });
+
       const exchangeToken = async () => {
         try {
           const tokenResult = await AuthSession.exchangeCodeAsync(
@@ -112,13 +151,24 @@ export const useStrava = () => {
             { tokenEndpoint: 'https://www.strava.com/oauth/token' }
           );
           if (!tokenResult) {
-            console.error('Token exchange failed: No token result');
+            const errorMsg = 'Token exchange failed: No token result';
+            console.error(errorMsg);
+            Sentry.captureMessage(errorMsg, {
+              level: 'error',
+              tags: { action: 'strava_token_exchange' },
+            });
             return;
           }
           const { accessToken, refreshToken, expiresIn } = tokenResult;
 
           if (!accessToken) {
-            console.error('Token exchange failed: No access token in response');
+            const errorMsg = 'Token exchange failed: No access token in response';
+            console.error(errorMsg);
+            Sentry.captureMessage(errorMsg, {
+              level: 'error',
+              tags: { action: 'strava_token_exchange' },
+              extra: { has_refresh_token: !!refreshToken },
+            });
             return;
           }
 
@@ -129,24 +179,56 @@ export const useStrava = () => {
             Math.floor(Date.now() / 1000) + (expiresIn ?? 1)
           );
           setIsAuthenticated(true);
+          Sentry.addBreadcrumb({
+            category: 'auth',
+            message: 'Strava token exchange successful',
+            level: 'info',
+          });
+          Sentry.setTag('strava_authenticated', true);
         } catch (error) {
           console.error('Token exchange failed:', error);
+          Sentry.captureException(error, {
+            tags: { action: 'strava_token_exchange' },
+          });
         }
       };
 
       exchangeToken();
+    } else if (
+      response &&
+      ['error', 'cancel', 'dismiss', 'opened', 'locked'].includes(response.type)
+    ) {
+      Sentry.captureMessage('Strava auth response not successful', {
+        level: 'warning',
+        tags: { action: 'strava_auth' },
+        extra: { response_type: response.type },
+      });
     }
   }, [response, setIsAuthenticated]);
 
   const handleLinkStrava = async () => {
     try {
+      Sentry.addBreadcrumb({
+        category: 'auth',
+        message: 'User initiating Strava link',
+        level: 'info',
+      });
       await promptAsync();
     } catch (error) {
       console.error('Error linking Strava:', error);
+      Sentry.captureException(error, {
+        tags: { action: 'strava_link' },
+      });
     }
   };
 
   const handleUnlinkStrava = async () => {
+    Sentry.addBreadcrumb({
+      category: 'auth',
+      message: 'User unlinking Strava account',
+      level: 'info',
+    });
+
     setIsAuthenticated(false);
     try {
       await AuthSession.revokeAsync(
@@ -155,20 +237,41 @@ export const useStrava = () => {
         },
         discovery
       );
+      Sentry.addBreadcrumb({
+        category: 'auth',
+        message: 'Strava token revoked successfully',
+        level: 'info',
+      });
     } catch (error) {
       console.error('Error revoking token:', error);
+      Sentry.captureException(error, {
+        tags: { action: 'strava_unlink' },
+      });
     }
     stravaStorage.delete('strava_access_token');
     stravaStorage.delete('strava_refresh_token');
     stravaStorage.delete('strava_token_expiry');
+    Sentry.setTag('strava_authenticated', false);
   };
 
   const listLast10RunningExercises = async (): Promise<StravaActivity[]> => {
     const token = await maybeRefreshToken();
     if (!token) {
-      console.error('No valid access token');
+      const errorMsg = 'No valid access token for fetching activities';
+      console.error(errorMsg);
+      Sentry.captureMessage(errorMsg, {
+        level: 'error',
+        tags: { action: 'strava_fetch_activities' },
+      });
       return [];
     }
+
+    Sentry.addBreadcrumb({
+      category: 'api',
+      message: 'Fetching Strava activities',
+      level: 'info',
+    });
+
     const nowEpoch = Math.floor(Date.now() / 1000);
     const oneMonthAgoEpoch = nowEpoch - 86400 * 150; // last 150 days
     try {
@@ -181,10 +284,23 @@ export const useStrava = () => {
         }
       );
       if (!response.ok) {
-        console.error('Failed to fetch activities:', response.statusText);
+        const errorMsg = `Failed to fetch activities: ${response.statusText}`;
+        console.error(errorMsg);
+        Sentry.captureMessage(errorMsg, {
+          level: 'error',
+          tags: { action: 'strava_fetch_activities' },
+          extra: { status: response.status },
+        });
         return [];
       }
+
       const activities: StravaActivity[] = await response.json();
+      Sentry.addBreadcrumb({
+        category: 'api',
+        message: `Fetched ${activities.length} Strava activities`,
+        level: 'info',
+      });
+
       return activities.map((activity) => ({
         ...activity,
         id: `strava-${activity.id}`,
@@ -201,6 +317,9 @@ export const useStrava = () => {
       }));
     } catch (error) {
       console.error('Error fetching activities:', error);
+      Sentry.captureException(error, {
+        tags: { action: 'strava_fetch_activities' },
+      });
       return [];
     }
   };

@@ -251,35 +251,36 @@
   },
   "home": {
     "noConnectedApps": {
-      "title": "No connected apps",
-      "subtitle": "Connect your first app to start tracking your activities."
+      "title": "Connect Your Fitness Apps",
+      "subtitle": "Link your favorite fitness apps to track and share your activities."
     },
     "apps": {
+      "connectPrompt": "Choose an app to connect",
       "strava": {
         "title": "Strava",
         "connected": "Connected",
-        "connect": "Connect"
+        "connect": "Connect to sync activities"
       },
       "appleHealth": {
         "title": "Apple Health",
         "connected": "Connected",
-        "connect": "Connect"
+        "connect": "Connect to sync activities"
       }
     },
     "lastExercise": {
       "title": "Last Exercise",
       "seeAll": "See All",
       "empty": {
-        "title": "You haven't uploaded any activities",
-        "subtitle": "To track your progress and achieve your goals, please upload your activities and stay healthy."
+        "title": "No Activities Yet",
+        "subtitle": "Your recent activities will appear here once you complete them."
       }
     },
     "weekSummary": {
       "title": "Week Summary",
       "seeAll": "See All",
       "empty": {
-        "title": "No activities this week",
-        "subtitle": "Complete your first activity this week to see your progress and statistics."
+        "title": "No Activities This Week",
+        "subtitle": "Complete some activities to see your weekly summary."
       }
     },
     "activityDetails": {
@@ -371,7 +372,7 @@
     "last12Weeks": "Last 12 Weeks"
   },
   "layout": {
-    "title": "My Activities",
+    "title": "FitStories",
     "settings": "Settings"
   },
   "activitiesList": {
@@ -406,6 +407,14 @@
       "duration": "Duration",
       "avgPace": "Avg Pace",
       "elevation": "Elevation",
+      "calories": "Calories"
+    }
+  },
+  "weekSummaryCard": {
+    "stats": {
+      "activeTime": "Active Time",
+      "distance": "Distance",
+      "avgPace": "Avg Pace",
       "calories": "Calories"
     }
   },

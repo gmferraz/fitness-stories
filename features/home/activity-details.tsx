@@ -2,7 +2,6 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
-import { useActivities } from './hooks/use-activities';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { sportTypeToIcon } from './utils/sport-type-icons';
@@ -19,6 +18,7 @@ import {
   formatPace,
   formatWatts,
 } from '~/utils/formatters';
+import { getStoredActivityDetails } from './utils/get-stored-activity-details';
 
 interface ActivityDetailsProps {
   id: string;
@@ -32,12 +32,11 @@ interface StatItem {
 }
 
 export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
-  const { activities } = useActivities();
   const { bottom } = useSafeAreaInsets();
   const { colors } = useColorScheme();
   const { t } = useTranslation();
 
-  const activity = activities.find((a) => a.id === id);
+  const activity = getStoredActivityDetails(id);
 
   if (!activity) {
     return null;
