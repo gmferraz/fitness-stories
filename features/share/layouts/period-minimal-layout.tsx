@@ -35,7 +35,7 @@ export const PeriodMinimalLayout: React.FC<PeriodMinimalLayoutProps> = ({
     ? styles['period-minimal']
     : DEFAULT_LAYOUT_STYLES['period-minimal'];
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
   const icon = getIconColor(style.iconColor);
 
   const stats = [
@@ -63,9 +63,10 @@ export const PeriodMinimalLayout: React.FC<PeriodMinimalLayoutProps> = ({
 
   return (
     <View
-      className="aspect-square w-full overflow-hidden rounded-3xl p-6"
+      className="aspect-square w-full overflow-hidden rounded-2xl"
       style={{
         backgroundColor: showBackground ? bgColor : 'transparent',
+        padding: style.padding ?? 16,
       }}>
       <View className="flex-1">
         <Text

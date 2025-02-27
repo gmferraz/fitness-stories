@@ -35,7 +35,7 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
     ? styles['period-stats']
     : DEFAULT_LAYOUT_STYLES['period-stats'];
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
 
   const stats = [
     {
@@ -62,9 +62,10 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
 
   return (
     <View
-      className="aspect-square w-full overflow-hidden rounded-3xl p-6"
+      className="aspect-square w-full overflow-hidden rounded-2xl"
       style={{
         backgroundColor: showBackground ? bgColor : 'transparent',
+        padding: style.padding ?? 16,
       }}>
       <View className="flex-1">
         <Text

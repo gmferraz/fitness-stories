@@ -37,15 +37,16 @@ export function MinimalLayout({
   const style = styles.minimal.isEdited ? styles.minimal : DEFAULT_LAYOUT_STYLES.minimal;
 
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
   const hasElevation = !!activity.total_elevation_gain;
 
   return (
     <View
-      className="flex-col self-center rounded-2xl p-4"
+      className="flex-col self-center rounded-2xl px-4"
       style={{
-        width: width - 48,
+        width: width - 108,
         backgroundColor: showBackground ? bgColor : 'transparent',
+        padding: style.padding ?? 16,
       }}>
       <Text
         style={{

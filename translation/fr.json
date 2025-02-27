@@ -230,6 +230,8 @@
         "fontColor": "Couleur de Police",
         "backgroundColor": "Couleur de Fond",
         "iconColor": "Couleur d'Icône",
+        "opacity": "Opacité",
+        "padding": "Taille de Marge",
         "done": "Terminé",
         "colors": {
           "dark": "Sombre",

@@ -148,7 +148,7 @@ export const HomeScreen = () => {
     );
   }
 
-  if (isLoading && !finishedMount && !hasConnectedSource) {
+  if (isLoading && !finishedMount && !hasConnectedSource && !activities.length) {
     return (
       <View className="flex-1 items-center justify-center bg-background">
         <LoadingIndicator />

@@ -1,6 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { Canvas, Path, Skia } from '@shopify/react-native-skia';
+
+// Get screen dimensions
+const { width: screenWidth } = Dimensions.get('window');
 
 type Coordinate = { latitude: number; longitude: number };
 
@@ -20,13 +23,25 @@ const getBoundingBox = (coordinates: Coordinate[]) => {
 const transformCoordinates = (
   coordinates: { latitude: number; longitude: number }[],
   scale: number,
-  margin: number
+  margin: number,
+  maxWidth: number
 ) => {
   const { minLat, maxLat, minLon, maxLon } = getBoundingBox(coordinates);
 
   // Compute canvas dimensions based on the coordinate range, chosen scale, and margin.
-  const canvasWidth = (maxLon - minLon) * scale + margin * 2;
-  const canvasHeight = (maxLat - minLat) * scale + margin * 2;
+  let canvasWidth = (maxLon - minLon) * scale + margin * 2;
+  let canvasHeight = (maxLat - minLat) * scale + margin * 2;
+
+  // Calculate aspect ratio of the path
+  const aspectRatio = canvasHeight / canvasWidth;
+
+  // If the canvas width exceeds the maximum width, scale it down
+  if (canvasWidth > maxWidth) {
+    canvasWidth = maxWidth;
+    canvasHeight = canvasWidth * aspectRatio;
+    // Recalculate scale to fit the new dimensions
+    scale = (canvasWidth - margin * 2) / (maxLon - minLon);
+  }
 
   // Transform each coordinate to canvas space.
   // Note: we flip the y-axis so that higher latitudes appear toward the top.
@@ -54,10 +69,12 @@ export const SkiaMap = ({
   coordinates,
   color = 'white',
   strokeWidth = 5,
+  maxWidth = screenWidth - 40, // Default to screen width minus some margin
 }: {
   coordinates: { latitude: number; longitude: number }[];
   color?: string;
   strokeWidth?: number;
+  maxWidth?: number;
 }) => {
   // Define a scale factor.
   // For example, you might choose a scale of 700 pixels per degree (adjustable) to "zoom out".
@@ -68,12 +85,12 @@ export const SkiaMap = ({
   // Define a margin (in pixels) around the path.
   const margin = 20;
 
-  // Transform the coordinates into canvas space.
+  // Transform the coordinates into canvas space, respecting the maximum width.
   const {
     points: canvasPoints,
     canvasWidth,
     canvasHeight,
-  } = transformCoordinates(coordinates, effectiveScale, margin);
+  } = transformCoordinates(coordinates, effectiveScale, margin, maxWidth);
 
   // Build the Skia path from these points.
   const skPath = createPath(canvasPoints);

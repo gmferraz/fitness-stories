@@ -35,7 +35,7 @@ export const PeriodSocialLayout: React.FC<PeriodSocialLayoutProps> = ({
     ? styles['period-social']
     : DEFAULT_LAYOUT_STYLES['period-social'];
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
   const icon = getIconColor(style.iconColor);
 
   const mainStat = {
@@ -66,9 +66,10 @@ export const PeriodSocialLayout: React.FC<PeriodSocialLayoutProps> = ({
 
   return (
     <View
-      className="aspect-square w-full overflow-hidden rounded-3xl p-6"
+      className="aspect-square w-full overflow-hidden rounded-2xl"
       style={{
         backgroundColor: showBackground ? bgColor : 'transparent',
+        padding: style.padding ?? 16,
       }}>
       <View className="flex-1">
         <View className="flex-1 justify-center">

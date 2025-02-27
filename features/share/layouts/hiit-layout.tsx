@@ -22,16 +22,17 @@ export function HiitLayout({ activity, showBackground = true }: HiitLayoutProps)
   const { styles } = useLayoutEditionStore();
   const style = styles.hiit.isEdited ? styles.hiit : DEFAULT_LAYOUT_STYLES.hiit;
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
   const width = Dimensions.get('window').width;
   const language = languageDetector.detect();
 
   return (
     <View
-      className="flex-col self-center rounded-2xl p-4"
+      className="flex-col self-center rounded-2xl"
       style={{
         width: width - 48,
         backgroundColor: showBackground ? bgColor : 'transparent',
+        padding: style.padding ?? 16,
       }}>
       <Text
         style={{

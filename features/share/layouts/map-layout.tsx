@@ -35,7 +35,7 @@ export function MapLayout({
   const style = styles.map.isEdited ? styles.map : DEFAULT_LAYOUT_STYLES.map;
 
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
   const icon = getIconColor(style.iconColor);
 
   const getCoordinates = () => {
@@ -55,13 +55,17 @@ export function MapLayout({
   if (coordinates.length === 0) return null;
 
   return (
-    <View className="self-center overflow-hidden rounded-3xl" style={{ width: 320 }}>
-      <View style={{ backgroundColor: showBackground ? bgColor : 'transparent' }}>
+    <View className="self-center overflow-hidden rounded-2xl" style={{ width: 320 }}>
+      <View
+        style={{
+          backgroundColor: showBackground ? bgColor : 'transparent',
+          padding: style.padding ?? 12,
+        }}>
         <View className="overflow-hidden">
           <SkiaMap coordinates={coordinates} color={icon} strokeWidth={4} />
         </View>
 
-        <View className="p-4">
+        <View>
           <Text
             style={{
               fontFamily: style.fontFamily,

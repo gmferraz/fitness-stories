@@ -230,6 +230,8 @@
         "fontColor": "Color de Fuente",
         "backgroundColor": "Color de Fondo",
         "iconColor": "Color de Icono",
+        "opacity": "Opacidad",
+        "padding": "Tamaño del Margen",
         "done": "Listo",
         "colors": {
           "dark": "Oscuro",

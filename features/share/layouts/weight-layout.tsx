@@ -29,13 +29,17 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
   const style = styles.weight.isEdited ? styles.weight : DEFAULT_LAYOUT_STYLES.weight;
 
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
   const icon = getIconColor(style.iconColor);
 
   return (
     <View
-      className={`self-center overflow-hidden rounded-2xl p-4 ${showBackground ? 'bg-card' : ''}`}
-      style={{ width: 320, backgroundColor: showBackground ? bgColor : 'transparent' }}>
+      className={`self-center overflow-hidden rounded-2xl ${showBackground ? 'bg-card' : ''}`}
+      style={{
+        width: 320,
+        backgroundColor: showBackground ? bgColor : 'transparent',
+        padding: style.padding ?? 16,
+      }}>
       <Text
         style={{
           fontFamily: style.fontFamily,

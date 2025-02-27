@@ -55,20 +55,43 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
     useLayoutEditionStore();
 
   const BACKGROUND_COLORS: { label: string; value: BackgroundColor }[] = [
-    { label: t('share.editor.colors.dark'), value: 'dark' },
     { label: t('share.editor.colors.white'), value: 'white' },
-    { label: t('share.editor.colors.blue'), value: 'blue-200' },
-    { label: t('share.editor.colors.purple'), value: 'purple-600' },
-    { label: t('share.editor.colors.red'), value: 'red-200' },
-    { label: t('share.editor.colors.orange'), value: 'orange-200' },
+    { label: t('share.editor.colors.black'), value: 'black' },
+    { label: 'Pastel Pink', value: 'pastel-pink' },
+    { label: 'Pastel Blue', value: 'pastel-blue' },
+    { label: 'Pastel Purple', value: 'pastel-purple' },
+    { label: 'Pastel Green', value: 'pastel-green' },
+    { label: 'Pastel Mint', value: 'pastel-mint' },
+    { label: 'Pastel Lavender', value: 'pastel-lavender' },
+    { label: 'Pastel Coral', value: 'pastel-coral' },
+    { label: 'Pastel Turquoise', value: 'pastel-turquoise' },
+    { label: 'Pastel Mauve', value: 'pastel-mauve' },
+    { label: 'Pastel Sky Blue', value: 'pastel-sky-blue' },
+    { label: 'Vibrant Blue', value: 'vibrant-blue' },
+    { label: 'Vibrant Purple', value: 'vibrant-purple' },
+    { label: 'Vibrant Pink', value: 'vibrant-pink' },
+    { label: 'Vibrant Teal', value: 'vibrant-teal' },
+    { label: 'Vibrant Orange', value: 'vibrant-orange' },
+    { label: 'Vibrant Red', value: 'vibrant-red' },
   ];
 
   const FONT_COLORS: { label: string; value: FontColor }[] = [
     { label: t('share.editor.colors.white'), value: 'white' },
     { label: t('share.editor.colors.black'), value: 'black' },
-    { label: t('share.editor.colors.gray900'), value: 'gray-900' },
-    { label: t('share.editor.colors.gray800'), value: 'gray-800' },
-    { label: t('share.editor.colors.gray700'), value: 'gray-700' },
+    { label: 'Slate Blue-Gray', value: 'slate-blue-gray' },
+    { label: 'Soft Burgundy', value: 'soft-burgundy' },
+    { label: 'Moderate Plum', value: 'moderate-plum' },
+    { label: 'Dark Olive Green', value: 'dark-olive-green' },
+    { label: 'Deep Teal', value: 'deep-teal' },
+    { label: 'Moderate Indigo', value: 'moderate-indigo' },
+    { label: 'Slate Gray', value: 'slate-gray' },
+    { label: 'Dark Brown', value: 'dark-brown' },
+    { label: 'Forest Green', value: 'forest-green' },
+    { label: 'Charcoal', value: 'charcoal' },
+    { label: 'Midnight Blue', value: 'midnight-blue' },
+    { label: 'Espresso Brown', value: 'espresso-brown' },
+    { label: 'Iron Gray', value: 'iron-gray' },
+    { label: 'Deep Aubergine', value: 'deep-aubergine' },
   ];
 
   // Get current layout style
@@ -115,7 +138,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
       <Text color="primary" variant="heading" className="mb-4 font-bold">
         {t('share.editor.fontStyle')}
       </Text>
-      <View className="flex-col" style={{ gap: 8 }}>
+      <View className="flex-row flex-wrap" style={{ gap: 8 }}>
         {FONT_FAMILIES.map((font) => (
           <MotiPressable
             key={font.value}
@@ -145,6 +168,25 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
             </View>
           </MotiPressable>
         ))}
+      </View>
+      <View className="mt-4">
+        <View className="mb-2 flex-row items-center justify-between">
+          <Text color="primary" variant="heading" className="font-bold">
+            {t('share.editor.opacity')}
+          </Text>
+          <Text color="primary" variant="callout" className="font-medium">
+            {currentStyle?.opacity ?? 100}%
+          </Text>
+        </View>
+        <Slider
+          value={currentStyle?.opacity ?? 100}
+          minimumValue={5}
+          maximumValue={100}
+          step={5}
+          onValueChange={(value) =>
+            selectedLayout && setLayoutStyle(selectedLayout, { opacity: value })
+          }
+        />
       </View>
     </View>
   );
@@ -189,7 +231,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
           }
         />
       </View>
-      <View>
+      <View className="mb-6">
         <View className="mb-2 flex-row items-center justify-between">
           <Text color="primary" variant="heading" className="font-bold">
             {t('share.editor.labelSize')}
@@ -208,6 +250,23 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
           }
         />
       </View>
+      <View className="mb-2 flex-row items-center justify-between">
+        <Text color="primary" variant="heading" className="font-bold">
+          {t('share.editor.padding')}
+        </Text>
+        <Text color="primary" variant="callout" className="font-medium">
+          {currentStyle?.padding ?? 16}px
+        </Text>
+      </View>
+      <Slider
+        value={currentStyle?.padding ?? 16}
+        minimumValue={4}
+        maximumValue={24}
+        step={1}
+        onValueChange={(value) =>
+          selectedLayout && setLayoutStyle(selectedLayout, { padding: value })
+        }
+      />
     </View>
   );
 
@@ -233,7 +292,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
                 };
               }}>
               <View
-                className={`aspect-square w-12 items-center justify-center rounded-full ${
+                className={`aspect-square w-10 items-center justify-center rounded-full ${
                   currentStyle?.fontColor === color.value ? 'border-2 border-primary' : ''
                 }`}
                 style={{ backgroundColor: getFontColor(color.value) }}>
@@ -266,12 +325,12 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
                 };
               }}>
               <View
-                className={`aspect-square w-12 items-center justify-center rounded-full ${
+                className={`aspect-square w-10 items-center justify-center rounded-full ${
                   currentStyle?.backgroundColor === color.value
                     ? 'border-2 border-primary'
                     : 'border-border/30 border'
                 }`}
-                style={{ backgroundColor: getBackgroundColor(color.value) }}>
+                style={{ backgroundColor: getBackgroundColor(color.value, 100) }}>
                 {currentStyle?.backgroundColor === color.value && (
                   <MaterialCommunityIcons name="check" size={20} color={colors.primary} />
                 )}
@@ -290,7 +349,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
               onPress={() =>
                 selectedLayout && setLayoutStyle(selectedLayout, { iconColor: color as IconColor })
               }
-              className={`h-8 w-8 items-center justify-center rounded-full ${
+              className={`h-10 w-10 items-center justify-center rounded-full ${
                 currentStyle?.iconColor === color ? 'border-2 border-white' : ''
               }`}
               style={{ backgroundColor: getIconColor(color as IconColor) }}>

@@ -35,17 +35,18 @@ export function StatsLayout({
   const style = styles.stats.isEdited ? styles.stats : DEFAULT_LAYOUT_STYLES.stats;
 
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
   const icon = getIconColor(style.iconColor);
 
   const hasHeartRate = !!activity.average_heartrate && !!activity.max_heartrate;
 
   return (
     <View
-      className="self-center overflow-hidden rounded-2xl p-4"
+      className="self-center overflow-hidden rounded-2xl"
       style={{
         width: 320,
         backgroundColor: showBackground ? bgColor : 'transparent',
+        padding: style.padding ?? 16,
       }}>
       <View>
         <Text

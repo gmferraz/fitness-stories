@@ -30,81 +30,84 @@ export function ProgressLayout({
   const style = styles.progress.isEdited ? styles.progress : DEFAULT_LAYOUT_STYLES.progress;
 
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
 
   return (
-    <View className="self-center rounded-2xl" style={{ height: 180, width: width - 48 }}>
-      <View
-        className="mb-2 flex-col rounded-xl p-4"
-        style={{ backgroundColor: showBackground ? bgColor : 'transparent' }}>
-        <Text
-          style={{
-            fontFamily: style.fontFamily,
-            color: textColor,
-            fontSize: style.bodySize,
-            lineHeight: style.bodySize * 1.2,
-          }}
-          className="mb-2"
-          numberOfLines={3}>
-          {activity.name}
-        </Text>
-        <Text
-          numberOfLines={2}
-          style={{
-            fontFamily: style.fontFamily,
-            color: textColor,
-            fontSize: style.titleSize,
-            lineHeight: style.titleSize * 1.2,
-          }}
-          className="mb-4 font-bold">
-          {formatDistance(activity.distance)}
-        </Text>
+    <View
+      className="flex-col self-center rounded-2xl px-4"
+      style={{
+        width: width - 72,
+        backgroundColor: showBackground ? bgColor : 'transparent',
+        padding: style.padding ?? 16,
+        borderRadius: 16,
+      }}>
+      <Text
+        style={{
+          fontFamily: style.fontFamily,
+          color: textColor,
+          fontSize: style.bodySize,
+          lineHeight: style.bodySize * 1.2,
+        }}
+        className="mb-2"
+        numberOfLines={3}>
+        {activity.name}
+      </Text>
+      <Text
+        numberOfLines={2}
+        style={{
+          fontFamily: style.fontFamily,
+          color: textColor,
+          fontSize: style.titleSize,
+          lineHeight: style.titleSize * 1.2,
+        }}
+        className="mb-4 font-bold">
+        {formatDistance(activity.distance)}
+      </Text>
 
-        <View className="flex-row justify-between">
-          <View className="flex-1">
-            <Text
-              style={{
-                fontFamily: style.fontFamily,
-                color: textColor,
-                fontSize: style.labelSize,
-                lineHeight: style.labelSize * 1.2,
-              }}
-              className="mb-1">
-              {t('share.layouts.common.avgPace')}
-            </Text>
-            <Text
-              style={{
-                fontFamily: style.fontFamily,
-                color: textColor,
-                fontSize: style.bodySize,
-                lineHeight: style.bodySize * 1.2,
-              }}
-              className="font-bold">
-              {pace}
-            </Text>
-          </View>
-          <View className="ml-3 flex-1">
-            <Text
-              style={{
-                fontFamily: style.fontFamily,
-                color: textColor,
-                fontSize: style.labelSize,
-                lineHeight: style.labelSize * 1.2,
-              }}
-              className="mb-1">
-              {t('share.layouts.common.time')}
-            </Text>
-            <Text
-              style={{
-                fontFamily: style.fontFamily,
-                color: textColor,
-                fontSize: style.bodySize,
-                lineHeight: style.bodySize * 1.2,
-              }}
-              className="font-bold">
-              {formatDuration(duration)}
-            </Text>
-          </View>
+      <View className="flex-row justify-between">
+        <View className="flex-1">
+          <Text
+            style={{
+              fontFamily: style.fontFamily,
+              color: textColor,
+              fontSize: style.labelSize,
+              lineHeight: style.labelSize * 1.2,
+            }}
+            className="mb-1">
+            {t('share.layouts.common.avgPace')}
+          </Text>
+          <Text
+            style={{
+              fontFamily: style.fontFamily,
+              color: textColor,
+              fontSize: style.bodySize,
+              lineHeight: style.bodySize * 1.2,
+            }}
+            className="font-bold">
+            {pace}
+          </Text>
+        </View>
+        <View className="ml-3 flex-1">
+          <Text
+            style={{
+              fontFamily: style.fontFamily,
+              color: textColor,
+              fontSize: style.labelSize,
+              lineHeight: style.labelSize * 1.2,
+            }}
+            className="mb-1">
+            {t('share.layouts.common.time')}
+          </Text>
+          <Text
+            style={{
+              fontFamily: style.fontFamily,
+              color: textColor,
+              fontSize: style.bodySize,
+              lineHeight: style.bodySize * 1.2,
+            }}
+            className="font-bold">
+            {formatDuration(duration)}
+          </Text>
         </View>
       </View>
     </View>

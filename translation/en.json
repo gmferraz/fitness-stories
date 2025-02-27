@@ -230,6 +230,8 @@
       "fontColor": "Font Color",
       "backgroundColor": "Background Color",
       "iconColor": "Icon Color",
+      "opacity": "Opacity",
+      "padding": "Margin Size",
       "done": "Done",
       "colors": {
         "dark": "Dark",

@@ -43,23 +43,11 @@ export const useAppleHealth = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      checkAvailabilityAndPermissions();
-    }
+    checkAvailabilityAndPermissions();
   }, []);
 
   const checkAvailabilityAndPermissions = async () => {
     // Check if HealthKit is available on this device
-    Sentry.addBreadcrumb({
-      category: 'health',
-      message: 'Checking Apple Health availability',
-      level: 'info',
-    });
-
-    requestPermissions();
-  };
-
-  const requestPermissions = () => {
     AppleHealthKit.isAvailable((err: any, available: boolean) => {
       if (err) {
         console.error('error checking Healthkit availability: ', err);
@@ -73,7 +61,18 @@ export const useAppleHealth = () => {
       setIsAvailable(available);
       Sentry.setTag('apple_health_available', available);
     });
+    Sentry.addBreadcrumb({
+      category: 'health',
+      message: 'Checking Apple Health availability',
+      level: 'info',
+    });
 
+    if (isAuthenticated) {
+      requestPermissions();
+    }
+  };
+
+  const requestPermissions = () => {
     Sentry.addBreadcrumb({
       category: 'health',
       message: 'Requesting Apple Health permissions',

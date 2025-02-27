@@ -29,8 +29,6 @@ export const handleShareToInstagram = async ({
       shareOptions.backgroundImage = backgroundUri;
     }
 
-    console.log('shareOptions', shareOptions);
-
     await Share.shareSingle(shareOptions);
   } catch (error) {
     console.error('Error in handleShareToInstagram:', error);

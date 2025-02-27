@@ -21,7 +21,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
   const { styles } = useLayoutEditionStore();
   const style = styles.hiit2.isEdited ? styles.hiit2 : DEFAULT_LAYOUT_STYLES.hiit2;
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
   const hasHeartRate = !!activity.average_heartrate;
   const hasMaxHeartRate = !!activity.max_heartrate;
 
@@ -44,10 +44,11 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
 
   return (
     <View
-      className="self-center overflow-hidden rounded-2xl p-4"
+      className="self-center overflow-hidden rounded-2xl"
       style={{
         width: 300,
         backgroundColor: showBackground ? bgColor : 'transparent',
+        padding: style.padding ?? 16,
       }}>
       {hasHeartRate ? (
         // Layout with heart rate: 2x2 grid

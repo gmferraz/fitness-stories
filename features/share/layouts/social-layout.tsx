@@ -33,7 +33,7 @@ export function SocialLayout({
   const style = styles.social.isEdited ? styles.social : DEFAULT_LAYOUT_STYLES.social;
 
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
 
   const commonTextStyles = {
     fontFamily: style.fontFamily,
@@ -54,10 +54,11 @@ export function SocialLayout({
 
   return (
     <View
-      className="self-center overflow-hidden rounded-2xl p-4"
+      className="self-center overflow-hidden rounded-2xl"
       style={{
         width: 300,
         backgroundColor: showBackground ? bgColor : 'transparent',
+        padding: style.padding ?? 12,
       }}>
       {hasHeartRate ? (
         // Layout with heart rate: 2x2 grid

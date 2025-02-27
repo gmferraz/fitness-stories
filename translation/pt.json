@@ -226,10 +226,12 @@
         "fontStyle": "Estilo da Fonte",
         "titleSize": "Tamanho do Título",
         "bodySize": "Tamanho do Corpo",
-        "labelSize": "Tamanho do título da seção",
+        "labelSize": "Tamanho do Título da seção",
         "fontColor": "Cor da Fonte",
         "backgroundColor": "Cor de Fundo",
         "iconColor": "Cor do Ícone",
+        "opacity": "Transparência",
+        "padding": "Tamanho da Margem",
         "done": "Concluir",
         "colors": {
           "dark": "Escuro",
@@ -270,8 +272,8 @@
         "title": "Último exercício",
         "seeAll": "Ver tudo",
         "empty": {
-          "title": "Você não enviou nenhuma atividade",
-          "subtitle": "Para acompanhar seu progresso e atingir suas metas, por favor, envie suas atividades e mantenha-se saudável."
+          "title": "Nenhuma atividade",
+          "subtitle": "Nenhuma atividade recente. Tente adicionar uma atividade para ver seu progresso."
         }
       },
       "weekSummary": {

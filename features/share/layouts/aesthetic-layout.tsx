@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import { formatDistance, formatDuration } from '~/utils/formatters';
@@ -8,7 +8,6 @@ import {
   getBackgroundColor,
   DEFAULT_LAYOUT_STYLES,
 } from '../utils/use-layout-edition-store';
-
 interface AestheticLayoutProps {
   pace: string;
   duration: number;
@@ -30,13 +29,14 @@ export function AestheticLayout({
   const { styles } = useLayoutEditionStore();
   const style = styles.aesthetic.isEdited ? styles.aesthetic : DEFAULT_LAYOUT_STYLES.aesthetic;
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
+  const width = Dimensions.get('window').width;
 
   return (
     <View
       className="self-center rounded-2xl p-4"
       style={{
-        width: 320,
+        width: width - 48,
         backgroundColor: showBackground ? bgColor : 'transparent',
       }}>
       <View className="flex-col p-4">

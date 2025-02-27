@@ -3,17 +3,46 @@ import { create } from 'zustand';
 import { createJSONStorage, persist, StateStorage } from 'zustand/middleware';
 import { LayoutType } from './get-available-layouts';
 import { Appearance } from 'react-native';
+import { applyOpacityToColor } from './apply-opacity-to-color';
 
 export type FontFamily = 'Inter' | 'Oswald' | 'Montserrat' | 'Poppins';
 export type ColorScheme = 'blue' | 'purple' | 'pink' | 'orange' | 'green';
 export type BackgroundColor =
-  | 'dark'
   | 'white'
-  | 'blue-200'
-  | 'purple-600'
-  | 'red-200'
-  | 'orange-200';
-export type FontColor = 'black' | 'gray-700' | 'gray-800' | 'gray-900' | 'white';
+  | 'black'
+  | 'pastel-pink'
+  | 'pastel-blue'
+  | 'pastel-purple'
+  | 'pastel-green'
+  | 'pastel-mint'
+  | 'pastel-lavender'
+  | 'pastel-coral'
+  | 'pastel-turquoise'
+  | 'pastel-mauve'
+  | 'pastel-sky-blue'
+  | 'vibrant-blue'
+  | 'vibrant-purple'
+  | 'vibrant-pink'
+  | 'vibrant-teal'
+  | 'vibrant-orange'
+  | 'vibrant-red';
+export type FontColor =
+  | 'white'
+  | 'black'
+  | 'slate-blue-gray'
+  | 'soft-burgundy'
+  | 'moderate-plum'
+  | 'dark-olive-green'
+  | 'deep-teal'
+  | 'moderate-indigo'
+  | 'slate-gray'
+  | 'dark-brown'
+  | 'forest-green'
+  | 'charcoal'
+  | 'midnight-blue'
+  | 'espresso-brown'
+  | 'iron-gray'
+  | 'deep-aubergine';
 export type IconColor = 'blue' | 'purple' | 'pink' | 'orange' | 'green' | 'white' | 'gray';
 
 const envStorage = new MMKV({
@@ -43,6 +72,8 @@ interface LayoutStyle {
   backgroundColor: BackgroundColor;
   showBackground: boolean;
   isEdited: boolean;
+  padding: number;
+  opacity: number;
 }
 
 interface LayoutStylesState {
@@ -65,9 +96,11 @@ const DEFAULT_STYLE: LayoutStyle = {
   labelSize: 14,
   fontColor: Appearance.getColorScheme() === 'dark' ? 'white' : 'black',
   iconColor: 'blue',
-  backgroundColor: Appearance.getColorScheme() === 'dark' ? 'dark' : 'white',
+  backgroundColor: Appearance.getColorScheme() === 'dark' ? 'black' : 'white',
   showBackground: true,
   isEdited: false,
+  padding: 16,
+  opacity: 100,
 };
 
 export const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
@@ -217,7 +250,7 @@ export const useLayoutEditionStore = create<LayoutStylesState>()(
         }),
     }),
     {
-      name: 'layout-styles-storage-v13',
+      name: 'layout-styles-storage-v15',
       storage: createJSONStorage(() => zustandStorage),
     }
   )
@@ -225,33 +258,79 @@ export const useLayoutEditionStore = create<LayoutStylesState>()(
 
 export function getFontColor(color: FontColor): string {
   switch (color) {
-    case 'black':
-      return '#000000';
-    case 'gray-900':
-      return '#111827';
-    case 'gray-800':
-      return '#1F2937';
-    case 'gray-700':
-      return '#374151';
     case 'white':
       return '#FFFFFF';
+    case 'black':
+      return '#000000';
+    case 'slate-blue-gray':
+      return '#37474F';
+    case 'soft-burgundy':
+      return '#880E4F';
+    case 'moderate-plum':
+      return '#5D3A6A';
+    case 'dark-olive-green':
+      return '#3B3F2B';
+    case 'deep-teal':
+      return '#00796B';
+    case 'moderate-indigo':
+      return '#283593';
+    case 'slate-gray':
+      return '#455A64';
+    case 'dark-brown':
+      return '#4E342E';
+    case 'forest-green':
+      return '#2E7D32';
+    case 'charcoal':
+      return '#212121';
+    case 'midnight-blue':
+      return '#0D47A1';
+    case 'espresso-brown':
+      return '#3E2723';
+    case 'iron-gray':
+      return '#616161';
+    case 'deep-aubergine':
+      return '#4B0082';
   }
 }
 
-export function getBackgroundColor(color: BackgroundColor): string {
+export function getBackgroundColor(color: BackgroundColor, opacity = 100): string {
   switch (color) {
-    case 'dark':
-      return 'rgb(21, 21, 24)';
     case 'white':
-      return '#FFFFFF';
-    case 'blue-200':
-      return '#BFDBFE';
-    case 'purple-600':
-      return '#9333EA';
-    case 'red-200':
-      return '#FECACA';
-    case 'orange-200':
-      return '#FED7AA';
+      return applyOpacityToColor('#FFFFFF', opacity);
+    case 'black':
+      return applyOpacityToColor('rgb(21, 21, 24)', opacity);
+    case 'pastel-pink':
+      return applyOpacityToColor('#FFC1CC', opacity);
+    case 'pastel-blue':
+      return applyOpacityToColor('#A2D2FF', opacity);
+    case 'pastel-purple':
+      return applyOpacityToColor('#CDB4DB', opacity);
+    case 'pastel-green':
+      return applyOpacityToColor('#BFD8B8', opacity);
+    case 'pastel-mint':
+      return applyOpacityToColor('#CFF9E1', opacity);
+    case 'pastel-lavender':
+      return applyOpacityToColor('#E3D0FF', opacity);
+    case 'pastel-coral':
+      return applyOpacityToColor('#FFAAA7', opacity);
+    case 'pastel-turquoise':
+      return applyOpacityToColor('#B2DFDB', opacity);
+    case 'pastel-mauve':
+      return applyOpacityToColor('#F1E1FF', opacity);
+    case 'pastel-sky-blue':
+      return applyOpacityToColor('#B3E5FC', opacity);
+    case 'vibrant-blue':
+      return applyOpacityToColor('#1E88E5', opacity);
+    case 'vibrant-purple':
+      return applyOpacityToColor('#8E24AA', opacity);
+    case 'vibrant-pink':
+      return applyOpacityToColor('#EC407A', opacity);
+    case 'vibrant-teal':
+      return applyOpacityToColor('#00ACC1', opacity);
+    case 'vibrant-orange':
+      return applyOpacityToColor('#FF7043', opacity);
+    case 'vibrant-red':
+      return applyOpacityToColor('#E53935', opacity);
   }
 }
 

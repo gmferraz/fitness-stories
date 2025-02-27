@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -36,102 +36,98 @@ export function AchievementLayout({
     : DEFAULT_LAYOUT_STYLES.achievement;
 
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
   const icon = getIconColor(style.iconColor);
+  const padding = style.padding;
+  const width = Dimensions.get('window').width;
 
   return (
     <View
-      className="self-center rounded-2xl p-4"
+      className="flex-col self-center rounded-2xl"
       style={{
-        height: 340,
-        width: 320,
+        width: width - 48,
         backgroundColor: showBackground ? bgColor : 'transparent',
+        padding: padding ?? 16,
       }}>
-      <View className="flex-1 p-6">
-        {/* Achievement Badge */}
-        <View className="items-center">
-          <View
-            className="items-center justify-center rounded-full p-6"
-            style={{
-              backgroundColor: `${textColor}20`,
-            }}>
-            <MaterialCommunityIcons
-              name="trophy"
-              size={48}
-              color={showBackground ? textColor : icon}
-            />
-          </View>
-
-          <Text
-            style={{
-              fontFamily: style.fontFamily,
-              color: textColor,
-              fontSize: style.titleSize * 1.2,
-              lineHeight: style.titleSize * 1.4,
-            }}
-            className="mt-4 text-center font-black">
-            {formatDistance(distance)}
-          </Text>
-
-          <Text
-            style={{
-              fontFamily: style.fontFamily,
-              color: textColor,
-              fontSize: style.labelSize,
-              lineHeight: style.labelSize * 1.2,
-            }}
-            className="mt-1 text-center">
-            {title}
-          </Text>
+      {/* Achievement Badge */}
+      <View className="items-center">
+        <View
+          className="items-center justify-center rounded-full p-6"
+          style={{
+            backgroundColor: `${textColor}20`,
+          }}>
+          <MaterialCommunityIcons name="trophy" size={48} color={icon} />
         </View>
 
-        {/* Stats */}
-        <View className="mt-6">
-          <View className="rounded-2xl p-4">
-            <View className="flex-row justify-between">
-              <View>
-                <Text
-                  style={{
-                    fontFamily: style.fontFamily,
-                    color: textColor,
-                    fontSize: style.labelSize,
-                    lineHeight: style.labelSize * 1.2,
-                  }}>
-                  {t('share.layouts.common.time')}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: style.fontFamily,
-                    color: textColor,
-                    fontSize: style.bodySize,
-                    lineHeight: style.bodySize * 1.2,
-                  }}
-                  className="font-bold">
-                  {formatDuration(duration)}
-                </Text>
-              </View>
+        <Text
+          style={{
+            fontFamily: style.fontFamily,
+            color: textColor,
+            fontSize: style.titleSize * 1.2,
+            lineHeight: style.titleSize * 1.4,
+          }}
+          className="mt-4 text-center font-black">
+          {formatDistance(distance)}
+        </Text>
 
-              <View className="items-start">
-                <Text
-                  style={{
-                    fontFamily: style.fontFamily,
-                    color: textColor,
-                    fontSize: style.labelSize,
-                    lineHeight: style.labelSize * 1.2,
-                  }}>
-                  {t('share.layouts.common.avgPace')}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: style.fontFamily,
-                    color: textColor,
-                    fontSize: style.bodySize,
-                    lineHeight: style.bodySize * 1.2,
-                  }}
-                  className="font-bold">
-                  {pace}
-                </Text>
-              </View>
+        <Text
+          style={{
+            fontFamily: style.fontFamily,
+            color: textColor,
+            fontSize: style.labelSize,
+            lineHeight: style.labelSize * 1.2,
+          }}
+          className="mt-1 text-center">
+          {title}
+        </Text>
+      </View>
+
+      {/* Stats */}
+      <View className="mt-6">
+        <View className="rounded-2xl p-4">
+          <View className="flex-row justify-between">
+            <View>
+              <Text
+                style={{
+                  fontFamily: style.fontFamily,
+                  color: textColor,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
+                }}>
+                {t('share.layouts.common.time')}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: style.fontFamily,
+                  color: textColor,
+                  fontSize: style.bodySize,
+                  lineHeight: style.bodySize * 1.2,
+                }}
+                className="font-bold">
+                {formatDuration(duration)}
+              </Text>
+            </View>
+
+            <View className="items-start">
+              <Text
+                style={{
+                  fontFamily: style.fontFamily,
+                  color: textColor,
+                  fontSize: style.labelSize,
+                  lineHeight: style.labelSize * 1.2,
+                }}>
+                {t('share.layouts.common.avgPace')}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: style.fontFamily,
+                  color: textColor,
+                  fontSize: style.bodySize,
+                  lineHeight: style.bodySize * 1.2,
+                }}
+                className="font-bold">
+                {pace}
+              </Text>
             </View>
           </View>
         </View>

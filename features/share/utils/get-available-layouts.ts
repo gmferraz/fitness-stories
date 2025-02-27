@@ -1,5 +1,3 @@
-import { act } from 'react';
-import { Appearance } from 'react-native';
 import { Activity, StravaActivity, AppleHealthActivity } from '~/features/home/types/activity';
 
 export type LayoutType =

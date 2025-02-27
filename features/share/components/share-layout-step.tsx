@@ -173,7 +173,12 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
             quality: 1,
             result: 'data-uri',
           }}>
-          <LayoutComponent {...props} showBackground={currentLayoutStyle?.showBackground ?? true} />
+          <View style={{ borderRadius: 16, overflow: 'hidden' }}>
+            <LayoutComponent
+              {...props}
+              showBackground={currentLayoutStyle?.showBackground ?? true}
+            />
+          </View>
         </ViewShot>
         <MotiPressable
           onPress={toggleBackground}

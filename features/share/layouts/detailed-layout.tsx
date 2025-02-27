@@ -35,17 +35,18 @@ export function DetailedLayout({
   const style = styles.detailed.isEdited ? styles.detailed : DEFAULT_LAYOUT_STYLES.detailed;
 
   const textColor = getFontColor(style.fontColor);
-  const bgColor = getBackgroundColor(style.backgroundColor);
+  const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
   const icon = getIconColor(style.iconColor);
 
   const totalElevation = activity.total_elevation_gain ?? 0;
 
   return (
     <View
-      className="self-center rounded-2xl p-4"
+      className="self-center rounded-2xl"
       style={{
         width: width - 48,
         backgroundColor: showBackground ? bgColor : 'transparent',
+        padding: style.padding ?? 16,
       }}>
       <View className="flex-col">
         <View className="mb-3 flex-row justify-between">
