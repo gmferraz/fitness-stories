@@ -100,7 +100,7 @@ const DEFAULT_STYLE: LayoutStyle = {
   showBackground: true,
   isEdited: false,
   padding: 16,
-  opacity: 100,
+  opacity: 80,
 };
 
 export const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
@@ -126,24 +126,28 @@ export const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
     fontFamily: 'Inter',
     titleSize: 26,
     bodySize: 16,
+    opacity: 100,
   },
   map: {
     ...DEFAULT_STYLE,
     fontFamily: 'Poppins',
     titleSize: 30,
     bodySize: 18,
+    opacity: 100,
   },
   stats: {
     ...DEFAULT_STYLE,
     fontFamily: 'Poppins',
     titleSize: 28,
     bodySize: 18,
+    opacity: 100,
   },
   aesthetic: {
     ...DEFAULT_STYLE,
     fontFamily: 'Montserrat',
     titleSize: 32,
     bodySize: 20,
+    opacity: 60,
   },
   achievement: {
     ...DEFAULT_STYLE,
