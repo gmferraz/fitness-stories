@@ -102,7 +102,7 @@ const DEFAULT_STYLE: LayoutStyle = {
   showBackground: true,
   isEdited: false,
   padding: 16,
-  opacity: 80,
+  opacity: 90,
 };
 
 export const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
@@ -128,7 +128,6 @@ export const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
     fontFamily: 'Inter',
     titleSize: 26,
     bodySize: 16,
-    opacity: 100,
   },
   map: {
     ...DEFAULT_STYLE,
@@ -149,7 +148,7 @@ export const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
     fontFamily: 'Montserrat',
     titleSize: 32,
     bodySize: 20,
-    opacity: 60,
+    opacity: 80,
   },
   achievement: {
     ...DEFAULT_STYLE,
@@ -256,7 +255,7 @@ export const useLayoutEditionStore = create<LayoutStylesState>()(
         }),
     }),
     {
-      name: 'layout-styles-storage-v16',
+      name: 'layout-styles-storage-v17',
       storage: createJSONStorage(() => zustandStorage),
     }
   )

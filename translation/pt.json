@@ -491,11 +491,11 @@
       "subscribe": "Assinar",
       "presets": {
         "editTemplates": {
-          "title": "Editar templates é um recurso premium",
-          "subtitle": "Desbloqueie a edição ilimitada de templates com uma assinatura. Redefina seu template para continuar sem uma assinatura."
+          "title": "Editar layouts é um recurso premium",
+          "subtitle": "Desbloqueie a edição ilimitada de layouts com uma assinatura. Reinicie seu layout para continuar sem uma assinatura."
         },
         "removeAds": {
-          "title": "Desfrute de uma experiência sem anúncios",
+          "title": "Tenha uma experiência sem anúncios",
           "subtitle": "Remova todos os anúncios e aproveite sessões ininterruptas com uma assinatura"
         }
       },

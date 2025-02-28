@@ -3,7 +3,7 @@ import { View, Dimensions } from 'react-native';
 import { Canvas, Path, Skia } from '@shopify/react-native-skia';
 
 // Get screen dimensions
-const { width: screenWidth } = Dimensions.get('window');
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 type Coordinate = { latitude: number; longitude: number };
 
@@ -18,36 +18,50 @@ const getBoundingBox = (coordinates: Coordinate[]) => {
   return { minLat, maxLat, minLon, maxLon };
 };
 
-// Updated transformation that uses the bounding box to compute canvas dimensions.
-// The canvas size will be limited to the path (plus a margin), and the drawing is zoomed out.
+// Improved transformation that handles large maps better
 const transformCoordinates = (
   coordinates: { latitude: number; longitude: number }[],
-  scale: number,
+  initialScale: number,
   margin: number,
-  maxWidth: number
+  maxWidth: number,
+  maxHeight: number
 ) => {
-  const { minLat, maxLat, minLon, maxLon } = getBoundingBox(coordinates);
-
-  // Compute canvas dimensions based on the coordinate range, chosen scale, and margin.
-  let canvasWidth = (maxLon - minLon) * scale + margin * 2;
-  let canvasHeight = (maxLat - minLat) * scale + margin * 2;
-
-  // Calculate aspect ratio of the path
-  const aspectRatio = canvasHeight / canvasWidth;
-
-  // If the canvas width exceeds the maximum width, scale it down
-  if (canvasWidth > maxWidth) {
-    canvasWidth = maxWidth;
-    canvasHeight = canvasWidth * aspectRatio;
-    // Recalculate scale to fit the new dimensions
-    scale = (canvasWidth - margin * 2) / (maxLon - minLon);
+  if (coordinates.length === 0) {
+    return { points: [], canvasWidth: maxWidth, canvasHeight: maxHeight };
   }
 
-  // Transform each coordinate to canvas space.
-  // Note: we flip the y-axis so that higher latitudes appear toward the top.
+  const { minLat, maxLat, minLon, maxLon } = getBoundingBox(coordinates);
+
+  // Calculate the latitude and longitude ranges
+  const latRange = maxLat - minLat;
+  const lonRange = maxLon - minLon;
+
+  // If the range is too small, add a minimum to prevent division by zero
+  const effectiveLatRange = Math.max(latRange, 0.0001);
+  const effectiveLonRange = Math.max(lonRange, 0.0001);
+
+  // Initial dimensions based on the provided scale
+  let canvasWidth = effectiveLonRange * initialScale + margin * 2;
+  let canvasHeight = effectiveLatRange * initialScale + margin * 2;
+
+  // Calculate scale factors to fit within max dimensions
+  const widthScaleFactor = maxWidth / canvasWidth;
+  const heightScaleFactor = maxHeight / canvasHeight;
+
+  // Use the smaller scale factor to ensure both dimensions fit
+  const scaleFactor = Math.min(widthScaleFactor, heightScaleFactor, 1);
+
+  // Apply the scale factor
+  canvasWidth = Math.min(canvasWidth * scaleFactor, maxWidth);
+  canvasHeight = Math.min(canvasHeight * scaleFactor, maxHeight);
+
+  // Calculate the final scale to use for coordinate transformation
+  const finalScale = (canvasWidth - margin * 2) / effectiveLonRange;
+
+  // Transform coordinates to canvas space
   const transformedPoints = coordinates.map(({ latitude, longitude }) => {
-    const x = (longitude - minLon) * scale + margin;
-    const y = canvasHeight - ((latitude - minLat) * scale + margin);
+    const x = (longitude - minLon) * finalScale + margin;
+    const y = canvasHeight - ((latitude - minLat) * finalScale + margin);
     return { x, y };
   });
 
@@ -70,27 +84,26 @@ export const SkiaMap = ({
   color = 'white',
   strokeWidth = 5,
   maxWidth = screenWidth - 40, // Default to screen width minus some margin
+  maxHeight = screenHeight * 0.7, // Default to 70% of screen height
 }: {
   coordinates: { latitude: number; longitude: number }[];
   color?: string;
   strokeWidth?: number;
   maxWidth?: number;
+  maxHeight?: number;
 }) => {
-  // Define a scale factor.
-  // For example, you might choose a scale of 700 pixels per degree (adjustable) to "zoom out".
-  const scale = 24000; // pixels per degree (adjust as needed)
-  const zoomFactor = 1; // Multiply to "zoom out" further if desired.
-  const effectiveScale = scale * zoomFactor;
+  // Base scale factor - will be adjusted based on map size
+  const baseScale = 24000; // pixels per degree
 
   // Define a margin (in pixels) around the path.
   const margin = 20;
 
-  // Transform the coordinates into canvas space, respecting the maximum width.
+  // Transform the coordinates into canvas space, respecting both max width and height
   const {
     points: canvasPoints,
     canvasWidth,
     canvasHeight,
-  } = transformCoordinates(coordinates, effectiveScale, margin, maxWidth);
+  } = transformCoordinates(coordinates, baseScale, margin, maxWidth, maxHeight);
 
   // Build the Skia path from these points.
   const skPath = createPath(canvasPoints);

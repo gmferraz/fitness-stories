@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../../translation';
 // import Purchases from 'react-native-purchases';
+import * as Sentry from '@sentry/react-native';
 
 import { useMountEffect } from '~/utils/use-mount-effect';
 import {
@@ -9,8 +10,15 @@ import {
   useInitializeEnvironment,
 } from './use-environment';
 import { useAds } from '../ads/use-ads';
+import { MMKV } from 'react-native-mmkv';
+import { router } from 'expo-router';
 
 type AppSetupState = 'pending' | 'done' | 'failed';
+
+const APP_OPEN_AD_VIEWS_KEY = 'appOpenAdViews';
+const PAYWALL_SHOWN_KEY = 'paywallShown';
+
+const storage = new MMKV();
 
 export const runSynchronousSetupChores = () => {
   // TODO: Uncomment this when we have a way to test the app without ads
@@ -29,6 +37,36 @@ export const useAppSetup = () => {
   const { createAppOpenAd } = useAds();
   const isPremium = useEnvironmentStore((state) => state.isPremium);
 
+  const trackAppOpenAdView = () => {
+    if (isPremium) return false;
+
+    // Check if paywall was already shown
+    const paywallShown = storage.getBoolean(PAYWALL_SHOWN_KEY) || false;
+    if (paywallShown) return false;
+
+    // Get current count and increment
+    const currentViews = storage.getNumber(APP_OPEN_AD_VIEWS_KEY) || 0;
+    const newViews = currentViews + 1;
+    storage.set(APP_OPEN_AD_VIEWS_KEY, newViews);
+
+    // Return true if this is the third view
+    return newViews === 3;
+  };
+
+  const markPaywallAsShown = () => {
+    storage.set(PAYWALL_SHOWN_KEY, true);
+
+    Sentry.captureMessage('Paywall shown', {
+      level: 'info',
+      tags: { action: 'paywall_ads_shown' },
+    });
+
+    router.push({
+      pathname: '/paywall',
+      params: { preset: 'removeAds' },
+    });
+  };
+
   useMountEffect(() => {
     const runSetup = async () => {};
 
@@ -38,7 +76,12 @@ export const useAppSetup = () => {
       setState('done');
       setTimeout(() => {
         if (!isPremium && appOpenAd?.loaded) {
-          appOpenAd?.show();
+          appOpenAd?.show().then(() => {
+            const isThirdView = trackAppOpenAdView();
+            if (isThirdView) {
+              markPaywallAsShown();
+            }
+          });
         }
       }, 1000);
     };

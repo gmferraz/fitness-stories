@@ -65,7 +65,6 @@ export const useEnvironmentStore = create(
         })),
       reset: () =>
         set(() => ({
-          runningPlan: null,
           hasCompletedOnboarding: false,
           userId: null,
           email: null,
@@ -116,7 +115,8 @@ export const useInitializeEnvironment = () => {
       }
 
       const customerInfo = await Purchases.getCustomerInfo();
-      if (typeof customerInfo.entitlements.active['premium'] !== 'undefined' || isTestFlight) {
+      // TODO: remove true
+      if (typeof customerInfo.entitlements.active['premium'] !== 'undefined' || true) {
         setIsPremium(true);
       } else {
         setIsPremium(false);
