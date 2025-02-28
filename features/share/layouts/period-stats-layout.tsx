@@ -11,6 +11,7 @@ import {
   useLayoutEditionStore,
 } from '../utils/use-layout-edition-store';
 import { formatDistance, formatDuration } from '~/utils/formatters';
+import { formatWeekDateRange } from '../utils/format-week-date-range';
 
 interface PeriodStatsLayoutProps {
   weekRange: string;
@@ -31,7 +32,7 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
   totalElevation,
   showBackground = true,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { styles: layoutStyles } = useLayoutEditionStore();
   const style = layoutStyles['period-stats'].isEdited
     ? layoutStyles['period-stats']
@@ -71,6 +72,8 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
     },
   ];
 
+  const formattedDateRange = formatWeekDateRange(weekRange, i18n);
+
   return (
     <View
       className="w-full overflow-hidden rounded-2xl"
@@ -83,7 +86,7 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
       ]}>
       <View>
         <Text
-          className="mb-8 text-center"
+          className="mb-2 text-center"
           style={{
             fontFamily: style.fontFamily,
             fontSize: style.titleSize,
@@ -93,6 +96,18 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
             letterSpacing: 0.5,
           }}>
           {t('share.layouts.periodStats.title')}
+        </Text>
+
+        <Text
+          className="mb-6 text-center"
+          style={{
+            fontFamily: style.fontFamily,
+            fontSize: style.bodySize,
+            color: textColor,
+            lineHeight: style.bodySize * 1.2,
+            opacity: 0.8,
+          }}>
+          {formattedDateRange}
         </Text>
 
         <View>

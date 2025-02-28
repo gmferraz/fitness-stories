@@ -37,11 +37,17 @@ const FONT_FAMILIES: { label: string; value: FontFamily }[] = [
 ];
 
 type EditorSection = 'Style' | 'Sizes' | 'Colors';
+type StyleSubSection = 'Font' | 'Opacity';
+type SizesSubSection = 'Title' | 'Body' | 'Label' | 'Padding';
+type ColorsSubSection = 'Font' | 'Background' | 'Icon';
 
 export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'period' }) {
   const { colors } = useColorScheme();
   const { t } = useTranslation();
   const [selectedSection, setSelectedSection] = useState<number>(0);
+  const [styleSubSection, setStyleSubSection] = useState<StyleSubSection>('Font');
+  const [sizesSubSection, setSizesSubSection] = useState<SizesSubSection>('Title');
+  const [colorsSubSection, setColorsSubSection] = useState<ColorsSubSection>('Font');
   const { selectedLayout } = useInstagramShareStore();
   const { bottom } = useSafeAreaInsets();
 
@@ -135,237 +141,346 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
     }
   }, []);
 
+  // Subsection selector component
+  const SubSectionSelector = ({
+    options,
+    value,
+    onChange,
+  }: {
+    options: string[];
+    value: string;
+    onChange: (value: string) => void;
+  }) => (
+    <View className="bg-secondary/10 mb-4 flex-row rounded-lg p-1">
+      {options.map((option) => (
+        <Pressable
+          key={option}
+          onPress={() => onChange(option as any)}
+          className={`flex-1 rounded-md py-2 ${value === option ? 'bg-white shadow-sm' : ''}`}
+          style={
+            value === option
+              ? {
+                  shadowColor: colors.primary,
+                  shadowOpacity: 0.1,
+                  shadowRadius: 2,
+                  shadowOffset: { width: 0, height: 1 },
+                }
+              : {}
+          }>
+          <Text
+            color={value === option ? 'black' : 'primary'}
+            variant="callout"
+            className="text-center font-medium">
+            {option}
+          </Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+
   const renderStyleSection = () => (
-    <View className="mb-6">
-      <Text color="primary" variant="heading" className="mb-4 font-bold">
-        {t('share.editor.fontStyle')}
-      </Text>
-      <View className="flex-row flex-wrap" style={{ gap: 8 }}>
-        {FONT_FAMILIES.map((font) => (
-          <MotiPressable
-            key={font.value}
-            onPress={() =>
-              selectedLayout && setLayoutStyle(selectedLayout, { fontFamily: font.value })
-            }
-            animate={({ pressed }) => {
-              'worklet';
-              return {
-                scale: pressed ? 0.95 : 1,
-                opacity: pressed ? 0.9 : 1,
-              };
-            }}>
-            <View
-              className={`self-start rounded-xl border p-3 ${
-                currentStyle?.fontFamily === font.value
-                  ? 'bg-primary/5 border-primary'
-                  : 'border-border/30'
-              }`}>
-              <Text
-                color="primary"
-                variant="callout"
-                style={{ fontFamily: font.value }}
-                className={currentStyle?.fontFamily === font.value ? 'font-bold' : 'font-medium'}>
-                {font.label}
-              </Text>
-            </View>
-          </MotiPressable>
-        ))}
-      </View>
-      <View className="mt-4">
-        <View className="mb-2 flex-row items-center justify-between">
-          <Text color="primary" variant="heading" className="font-bold">
-            {t('share.editor.opacity')}
-          </Text>
-          <Text color="primary" variant="callout" className="font-medium">
-            {currentStyle?.opacity ?? 100}%
-          </Text>
+    <View className="mb-4">
+      <SubSectionSelector
+        options={[t('share.editor.font'), t('share.editor.opacity')]}
+        value={styleSubSection === 'Font' ? t('share.editor.font') : t('share.editor.opacity')}
+        onChange={(value) =>
+          setStyleSubSection(value === t('share.editor.font') ? 'Font' : 'Opacity')
+        }
+      />
+
+      {styleSubSection === 'Font' && (
+        <View className="mb-4">
+          <View className="flex-row flex-wrap" style={{ gap: 8 }}>
+            {FONT_FAMILIES.map((font) => (
+              <MotiPressable
+                key={font.value}
+                onPress={() =>
+                  selectedLayout && setLayoutStyle(selectedLayout, { fontFamily: font.value })
+                }
+                animate={({ pressed }) => {
+                  'worklet';
+                  return {
+                    scale: pressed ? 0.95 : 1,
+                    opacity: pressed ? 0.9 : 1,
+                  };
+                }}>
+                <View
+                  className={`self-start rounded-xl border p-3 ${
+                    currentStyle?.fontFamily === font.value
+                      ? 'bg-primary/5 border-primary'
+                      : 'border-border/30'
+                  }`}>
+                  <Text
+                    color="primary"
+                    variant="callout"
+                    style={{ fontFamily: font.value }}
+                    className={
+                      currentStyle?.fontFamily === font.value ? 'font-bold' : 'font-medium'
+                    }>
+                    {font.label}
+                  </Text>
+                </View>
+              </MotiPressable>
+            ))}
+          </View>
         </View>
-        <Slider
-          value={currentStyle?.opacity ?? 100}
-          minimumValue={5}
-          maximumValue={100}
-          step={5}
-          onValueChange={(value) =>
-            selectedLayout && setLayoutStyle(selectedLayout, { opacity: value })
-          }
-        />
-      </View>
+      )}
+
+      {styleSubSection === 'Opacity' && (
+        <View className="mb-4">
+          <View className="mb-2 flex-row items-center justify-between">
+            <Text color="primary" variant="callout" className="font-medium">
+              {currentStyle?.opacity ?? 100}%
+            </Text>
+          </View>
+          <Slider
+            value={currentStyle?.opacity ?? 100}
+            minimumValue={5}
+            maximumValue={100}
+            step={5}
+            onSlidingComplete={(value) =>
+              selectedLayout && setLayoutStyle(selectedLayout, { opacity: value })
+            }
+          />
+        </View>
+      )}
     </View>
   );
 
   const renderSizesSection = () => (
-    <View className="mb-6">
-      <View className="mb-6">
-        <View className="mb-2 flex-row items-center justify-between">
-          <Text color="primary" variant="heading" className="font-bold">
-            {t('share.editor.titleSize')}
-          </Text>
-          <Text color="primary" variant="callout" className="font-medium">
-            {currentStyle?.titleSize}px
-          </Text>
-        </View>
-        <Slider
-          value={currentStyle?.titleSize ?? 28}
-          minimumValue={20}
-          maximumValue={40}
-          step={1}
-          onValueChange={(value) =>
-            selectedLayout && setLayoutStyle(selectedLayout, { titleSize: value })
-          }
-        />
-      </View>
-      <View className="mb-6">
-        <View className="mb-2 flex-row items-center justify-between">
-          <Text color="primary" variant="heading" className="font-bold">
-            {t('share.editor.bodySize')}
-          </Text>
-          <Text color="primary" variant="callout" className="font-medium">
-            {currentStyle?.bodySize}px
-          </Text>
-        </View>
-        <Slider
-          value={currentStyle?.bodySize ?? 18}
-          minimumValue={12}
-          maximumValue={24}
-          step={1}
-          onValueChange={(value) =>
-            selectedLayout && setLayoutStyle(selectedLayout, { bodySize: value })
-          }
-        />
-      </View>
-      <View className="mb-6">
-        <View className="mb-2 flex-row items-center justify-between">
-          <Text color="primary" variant="heading" className="font-bold">
-            {t('share.editor.labelSize')}
-          </Text>
-          <Text color="primary" variant="callout" className="font-medium">
-            {currentStyle?.labelSize}px
-          </Text>
-        </View>
-        <Slider
-          value={currentStyle?.labelSize ?? 14}
-          minimumValue={10}
-          maximumValue={18}
-          step={1}
-          onValueChange={(value) =>
-            selectedLayout && setLayoutStyle(selectedLayout, { labelSize: value })
-          }
-        />
-      </View>
-      <View className="mb-2 flex-row items-center justify-between">
-        <Text color="primary" variant="heading" className="font-bold">
-          {t('share.editor.padding')}
-        </Text>
-        <Text color="primary" variant="callout" className="font-medium">
-          {currentStyle?.padding ?? 16}px
-        </Text>
-      </View>
-      <Slider
-        value={currentStyle?.padding ?? 16}
-        minimumValue={4}
-        maximumValue={24}
-        step={1}
-        onValueChange={(value) =>
-          selectedLayout && setLayoutStyle(selectedLayout, { padding: value })
+    <View className="mb-4">
+      <SubSectionSelector
+        options={[
+          t('share.editor.titleSize'),
+          t('share.editor.bodySize'),
+          t('share.editor.labelSize'),
+          t('share.editor.padding'),
+        ]}
+        value={
+          sizesSubSection === 'Title'
+            ? t('share.editor.titleSize')
+            : sizesSubSection === 'Body'
+              ? t('share.editor.bodySize')
+              : sizesSubSection === 'Label'
+                ? t('share.editor.labelSize')
+                : t('share.editor.padding')
+        }
+        onChange={(value) =>
+          setSizesSubSection(
+            value === t('share.editor.titleSize')
+              ? 'Title'
+              : value === t('share.editor.bodySize')
+                ? 'Body'
+                : value === t('share.editor.labelSize')
+                  ? 'Label'
+                  : 'Padding'
+          )
         }
       />
+
+      {sizesSubSection === 'Title' && (
+        <View className="mb-4">
+          <View className="mb-2 flex-row items-center justify-between">
+            <Text color="primary" variant="callout" className="font-medium">
+              {currentStyle?.titleSize}px
+            </Text>
+          </View>
+          <Slider
+            value={currentStyle?.titleSize ?? 28}
+            minimumValue={20}
+            maximumValue={40}
+            step={1}
+            onSlidingComplete={(value) =>
+              selectedLayout && setLayoutStyle(selectedLayout, { titleSize: value })
+            }
+          />
+        </View>
+      )}
+
+      {sizesSubSection === 'Body' && (
+        <View className="mb-4">
+          <View className="mb-2 flex-row items-center justify-between">
+            <Text color="primary" variant="callout" className="font-medium">
+              {currentStyle?.bodySize}px
+            </Text>
+          </View>
+          <Slider
+            value={currentStyle?.bodySize ?? 18}
+            minimumValue={12}
+            maximumValue={24}
+            step={1}
+            onSlidingComplete={(value) =>
+              selectedLayout && setLayoutStyle(selectedLayout, { bodySize: value })
+            }
+          />
+        </View>
+      )}
+
+      {sizesSubSection === 'Label' && (
+        <View className="mb-4">
+          <View className="mb-2 flex-row items-center justify-between">
+            <Text color="primary" variant="callout" className="font-medium">
+              {currentStyle?.labelSize}px
+            </Text>
+          </View>
+          <Slider
+            value={currentStyle?.labelSize ?? 14}
+            minimumValue={10}
+            maximumValue={18}
+            step={1}
+            onSlidingComplete={(value) =>
+              selectedLayout && setLayoutStyle(selectedLayout, { labelSize: value })
+            }
+          />
+        </View>
+      )}
+
+      {sizesSubSection === 'Padding' && (
+        <View className="mb-4">
+          <View className="mb-2 flex-row items-center justify-between">
+            <Text color="primary" variant="callout" className="font-medium">
+              {currentStyle?.padding ?? 16}px
+            </Text>
+          </View>
+          <Slider
+            value={currentStyle?.padding ?? 16}
+            minimumValue={4}
+            maximumValue={24}
+            step={1}
+            onSlidingComplete={(value) => {
+              selectedLayout && setLayoutStyle(selectedLayout, { padding: value });
+            }}
+          />
+        </View>
+      )}
     </View>
   );
 
   const renderColorsSection = () => (
-    <View className="mb-6">
-      {/* Font Colors */}
-      <View className="mb-8">
-        <Text color="primary" variant="heading" className="mb-4 font-bold">
-          {t('share.editor.fontColor')}
-        </Text>
-        <View className="flex-row flex-wrap" style={{ gap: 8 }}>
-          {FONT_COLORS.map((color) => (
-            <MotiPressable
-              key={color.value}
-              onPress={() =>
-                selectedLayout && setLayoutStyle(selectedLayout, { fontColor: color.value })
-              }
-              animate={({ pressed }) => {
-                'worklet';
-                return {
-                  scale: pressed ? 0.95 : 1,
-                  opacity: pressed ? 0.9 : 1,
-                };
-              }}>
-              <View
-                className={`aspect-square w-10 items-center justify-center rounded-full ${
-                  currentStyle?.fontColor === color.value ? 'border-2 border-primary' : ''
-                }`}
-                style={{ backgroundColor: getFontColor(color.value) }}>
-                {currentStyle?.fontColor === color.value && (
-                  <MaterialCommunityIcons name="check" size={20} color="white" />
-                )}
-              </View>
-            </MotiPressable>
-          ))}
-        </View>
-      </View>
+    <View className="mb-4">
+      <SubSectionSelector
+        options={[
+          t('share.editor.fontColor'),
+          t('share.editor.backgroundColor'),
+          t('share.editor.iconColor'),
+        ]}
+        value={
+          colorsSubSection === 'Font'
+            ? t('share.editor.fontColor')
+            : colorsSubSection === 'Background'
+              ? t('share.editor.backgroundColor')
+              : t('share.editor.iconColor')
+        }
+        onChange={(value) =>
+          setColorsSubSection(
+            value === t('share.editor.fontColor')
+              ? 'Font'
+              : value === t('share.editor.backgroundColor')
+                ? 'Background'
+                : 'Icon'
+          )
+        }
+      />
 
-      {/* Background Colors */}
-      <View className="mb-8">
-        <Text color="primary" variant="heading" className="mb-4 font-bold">
-          {t('share.editor.backgroundColor')}
-        </Text>
-        <View className="flex-row flex-wrap" style={{ gap: 8 }}>
-          {BACKGROUND_COLORS.map((color) => (
-            <MotiPressable
-              key={color.value}
-              onPress={() =>
-                selectedLayout && setLayoutStyle(selectedLayout, { backgroundColor: color.value })
-              }
-              animate={({ pressed }) => {
-                'worklet';
-                return {
-                  scale: pressed ? 0.95 : 1,
-                  opacity: pressed ? 0.9 : 1,
-                };
-              }}>
-              <View
-                className={`aspect-square w-10 items-center justify-center rounded-full ${
-                  currentStyle?.backgroundColor === color.value
-                    ? 'border-2 border-primary'
-                    : 'border-border/30 border'
-                }`}
-                style={{ backgroundColor: getBackgroundColor(color.value, 100) }}>
-                {currentStyle?.backgroundColor === color.value && (
-                  <MaterialCommunityIcons name="check" size={20} color={colors.primary} />
-                )}
-              </View>
-            </MotiPressable>
-          ))}
+      {colorsSubSection === 'Font' && (
+        <View className="mb-4">
+          <View className="flex-row flex-wrap" style={{ gap: 8 }}>
+            {FONT_COLORS.map((color) => (
+              <MotiPressable
+                key={color.value}
+                onPress={() =>
+                  selectedLayout && setLayoutStyle(selectedLayout, { fontColor: color.value })
+                }
+                animate={({ pressed }) => {
+                  'worklet';
+                  return {
+                    scale: pressed ? 0.95 : 1,
+                    opacity: pressed ? 0.9 : 1,
+                  };
+                }}>
+                <View
+                  className={`aspect-square w-10 items-center justify-center rounded-full ${
+                    currentStyle?.fontColor === color.value ? 'border-2 border-primary' : ''
+                  }`}
+                  style={{ backgroundColor: getFontColor(color.value) }}>
+                  {currentStyle?.fontColor === color.value && (
+                    <MaterialCommunityIcons name="check" size={20} color="white" />
+                  )}
+                </View>
+              </MotiPressable>
+            ))}
+          </View>
         </View>
-      </View>
+      )}
 
-      <View className="mb-6">
-        <Text className="mb-2 font-medium">{t('share.editor.iconColor')}</Text>
-        <View className="flex-row flex-wrap gap-2">
-          {['blue', 'purple', 'pink', 'orange', 'green', 'white', 'gray'].map((color) => (
-            <Pressable
-              key={color}
-              onPress={() =>
-                selectedLayout && setLayoutStyle(selectedLayout, { iconColor: color as IconColor })
-              }
-              className={`h-10 w-10 items-center justify-center rounded-full ${
-                currentStyle?.iconColor === color ? 'border-2 border-white' : ''
-              }`}
-              style={{ backgroundColor: getIconColor(color as IconColor) }}>
-              {currentStyle?.iconColor === color && (
-                <Ionicons
-                  name="checkmark"
-                  size={16}
-                  color={color === 'white' ? 'black' : 'white'}
-                />
-              )}
-            </Pressable>
-          ))}
+      {colorsSubSection === 'Background' && (
+        <View className="mb-4">
+          <View className="flex-row flex-wrap" style={{ gap: 8 }}>
+            {BACKGROUND_COLORS.map((color) => (
+              <MotiPressable
+                key={color.value}
+                onPress={() =>
+                  selectedLayout && setLayoutStyle(selectedLayout, { backgroundColor: color.value })
+                }
+                animate={({ pressed }) => {
+                  'worklet';
+                  return {
+                    scale: pressed ? 0.95 : 1,
+                    opacity: pressed ? 0.9 : 1,
+                  };
+                }}>
+                <View
+                  className={`aspect-square w-10 items-center justify-center rounded-full ${
+                    currentStyle?.backgroundColor === color.value
+                      ? 'border-2 border-primary'
+                      : 'border-border/30 border'
+                  }`}
+                  style={{ backgroundColor: getBackgroundColor(color.value, 100) }}>
+                  {currentStyle?.backgroundColor === color.value && (
+                    <MaterialCommunityIcons name="check" size={20} color={colors.primary} />
+                  )}
+                </View>
+              </MotiPressable>
+            ))}
+          </View>
         </View>
-      </View>
+      )}
+
+      {colorsSubSection === 'Icon' && (
+        <View className="mb-4">
+          <View className="flex-row flex-wrap" style={{ gap: 8 }}>
+            {['blue', 'purple', 'pink', 'orange', 'green', 'white', 'gray'].map((color) => (
+              <MotiPressable
+                key={color}
+                onPress={() =>
+                  selectedLayout &&
+                  setLayoutStyle(selectedLayout, { iconColor: color as IconColor })
+                }
+                animate={({ pressed }) => {
+                  'worklet';
+                  return {
+                    scale: pressed ? 0.95 : 1,
+                    opacity: pressed ? 0.9 : 1,
+                  };
+                }}>
+                <View
+                  className={`aspect-square w-10 items-center justify-center rounded-full ${
+                    currentStyle?.iconColor === color ? 'border-2 border-primary' : ''
+                  }`}
+                  style={{ backgroundColor: getIconColor(color as IconColor) }}>
+                  {currentStyle?.iconColor === color && (
+                    <Ionicons
+                      name="checkmark"
+                      size={16}
+                      color={color === 'white' ? 'black' : 'white'}
+                    />
+                  )}
+                </View>
+              </MotiPressable>
+            ))}
+          </View>
+        </View>
+      )}
     </View>
   );
 
@@ -383,9 +498,9 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
       transition={{ type: 'timing', duration: 300 }}
       className="flex-1">
       <View className="flex-1">
-        <View className="p-6">
+        <View className="p-4">
           <View className="flex-row items-center justify-between">
-            <Text color="primary" variant="title1" className="mb-4 font-bold">
+            <Text color="primary" variant="title2" className="font-bold">
               {t('share.editor.title')}
             </Text>
             <MotiPressable
@@ -397,7 +512,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
                   opacity: pressed ? 0.9 : 1,
                 };
               }}>
-              <View className="border-border/30 mt-2 flex-row items-center gap-2 self-end rounded-full border px-3 py-1.5">
+              <View className="border-border/30 flex-row items-center gap-2 self-end rounded-full border px-3 py-1.5">
                 <MaterialIcons
                   name={currentStyle?.showBackground ? 'visibility' : 'visibility-off'}
                   size={16}
@@ -412,8 +527,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
             </MotiPressable>
           </View>
 
-          {/* Preview Section */}
-          <View className="mb-4">{renderPreview()}</View>
+          <View className="my-4 mb-8">{renderPreview()}</View>
 
           {/* Section Control */}
           <SegmentedControl
@@ -422,14 +536,14 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
             onChange={(event) => {
               setSelectedSection(event.nativeEvent.selectedSegmentIndex);
             }}
-            className="mb-6"
+            className="mb-3"
           />
         </View>
 
         {/* Section Content */}
         <ScrollView
-          showsVerticalScrollIndicator
-          className="flex-1 px-6"
+          showsVerticalScrollIndicator={false}
+          className="flex-1 px-4"
           contentContainerStyle={{ paddingBottom: 24 }}>
           {selectedSection === 0 && renderStyleSection()}
           {selectedSection === 1 && renderSizesSection()}
@@ -438,7 +552,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
 
         <View
           style={{ paddingBottom: bottom }}
-          className="border-border/30 border-t bg-background p-6">
+          className="border-border/30 border-t bg-background p-4">
           <Button variant="primary" size="lg" onPress={() => router.back()} className="w-full">
             <Text className="font-medium">{t('share.editor.done')}</Text>
           </Button>

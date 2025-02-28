@@ -31,6 +31,7 @@ export function AestheticLayout({
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
   const width = Dimensions.get('window').width;
+  const padding = style.padding;
 
   return (
     <View
@@ -38,6 +39,7 @@ export function AestheticLayout({
       style={{
         width: width - 48,
         backgroundColor: showBackground ? bgColor : 'transparent',
+        padding: padding ?? 16,
       }}>
       <View className="flex-col p-4">
         <View className="items-center">

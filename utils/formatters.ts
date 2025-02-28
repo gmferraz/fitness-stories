@@ -10,7 +10,7 @@ export const formatDuration = (seconds: number, showSeconds = true) => {
   if (hours > 0) {
     return `${hours}h ${minutes}m`;
   }
-  return `${minutes}m${showSeconds ? ` ${remainingSeconds}s` : ''}`;
+  return `${minutes}m${showSeconds && !!remainingSeconds ? ` ${remainingSeconds}s` : ''}`;
 };
 
 export const formatTime = (seconds: number) => {

@@ -12,11 +12,13 @@ import {
 import { useAds } from '../ads/use-ads';
 import { MMKV } from 'react-native-mmkv';
 import { router } from 'expo-router';
+import { showRequestReview } from '~/utils/app-review';
 
 type AppSetupState = 'pending' | 'done' | 'failed';
 
 const APP_OPEN_AD_VIEWS_KEY = 'appOpenAdViews';
 const PAYWALL_SHOWN_KEY = 'paywallShown';
+const APP_OPEN_COUNT_KEY = 'appOpenCount';
 
 const storage = new MMKV();
 
@@ -53,6 +55,16 @@ export const useAppSetup = () => {
     return newViews === 3;
   };
 
+  const trackAppOpenCount = () => {
+    // Get current count and increment
+    const currentCount = storage.getNumber(APP_OPEN_COUNT_KEY) || 0;
+    const newCount = currentCount + 1;
+    storage.set(APP_OPEN_COUNT_KEY, newCount);
+
+    // Return true if this is the fifth open
+    return newCount === 5;
+  };
+
   const markPaywallAsShown = () => {
     storage.set(PAYWALL_SHOWN_KEY, true);
 
@@ -74,6 +86,11 @@ export const useAppSetup = () => {
       const appOpenAd = createAppOpenAd();
       appOpenAd?.load();
       setState('done');
+
+      // Track app open count and check if it's the 5th open
+      const isFifthOpen = trackAppOpenCount();
+
+      // Show app open ad if applicable
       setTimeout(() => {
         if (!isPremium && appOpenAd?.loaded) {
           appOpenAd?.show().then(() => {
@@ -84,6 +101,17 @@ export const useAppSetup = () => {
           });
         }
       }, 1000);
+
+      // Show review request if it's the 5th open
+      if (isFifthOpen) {
+        setTimeout(() => {
+          showRequestReview();
+          Sentry.captureMessage('Review request shown', {
+            level: 'info',
+            tags: { action: 'review_request_shown' },
+          });
+        }, 4000);
+      }
     };
 
     runSetup()

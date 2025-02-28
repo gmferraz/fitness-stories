@@ -11,7 +11,6 @@ import {
   useLayoutEditionStore,
 } from '../utils/use-layout-edition-store';
 import { formatDistance, formatDuration } from '~/utils/formatters';
-
 interface PeriodSocialLayoutProps {
   weekRange: string;
   totalActivities: number;

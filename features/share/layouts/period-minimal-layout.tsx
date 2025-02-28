@@ -11,6 +11,7 @@ import {
   DEFAULT_LAYOUT_STYLES,
 } from '../utils/use-layout-edition-store';
 import { formatDistance, formatDuration } from '~/utils/formatters';
+import { formatWeekDateRange } from '../utils/format-week-date-range';
 
 interface PeriodMinimalLayoutProps {
   weekRange: string;
@@ -29,7 +30,7 @@ export const PeriodMinimalLayout: React.FC<PeriodMinimalLayoutProps> = ({
   totalCalories,
   showBackground = true,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { styles: layoutStyles } = useLayoutEditionStore();
   const style = layoutStyles['period-minimal'].isEdited
     ? layoutStyles['period-minimal']
@@ -40,6 +41,8 @@ export const PeriodMinimalLayout: React.FC<PeriodMinimalLayoutProps> = ({
 
   // Divider color based on text color
   const dividerColor = `${textColor}20`; // 20 is hex for 12% opacity
+
+  const formattedDateRange = formatWeekDateRange(weekRange, i18n);
 
   const stats = [
     {
@@ -76,7 +79,7 @@ export const PeriodMinimalLayout: React.FC<PeriodMinimalLayoutProps> = ({
       ]}>
       <View>
         <Text
-          className="mb-8 text-center"
+          className="mb-2 text-center"
           style={{
             fontFamily: style.fontFamily,
             fontSize: style.titleSize,
@@ -86,6 +89,19 @@ export const PeriodMinimalLayout: React.FC<PeriodMinimalLayoutProps> = ({
             letterSpacing: 0.5,
           }}>
           {t('share.layouts.periodMinimal.title')}
+        </Text>
+
+        {/* Subtitle with formatted date range */}
+        <Text
+          className="mb-6 text-center"
+          style={{
+            fontFamily: style.fontFamily,
+            fontSize: style.bodySize,
+            color: textColor,
+            lineHeight: style.bodySize * 1.2,
+            opacity: 0.8,
+          }}>
+          {formattedDateRange}
         </Text>
 
         <View>
