@@ -1,4 +1,3 @@
-import * as SplashScreen from 'expo-splash-screen';
 import { useState } from 'react';
 import '../../translation';
 // import Purchases from 'react-native-purchases';
@@ -9,11 +8,12 @@ import {
   useEnvironmentStore,
   useInitializeEnvironment,
 } from './use-environment';
-// import { useAds } from '../ads/use-ads';
+import { useAds } from '../ads/use-ads';
 
 type AppSetupState = 'pending' | 'done' | 'failed';
 
 export const runSynchronousSetupChores = () => {
+  // TODO: Uncomment this when we have a way to test the app without ads
   // Purchases.configure({
   //   apiKey:
   //     Platform.select({
@@ -26,23 +26,21 @@ export const runSynchronousSetupChores = () => {
 export const useAppSetup = () => {
   const [state, setState] = useState<AppSetupState>('pending');
   const { status } = useInitializeEnvironment();
-  // const { createAppOpenAd } = useAds();
+  const { createAppOpenAd } = useAds();
   const isPremium = useEnvironmentStore((state) => state.isPremium);
-  const isGui = useEnvironmentStore((state) => state.isGui);
 
   useMountEffect(() => {
     const runSetup = async () => {};
 
     const completeSetup = () => {
-      // const appOpenAd = createAppOpenAd();
-      // appOpenAd?.load();
+      const appOpenAd = createAppOpenAd();
+      appOpenAd?.load();
+      setState('done');
       setTimeout(() => {
-        setState('done');
-        // if (!isPremium && !isGui && appOpenAd?.loaded) {
-        //   appOpenAd?.show();
-        // }
-        SplashScreen.hideAsync().catch(() => {});
-      }, 500);
+        if (!isPremium && appOpenAd?.loaded) {
+          appOpenAd?.show();
+        }
+      }, 1000);
     };
 
     runSetup()

@@ -4,6 +4,7 @@ import Purchases from 'react-native-purchases';
 import { create } from 'zustand';
 import { createJSONStorage, persist, StateStorage } from 'zustand/middleware';
 import { MMKV } from 'react-native-mmkv';
+import { isTestFlight } from 'expo-testflight';
 
 const envStorage = new MMKV({
   id: 'environment-storage',
@@ -35,9 +36,13 @@ interface EnvironmentState {
   isPremium: boolean;
   setIsPremium: (isPremium: boolean) => void;
 
-  reset: () => void;
+  isPremiumForever: boolean;
+  setIsPremiumForever: (isPremiumForever: boolean) => void;
 
   isGui: boolean;
+  setIsGui: (isGui: boolean) => void;
+
+  reset: () => void;
 }
 
 export const useEnvironmentStore = create(
@@ -47,8 +52,11 @@ export const useEnvironmentStore = create(
       userGivenName: null,
       isGui: false,
       isPremium: false,
+      isPremiumForever: false,
       hasCompletedOnboarding: false,
       setIsPremium: (data) => set(() => ({ isPremium: data })),
+      setIsPremiumForever: (data) => set(() => ({ isPremiumForever: data })),
+      setIsGui: (data) => set(() => ({ isGui: data })),
       userId: null,
       setUserId: (data) => set(() => ({ userId: data })),
       setHasCompletedOnboarding: (data) =>
@@ -64,6 +72,7 @@ export const useEnvironmentStore = create(
           givenName: null,
           isGui: false,
           isPremium: false,
+          isPremiumForever: false,
         })),
     }),
     {
@@ -95,12 +104,19 @@ export type InitializeEnvironmentStatus =
 export const useInitializeEnvironment = () => {
   const { userId } = useCurrentUserId();
   const setIsPremium = useEnvironmentStore((s) => s.setIsPremium);
+  const isPremiumForever = useEnvironmentStore((s) => s.isPremiumForever);
   const [status, setStatus] = useState<InitializeEnvironmentStatus>('pending');
 
   const runInitialize = async () => {
     try {
+      // If user has redeemed a code that grants premium forever, set premium to true
+      if (isPremiumForever) {
+        setIsPremium(true);
+        return;
+      }
+
       const customerInfo = await Purchases.getCustomerInfo();
-      if (typeof customerInfo.entitlements.active['premium'] !== 'undefined') {
+      if (typeof customerInfo.entitlements.active['premium'] !== 'undefined' || isTestFlight) {
         setIsPremium(true);
       } else {
         setIsPremium(false);
@@ -115,7 +131,7 @@ export const useInitializeEnvironment = () => {
   useEffect(() => {
     runInitialize();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
+  }, [userId, isPremiumForever]);
 
   return { status, runInitialize };
 };

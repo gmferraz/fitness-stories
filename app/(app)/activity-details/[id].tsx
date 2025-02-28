@@ -11,6 +11,7 @@ import { useColorScheme } from '~/lib/useColorScheme';
 import { useTranslation } from 'react-i18next';
 import { translateSportType } from '~/features/home/utils/translate-sport-type';
 import { SportType } from '~/features/home/types/activity';
+
 export default function ActivityDetailsScreen() {
   const { id, type } = useLocalSearchParams<{ id: string; type: string }>();
   const activity = getStoredActivityDetails(id);

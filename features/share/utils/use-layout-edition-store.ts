@@ -20,12 +20,14 @@ export type BackgroundColor =
   | 'pastel-turquoise'
   | 'pastel-mauve'
   | 'pastel-sky-blue'
+  | 'pastel-gray'
   | 'vibrant-blue'
   | 'vibrant-purple'
   | 'vibrant-pink'
   | 'vibrant-teal'
   | 'vibrant-orange'
-  | 'vibrant-red';
+  | 'vibrant-red'
+  | 'vibrant-gray';
 export type FontColor =
   | 'white'
   | 'black'
@@ -164,20 +166,20 @@ export const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
   'period-minimal': {
     ...DEFAULT_STYLE,
     fontFamily: 'Inter',
-    titleSize: 32,
-    bodySize: 20,
+    titleSize: 24,
+    bodySize: 16,
   },
   'period-stats': {
     ...DEFAULT_STYLE,
     fontFamily: 'Inter',
-    titleSize: 32,
-    bodySize: 24,
+    titleSize: 24,
+    bodySize: 16,
   },
   'period-social': {
     ...DEFAULT_STYLE,
     fontFamily: 'Inter',
-    titleSize: 40,
-    bodySize: 18,
+    titleSize: 24,
+    bodySize: 16,
   },
   hiit: {
     ...DEFAULT_STYLE,
@@ -254,7 +256,7 @@ export const useLayoutEditionStore = create<LayoutStylesState>()(
         }),
     }),
     {
-      name: 'layout-styles-storage-v15',
+      name: 'layout-styles-storage-v16',
       storage: createJSONStorage(() => zustandStorage),
     }
   )
@@ -323,6 +325,8 @@ export function getBackgroundColor(color: BackgroundColor, opacity = 100): strin
       return applyOpacityToColor('#F1E1FF', opacity);
     case 'pastel-sky-blue':
       return applyOpacityToColor('#B3E5FC', opacity);
+    case 'pastel-gray':
+      return applyOpacityToColor('#E0E0E0', opacity);
     case 'vibrant-blue':
       return applyOpacityToColor('#1E88E5', opacity);
     case 'vibrant-purple':
@@ -335,6 +339,8 @@ export function getBackgroundColor(color: BackgroundColor, opacity = 100): strin
       return applyOpacityToColor('#FF7043', opacity);
     case 'vibrant-red':
       return applyOpacityToColor('#E53935', opacity);
+    case 'vibrant-gray':
+      return applyOpacityToColor('#8E8E93', opacity);
   }
 }
 

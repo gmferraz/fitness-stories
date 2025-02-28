@@ -7,6 +7,8 @@ import Carousel from 'react-native-reanimated-carousel';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ViewShot from 'react-native-view-shot';
 import { MotiPressable } from 'moti/interactions';
+import { useEnvironmentStore } from '~/features/app-setup/use-environment';
+import { router } from 'expo-router';
 
 import { DetailedLayout } from '../layouts/detailed-layout';
 import { MinimalLayout } from '../layouts/minimal-layout';
@@ -68,6 +70,7 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
   const width = Dimensions.get('window').width;
   const { t } = useTranslation();
   const viewShotRef = useRef<ViewShot>(null);
+  const isPremium = useEnvironmentStore((state) => state.isPremium);
 
   const entity: WeekDetails | Activity =
     type === 'activity' ? getStoredActivityDetails(id) : getWeekDetails(id);
@@ -102,6 +105,51 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
     setActiveLayout(initialLayout);
   });
 
+  // Function to handle the actual sharing to Instagram
+  const shareToInstagram = async () => {
+    try {
+      if (!viewShotRef.current?.capture || !selectedImage) return;
+
+      const stickerUri = await viewShotRef.current.capture();
+      const isVideoFile =
+        selectedImage.toLowerCase().endsWith('.mp4') ||
+        selectedImage.toLowerCase().endsWith('.mov') ||
+        selectedImage.toLowerCase().endsWith('.avi') ||
+        selectedImage.toLowerCase().includes('video/');
+
+      if (stickerUri) {
+        // Store the current layout as the last used layout before sharing
+        setLastUsedLayout(availableLayouts[currentPage]);
+        await handleShareToInstagram({
+          backgroundUri: selectedImage,
+          stickerUri,
+          isVideo: isVideoFile,
+        });
+      }
+    } catch (error) {
+      console.error('Error sharing to Instagram:', error);
+    }
+  };
+
+  // Function to handle the share button click
+  const handleShare = async () => {
+    // Check if user is premium and if the current layout is edited
+    const isLayoutEdited = currentStyle?.isEdited || false;
+
+    // If user is not premium and layout is edited, redirect to paywall
+    if (!isPremium && isLayoutEdited) {
+      // Store the current layout as the last used layout before redirecting
+      setLastUsedLayout(currentLayout);
+      router.push({
+        pathname: '/paywall',
+        params: { preset: 'editTemplates' },
+      });
+      return;
+    }
+
+    await shareToInstagram();
+  };
+
   const props = useMemo(() => {
     if (!entity) return null;
 
@@ -128,33 +176,9 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
         showBackground: currentStyle?.showBackground ?? true,
       };
     }
-  }, [entity, type]);
+  }, [entity, type, currentStyle]);
 
   if (!selectedImage || !entity) return null;
-
-  const handleShare = async () => {
-    try {
-      if (!viewShotRef.current?.capture) return;
-      const stickerUri = await viewShotRef.current.capture();
-      const isVideoFile =
-        selectedImage.toLowerCase().endsWith('.mp4') ||
-        selectedImage.toLowerCase().endsWith('.mov') ||
-        selectedImage.toLowerCase().endsWith('.avi') ||
-        selectedImage.toLowerCase().includes('video/');
-
-      if (stickerUri) {
-        // Store the current layout as the last used layout before sharing
-        setLastUsedLayout(availableLayouts[currentPage]);
-        await handleShareToInstagram({
-          backgroundUri: selectedImage,
-          stickerUri,
-          isVideo: isVideoFile,
-        });
-      }
-    } catch (error) {
-      console.error('Error sharing to Instagram:', error);
-    }
-  };
 
   const renderItem = ({ index }: { index: number }) => {
     const layout = availableLayouts[index];

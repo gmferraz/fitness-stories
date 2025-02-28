@@ -19,6 +19,8 @@ import { useEnvironmentStore } from '../app-setup/use-environment';
 
 const storage = new MMKV();
 const TRACKING_PERMISSION_KEY = 'trackingPermission';
+const APP_OPEN_AD_VIEWS_KEY = 'appOpenAdViews';
+const PAYWALL_SHOWN_KEY = 'paywallShown';
 
 export const useAds = () => {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -45,7 +47,8 @@ export const useAds = () => {
   const createAppOpenAd = () => {
     if (isPremium) return null;
     return AppOpenAd.createForAdRequest(
-      Platform.select({ ios: APP_OPEN_APPLE_AD_ID!, android: APP_OPEN_ANDROID_AD_ID! }) ?? '',
+      // Platform.select({ ios: APP_OPEN_APPLE_AD_ID!, android: APP_OPEN_ANDROID_AD_ID! }) ?? '',
+      TestIds.APP_OPEN,
       {
         requestNonPersonalizedAdsOnly: !isPersonalizedAdsAllowed(),
         keywords: ['running', 'clothing', 'sports', 'fitness', 'run', 'health', 'wellness'],
@@ -56,8 +59,9 @@ export const useAds = () => {
   const createInterstitialAd = () => {
     if (isPremium) return null;
     return InterstitialAd.createForAdRequest(
-      Platform.select({ ios: INTERSTITIAL_APPLE_AD_ID!, android: INTERSTITIAL_ANDROID_AD_ID! }) ??
-        '',
+      // Platform.select({ ios: INTERSTITIAL_APPLE_AD_ID!, android: INTERSTITIAL_ANDROID_AD_ID! }) ??
+      // '',
+      TestIds.INTERSTITIAL,
       {
         requestNonPersonalizedAdsOnly: !isPersonalizedAdsAllowed(),
         keywords: ['running', 'clothing', 'sports', 'fitness', 'run', 'health', 'wellness'],
@@ -77,6 +81,27 @@ export const useAds = () => {
     return storage.getString(TRACKING_PERMISSION_KEY) === 'granted';
   };
 
+  // Track app open ad views and check if paywall should be shown
+  const trackAppOpenAdView = () => {
+    if (isPremium) return false;
+
+    // Check if paywall was already shown
+    const paywallShown = storage.getBoolean(PAYWALL_SHOWN_KEY) || false;
+    if (paywallShown) return false;
+
+    // Get current count and increment
+    const currentViews = storage.getNumber(APP_OPEN_AD_VIEWS_KEY) || 0;
+    const newViews = currentViews + 1;
+    storage.set(APP_OPEN_AD_VIEWS_KEY, newViews);
+
+    // Return true if this is the third view
+    return newViews === 3;
+  };
+
+  const markPaywallAsShown = () => {
+    storage.set(PAYWALL_SHOWN_KEY, true);
+  };
+
   return {
     isInitialized,
     createAppOpenAd,
@@ -84,5 +109,7 @@ export const useAds = () => {
     createRewardedAd,
     isPersonalizedAdsAllowed,
     showAds: !isPremium,
+    trackAppOpenAdView,
+    markPaywallAsShown,
   };
 };

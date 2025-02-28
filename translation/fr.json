@@ -172,7 +172,8 @@
           "date": "Date",
           "edit": "Modifier",
           "share": "Partager",
-          "per": "par"
+          "per": "par",
+          "cancel": "Annuler"
         },
         "minimal": {
           "title": "Minimal"
@@ -348,6 +349,21 @@
       "premium": {
         "title": "Premium"
       },
+      "redeemCode": {
+        "title": "Utiliser un Code",
+        "modalTitle": "Utiliser un Code Premium",
+        "modalDescription": "Entrez votre code premium ci-dessous pour débloquer les fonctionnalités premium à vie.",
+        "placeholder": "Entrez le code",
+        "redeem": "Valider",
+        "redeeming": "Validation...",
+        "emptyCodeError": "Veuillez entrer un code",
+        "invalidCodeError": "Code invalide",
+        "alreadyRedeemedError": "Ce code a déjà été utilisé",
+        "errorUpdating": "Erreur lors de la mise à jour du statut du code",
+        "generalError": "Une erreur s'est produite. Veuillez réessayer.",
+        "successTitle": "Succès !",
+        "successMessage": "Votre code a été validé avec succès. Vous avez maintenant un accès premium à vie !"
+      },
       "apps": {
         "strava": {
           "title": "Strava"
@@ -470,6 +486,31 @@
       "Windsurf": "Planche à Voile",
       "Workout": "Entraînement",
       "Yoga": "Yoga"
+    },
+    "paywall": {
+      "subscribe": "S'abonner",
+      "presets": {
+        "editTemplates": {
+          "title": "L'édition de modèles est une fonctionnalité premium",
+          "subtitle": "Débloquez l'édition illimitée de modèles avec un abonnement. Réinitialisez votre modèle pour continuer sans abonnement."
+        },
+        "removeAds": {
+          "title": "Profitez d'une expérience sans publicité",
+          "subtitle": "Supprimez toutes les publicités et profitez de sessions ininterrompues avec un abonnement"
+        }
+      },
+      "features": {
+        "unlimited": "Accès illimité à toutes les fonctionnalités premium",
+        "newContent": "Nouveau contenu premium chaque mois",
+        "support": "Support client prioritaire"
+      },
+      "plans": {
+        "annual": "Annuel",
+        "monthly": "Mensuel",
+        "perYear": "/an",
+        "perMonth": "/mois",
+        "discount": "-{{ discount }}%"
+      }
     }
   }
   

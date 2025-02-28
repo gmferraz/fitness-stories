@@ -11,7 +11,6 @@ import { Text } from '../../components/nativewindui/Text';
 import { LastActivityCard } from './components/LastActivityCard';
 import { WeekSummaryCard } from './components/WeekSummaryCard';
 import { useActivities } from './hooks/use-activities';
-import { useWeekSummary } from './hooks/use-week-summary';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ActivityIndicator as LoadingIndicator } from '~/components/nativewindui/ActivityIndicator';
 import { useMountEffect } from '~/utils/use-mount-effect';
@@ -23,16 +22,19 @@ import { useAppleHealth } from '~/utils/use-apple-health';
 import StravaIcon from '~/assets/svg/strava.svg';
 import AppleHealthIcon from '~/assets/svg/apple-health.svg';
 import { Ionicons } from '@expo/vector-icons';
+import { useWeeks } from './hooks/use-weeks';
 
 export const HomeScreen = () => {
   const { activities, isLoading, refreshActivities, hasConnectedSource } = useActivities({
     origin: 'home',
   });
-  const weekSummary = useWeekSummary();
   const { bottom } = useSafeAreaInsets();
   const [finishedMount, setFinishedMount] = useState(false);
   const { colors } = useColorScheme();
   const { t } = useTranslation();
+  const { weeks } = useWeeks();
+
+  const weekSummary = weeks[0];
 
   // Connect apps state and hooks
   const { isAuthenticated: isStravaConnected, handleLinkStrava } = useStrava();

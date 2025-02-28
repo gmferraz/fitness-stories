@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import { Ionicons } from '@expo/vector-icons';
@@ -30,13 +30,16 @@ export const PeriodMinimalLayout: React.FC<PeriodMinimalLayoutProps> = ({
   showBackground = true,
 }) => {
   const { t } = useTranslation();
-  const { styles } = useLayoutEditionStore();
-  const style = styles['period-minimal'].isEdited
-    ? styles['period-minimal']
+  const { styles: layoutStyles } = useLayoutEditionStore();
+  const style = layoutStyles['period-minimal'].isEdited
+    ? layoutStyles['period-minimal']
     : DEFAULT_LAYOUT_STYLES['period-minimal'];
   const textColor = getFontColor(style.fontColor);
   const bgColor = getBackgroundColor(style.backgroundColor, style.opacity);
-  const icon = getIconColor(style.iconColor);
+  const iconColor = getIconColor(style.iconColor);
+
+  // Divider color based on text color
+  const dividerColor = `${textColor}20`; // 20 is hex for 12% opacity
 
   const stats = [
     {
@@ -63,53 +66,84 @@ export const PeriodMinimalLayout: React.FC<PeriodMinimalLayoutProps> = ({
 
   return (
     <View
-      className="aspect-square w-full overflow-hidden rounded-2xl"
-      style={{
-        backgroundColor: showBackground ? bgColor : 'transparent',
-        padding: style.padding ?? 16,
-      }}>
-      <View className="flex-1">
+      className="w-full overflow-hidden rounded-2xl"
+      style={[
+        {
+          backgroundColor: showBackground ? bgColor : 'transparent',
+          padding: style.padding ?? 20,
+        },
+        showBackground && localStyles.cardShadow,
+      ]}>
+      <View>
         <Text
-          className="mb-6 text-center"
+          className="mb-8 text-center"
           style={{
             fontFamily: style.fontFamily,
             fontSize: style.titleSize,
             color: textColor,
             lineHeight: style.titleSize * 1.2,
             fontWeight: 'bold',
+            letterSpacing: 0.5,
           }}>
           {t('share.layouts.periodMinimal.title')}
         </Text>
 
-        <View className="flex-1 justify-center">
+        <View>
           {stats.map((stat, index) => (
-            <View key={stat.label} className="mb-6 flex-row items-center justify-between">
-              <View className="flex-row items-center gap-3">
-                <Ionicons name={stat.icon as any} size={20} color={icon} />
+            <React.Fragment key={stat.label}>
+              <View className="mb-4 flex-row items-center justify-between py-2">
+                <View className="flex-row items-center gap-3">
+                  <View
+                    className="items-center justify-center rounded-full p-2"
+                    style={{
+                      backgroundColor: showBackground
+                        ? 'rgba(255,255,255,0.1)'
+                        : 'rgba(0,0,0,0.03)',
+                    }}>
+                    <Ionicons name={stat.icon as any} size={18} color={iconColor} />
+                  </View>
+                  <Text
+                    style={{
+                      fontFamily: style.fontFamily,
+                      fontSize: style.labelSize,
+                      color: textColor,
+                      opacity: 0.9,
+                      lineHeight: style.labelSize * 1.2,
+                    }}>
+                    {stat.label}
+                  </Text>
+                </View>
                 <Text
+                  className="font-bold"
                   style={{
                     fontFamily: style.fontFamily,
-                    fontSize: style.labelSize,
+                    fontSize: style.bodySize,
                     color: textColor,
-                    lineHeight: style.labelSize * 1.2,
+                    lineHeight: style.bodySize * 1.2,
                   }}>
-                  {stat.label}
+                  {stat.value}
                 </Text>
               </View>
-              <Text
-                className="font-medium"
-                style={{
-                  fontFamily: style.fontFamily,
-                  fontSize: style.bodySize,
-                  color: textColor,
-                  lineHeight: style.bodySize * 1.2,
-                }}>
-                {stat.value}
-              </Text>
-            </View>
+              {index < stats.length - 1 && (
+                <View className="mb-4 h-[1px] w-full" style={{ backgroundColor: dividerColor }} />
+              )}
+            </React.Fragment>
           ))}
         </View>
       </View>
     </View>
   );
 };
+
+const localStyles = StyleSheet.create({
+  cardShadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+});

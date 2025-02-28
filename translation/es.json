@@ -172,7 +172,8 @@
           "date": "Fecha",
           "edit": "Editar",
           "share": "Compartir",
-          "per": "por"
+          "per": "por",
+          "cancel": "Cancelar"
         },
         "minimal": {
           "title": "Minimal"
@@ -348,6 +349,21 @@
       "premium": {
         "title": "Premium"
       },
+      "redeemCode": {
+        "title": "Canjear Código",
+        "modalTitle": "Canjear Código Premium",
+        "modalDescription": "Ingresa tu código premium a continuación para desbloquear funciones premium para siempre.",
+        "placeholder": "Ingresa el código",
+        "redeem": "Canjear",
+        "redeeming": "Canjeando...",
+        "emptyCodeError": "Por favor, ingresa un código",
+        "invalidCodeError": "Código inválido",
+        "alreadyRedeemedError": "Este código ya ha sido canjeado",
+        "errorUpdating": "Error al actualizar el estado del código",
+        "generalError": "Algo salió mal. Por favor, inténtalo de nuevo.",
+        "successTitle": "¡Éxito!",
+        "successMessage": "Tu código ha sido canjeado con éxito. ¡Ahora tienes acceso premium para siempre!"
+      },
       "apps": {
         "strava": {
           "title": "Strava"
@@ -470,6 +486,31 @@
       "Windsurf": "Windsurf",
       "Workout": "Entrenamiento",
       "Yoga": "Yoga"
+    },
+    "paywall": {
+      "subscribe": "Suscribirse",
+      "presets": {
+        "editTemplates": {
+          "title": "Editar plantillas es una función premium",
+          "subtitle": "Desbloquea la edición ilimitada de plantillas con una suscripción. Restablece tu plantilla para continuar sin suscripción."
+        },
+        "removeAds": {
+          "title": "Disfruta de una experiencia sin anuncios",
+          "subtitle": "Elimina todos los anuncios y disfruta de sesiones ininterrumpidas con una suscripción"
+        }
+      },
+      "features": {
+        "unlimited": "Acceso ilimitado a todas las funciones premium",
+        "newContent": "Nuevo contenido premium cada mes",
+        "support": "Soporte prioritario al cliente"
+      },
+      "plans": {
+        "annual": "Anual",
+        "monthly": "Mensual",
+        "perYear": "/año",
+        "perMonth": "/mes",
+        "discount": "-{{ discount }}%"
+      }
     }
   }
   

@@ -172,7 +172,8 @@
           "date": "Data",
           "edit": "Editar",
           "share": "Compartilhar",
-          "per": "por"
+          "per": "por",
+          "cancel": "Cancelar"
         },
         "minimal": {
           "title": "Minimal"
@@ -348,6 +349,21 @@
       "premium": {
         "title": "Premium"
       },
+      "redeemCode": {
+        "title": "Resgatar Código",
+        "modalTitle": "Resgatar Código Premium",
+        "modalDescription": "Digite seu código premium abaixo para desbloquear recursos premium para sempre.",
+        "placeholder": "Digite o código",
+        "redeem": "Resgatar",
+        "redeeming": "Resgatando...",
+        "emptyCodeError": "Por favor, digite um código",
+        "invalidCodeError": "Código inválido",
+        "alreadyRedeemedError": "Este código já foi resgatado",
+        "errorUpdating": "Erro ao atualizar o status do código",
+        "generalError": "Algo deu errado. Por favor, tente novamente.",
+        "successTitle": "Sucesso!",
+        "successMessage": "Seu código foi resgatado com sucesso. Agora você tem acesso premium para sempre!"
+      },
       "apps": {
         "strava": {
           "title": "Strava"
@@ -470,6 +486,31 @@
       "Windsurf": "Windsurf",
       "Workout": "Treino",
       "Yoga": "Yoga"
+    },
+    "paywall": {
+      "subscribe": "Assinar",
+      "presets": {
+        "editTemplates": {
+          "title": "Editar templates é um recurso premium",
+          "subtitle": "Desbloqueie a edição ilimitada de templates com uma assinatura. Redefina seu template para continuar sem uma assinatura."
+        },
+        "removeAds": {
+          "title": "Desfrute de uma experiência sem anúncios",
+          "subtitle": "Remova todos os anúncios e aproveite sessões ininterruptas com uma assinatura"
+        }
+      },
+      "features": {
+        "unlimited": "Acesso ilimitado a todos os recursos premium",
+        "newContent": "Novo conteúdo premium todo mês",
+        "support": "Suporte prioritário ao cliente"
+      },
+      "plans": {
+        "annual": "Anual",
+        "monthly": "Mensal",
+        "perYear": "/ano",
+        "perMonth": "/mês",
+        "discount": "-{{ discount }}%"
+      }
     }
   }
   

@@ -67,12 +67,14 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
     { label: 'Pastel Turquoise', value: 'pastel-turquoise' },
     { label: 'Pastel Mauve', value: 'pastel-mauve' },
     { label: 'Pastel Sky Blue', value: 'pastel-sky-blue' },
+    { label: 'Pastel Gray', value: 'pastel-gray' },
     { label: 'Vibrant Blue', value: 'vibrant-blue' },
     { label: 'Vibrant Purple', value: 'vibrant-purple' },
     { label: 'Vibrant Pink', value: 'vibrant-pink' },
     { label: 'Vibrant Teal', value: 'vibrant-teal' },
     { label: 'Vibrant Orange', value: 'vibrant-orange' },
     { label: 'Vibrant Red', value: 'vibrant-red' },
+    { label: 'Vibrant Gray', value: 'vibrant-gray' },
   ];
 
   const FONT_COLORS: { label: string; value: FontColor }[] = [

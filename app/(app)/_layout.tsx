@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, Redirect, Stack } from 'expo-router';
+import React, { useEffect } from 'react';
+import { Link, Redirect, Stack, router } from 'expo-router';
 import { Pressable, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,6 +8,8 @@ import { ThemeToggle } from '~/components/ThemeToggle';
 import { cn } from '~/lib/cn';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { useOnboardingStore } from '~/features/onboarding/store/use-onboarding-store';
+import { useAds } from '~/features/ads/use-ads';
+import { useEnvironmentStore } from '~/features/app-setup/use-environment';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -17,6 +19,22 @@ export {
 export default function AppLayout() {
   const { isCompleted: isOnboardingCompleted } = useOnboardingStore();
   const { t } = useTranslation();
+  const { trackAppOpenAdView, markPaywallAsShown } = useAds();
+  const isPremium = useEnvironmentStore((state) => state.isPremium);
+
+  useEffect(() => {
+    // Check if we should show the paywall after the third app open ad
+    if (!isPremium && trackAppOpenAdView()) {
+      // Mark paywall as shown to prevent showing it again
+      markPaywallAsShown();
+
+      // Navigate to paywall with removeAds preset
+      router.push({
+        pathname: '/paywall',
+        params: { preset: 'removeAds' },
+      });
+    }
+  }, [isPremium, trackAppOpenAdView, markPaywallAsShown]);
 
   if (!isOnboardingCompleted) {
     return <Redirect href="/onboarding" />;
@@ -33,6 +51,7 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen name="modal" options={{ ...MODAL_OPTIONS, title: t('layout.settings') }} />
+      <Stack.Screen name="paywall" options={{ ...PAYWALL_OPTIONS }} />
     </Stack>
   );
 }
@@ -65,4 +84,10 @@ const MODAL_OPTIONS = {
   presentation: 'modal',
   animation: 'fade_from_bottom', // for android
   headerRight: () => <ThemeToggle />,
+} as const;
+
+const PAYWALL_OPTIONS = {
+  presentation: 'modal',
+  animation: 'fade_from_bottom',
+  headerShown: false,
 } as const;

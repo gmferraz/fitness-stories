@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Icon } from '@roninoss/icons';
 import * as ImagePicker from 'expo-image-picker';
 import { VideoView, useVideoPlayer } from 'expo-video';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Image, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -13,6 +13,8 @@ import { useInstagramShareStore } from '../utils/use-instagram-share-store';
 
 import { Text } from '~/components/nativewindui/Text';
 import { useColorScheme } from '~/lib/useColorScheme';
+import { useAds } from '~/features/ads/use-ads';
+import { InterstitialAd } from 'react-native-google-mobile-ads';
 
 interface SharePhotoStepProps {
   next: () => void;
@@ -24,6 +26,12 @@ export function SharePhotoStep({ next }: SharePhotoStepProps) {
   const { bottom } = useSafeAreaInsets();
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
+  const { createInterstitialAd } = useAds();
+  const [ad, setAd] = useState<InterstitialAd | null>(createInterstitialAd());
+
+  useEffect(() => {
+    ad?.load();
+  }, []);
 
   const pickImage = async () => {
     setIsLoading(true);
@@ -130,7 +138,17 @@ export function SharePhotoStep({ next }: SharePhotoStepProps) {
               </View>
             </MotiPressable>
             <MotiPressable
-              onPress={next}
+              onPress={() => {
+                if (ad?.loaded) {
+                  ad.show().then(() => {
+                    setAd(createInterstitialAd());
+                    ad.load();
+                    next();
+                  });
+                } else {
+                  next();
+                }
+              }}
               animate={({ pressed }) => {
                 'worklet';
                 return {

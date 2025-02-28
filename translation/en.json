@@ -172,7 +172,8 @@
         "date": "Date",
         "edit": "Edit",
         "share": "Share",
-        "per": "per"
+        "per": "per",
+        "cancel": "Cancel"
       },
       "minimal": {
         "title": "Minimal"
@@ -349,6 +350,21 @@
     "premium": {
       "title": "Premium"
     },
+    "redeemCode": {
+      "title": "Redeem Code",
+      "modalTitle": "Redeem Premium Code",
+      "modalDescription": "Enter your premium code below to unlock premium features forever.",
+      "placeholder": "Enter code",
+      "redeem": "Redeem",
+      "redeeming": "Redeeming...",
+      "emptyCodeError": "Please enter a code",
+      "invalidCodeError": "Invalid code",
+      "alreadyRedeemedError": "This code has already been redeemed",
+      "errorUpdating": "Error updating code status",
+      "generalError": "Something went wrong. Please try again.",
+      "successTitle": "Success!",
+      "successMessage": "Your code has been redeemed successfully. You now have premium access forever!"
+    },
     "apps": {
       "strava": {
         "title": "Strava"
@@ -471,5 +487,35 @@
     "Windsurf": "Windsurf",
     "Workout": "Workout",
     "Yoga": "Yoga"
+  },
+  "paywall": {
+    "title": "Select your plan",
+    "annual": "Annual",
+    "monthly": "Monthly",
+    "annualPrice": "{{defaultValue}}",
+    "monthlyPrice": "{{defaultValue}}",
+    "subscribe": "Subscribe",
+    "presets": {
+      "editTemplates": {
+        "title": "Editing templates is a premium feature",
+        "subtitle": "Unlock unlimited template editing with a subscription. Reset your template to continue without a subscription."
+      },
+      "removeAds": {
+        "title": "Enjoy an ad-free experience",
+        "subtitle": "Remove all ads and enjoy uninterrupted sessions with a subscription"
+      }
+    },
+    "features": {
+      "unlimited": "Unlimited access to all premium features",
+      "newContent": "New premium content every month",
+      "support": "Priority customer support"
+    },
+    "plans": {
+      "annual": "Annual",
+      "monthly": "Monthly",
+      "perYear": "/year",
+      "perMonth": "/month",
+      "discount": "-{{ discount }}%"
+    }
   }
 }
