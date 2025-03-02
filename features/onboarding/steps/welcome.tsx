@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, Linking } from 'react-native';
 import { MotiView } from 'moti';
 import { MotiPressable } from 'moti/interactions';
 import { useTranslation } from 'react-i18next';
@@ -41,11 +41,24 @@ export const WelcomeStep: React.FC<WelcomeStepProps> = ({ onNext }) => {
             scale: pressed ? 0.95 : 1,
           };
         }}>
-        <View className="flex-row items-center gap-2 rounded-full bg-primary px-4 py-2">
+        <View className="mb-6 flex-row items-center gap-2 rounded-full bg-primary px-4 py-2">
           <Text className="font-medium text-white">{t('onboarding.welcome.getStarted')}</Text>
           <Icon name="arrow-right" size={20} color="white" />
         </View>
       </MotiPressable>
+
+      <View className="mt-2 flex-row justify-center gap-4">
+        <Text
+          className="text-sm text-gray-500 underline"
+          onPress={() => Linking.openURL('https://fitstories-drab.vercel.app/privacy/en')}>
+          {t('settings.privacyPolicy')}
+        </Text>
+        <Text
+          className="text-sm text-gray-500 underline"
+          onPress={() => Linking.openURL('https://fitstories-drab.vercel.app/terms/en')}>
+          {t('settings.terms')}
+        </Text>
+      </View>
     </View>
   );
 };

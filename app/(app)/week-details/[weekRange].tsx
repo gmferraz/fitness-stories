@@ -33,7 +33,7 @@ export default function Screen() {
               }}>
               <View className="bg-primary/10 flex-row items-center rounded-full px-3 py-1.5">
                 <MaterialCommunityIcons name="instagram" size={16} color={colors.primary} />
-                <Text color="primary" variant="caption1" className="ml-1 font-medium">
+                <Text color="primary" variant="subhead" className="ml-2 font-medium">
                   {t('activityDetails.shareOnInstagram')}
                 </Text>
               </View>

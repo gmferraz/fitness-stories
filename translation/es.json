@@ -81,7 +81,7 @@
       },
       "layouts": {
         "common": {
-          "avgPace": "Ritmo promedio",
+          "avgPace": "Ritmo",
           "time": "Tiempo",
           "elevation": "Elevación",
           "distance": "Distancia",
@@ -290,7 +290,7 @@
         "stats": {
           "duration": "Duración",
           "distance": "Distancia",
-          "avgPace": "Ritmo promedio",
+          "avgPace": "Ritmo",
           "elevation": "Elevación",
           "calories": "Calorías",
           "avgHeartRate": "FC Promedio",
@@ -309,7 +309,7 @@
           "totalActivities": "Total de actividades",
           "duration": "Duración",
           "distance": "Distancia",
-          "avgPace": "Ritmo promedio",
+          "avgPace": "Ritmo",
           "elevation": "Elevación",
           "calories": "Calorías"
         },
@@ -326,8 +326,10 @@
       "sections": {
         "general": "General",
         "premium": "Premium",
-        "connectedApps": "Apps conectadas"
+        "connectedApps": "Aplicaciones conectadas"
       },
+      "privacyPolicy": "Política de privacidad",
+      "terms": "Términos y condiciones",
       "language": {
         "title": "Idioma",
         "options": {
@@ -375,7 +377,7 @@
       }
     },
     "activityDetails": {
-      "title": "Detalles de la Actividad",
+      "title": "Detalles",
       "shareOnInstagram": "Compartir",
       "stats": {
         "avgHeartRate": "FC Promedio",
@@ -386,13 +388,13 @@
       }
     },
     "weekDetails": {
-      "title": "Detalles de la Semana",
+      "title": "Detalles",
       "activities": "Actividades",
       "stats": {
         "totalActivities": "Actividades",
         "duration": "Duración",
         "distance": "Distancia",
-        "avgPace": "Ritmo Promedio",
+        "avgPace": "Ritmo",
         "elevation": "Elevación",
         "calories": "Calorías"
       }
@@ -433,7 +435,7 @@
       "settings": "Ajustes"
     },
     "activitiesList": {
-      "title": "Todas las Actividades",
+      "title": "Actividades",
       "last90Days": "Últimos 90 Días"
     },
     "sportTypes": {

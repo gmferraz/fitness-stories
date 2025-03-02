@@ -115,8 +115,7 @@ export const useInitializeEnvironment = () => {
       }
 
       const customerInfo = await Purchases.getCustomerInfo();
-      // TODO: remove true
-      if (typeof customerInfo.entitlements.active['premium'] !== 'undefined' || true) {
+      if (typeof customerInfo.entitlements.active['premium'] !== 'undefined' || isTestFlight) {
         setIsPremium(true);
       } else {
         setIsPremium(false);

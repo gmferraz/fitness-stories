@@ -326,8 +326,10 @@
       "sections": {
         "general": "Geral",
         "premium": "Premium",
-        "connectedApps": "Apps conectados"
+        "connectedApps": "Aplicativos conectados"
       },
+      "privacyPolicy": "Política de Privacidade",
+      "terms": "Termos e Condições",
       "language": {
         "title": "Idioma",
         "options": {

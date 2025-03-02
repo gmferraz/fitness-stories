@@ -13,7 +13,6 @@ import { WeekSummaryCard } from './components/WeekSummaryCard';
 import { useActivities } from './hooks/use-activities';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ActivityIndicator as LoadingIndicator } from '~/components/nativewindui/ActivityIndicator';
-import { useMountEffect } from '~/utils/use-mount-effect';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { EmptyState } from '~/components/EmptyState';
 import { router } from 'expo-router';
@@ -29,7 +28,6 @@ export const HomeScreen = () => {
     origin: 'home',
   });
   const { bottom } = useSafeAreaInsets();
-  const [finishedMount, setFinishedMount] = useState(false);
   const { colors } = useColorScheme();
   const { t } = useTranslation();
   const { weeks } = useWeeks();
@@ -57,12 +55,6 @@ export const HomeScreen = () => {
     await initializeHealthKit();
     setIsConnectingAppleHealth(false);
   };
-
-  useMountEffect(() => {
-    setTimeout(() => {
-      setFinishedMount(true);
-    }, 1000);
-  });
 
   if (!hasConnectedSource) {
     return (
@@ -150,7 +142,7 @@ export const HomeScreen = () => {
     );
   }
 
-  if (isLoading && !finishedMount && !hasConnectedSource && !activities.length) {
+  if (isLoading && hasConnectedSource && !activities.length) {
     return (
       <View className="flex-1 items-center justify-center bg-background">
         <LoadingIndicator />

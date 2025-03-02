@@ -328,6 +328,8 @@
         "premium": "Premium",
         "connectedApps": "Applications connectées"
       },
+      "privacyPolicy": "Politique de confidentialité",
+      "terms": "Conditions générales",
       "language": {
         "title": "Langue",
         "options": {

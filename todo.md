@@ -25,7 +25,7 @@
 - [x] Setup app icon
 - [x] Setup splash screen
 - [x] Add ads everywhere needed
-- [ ] Check offline mode
+- [x] Check offline mode
 - [ ] Setup app store project
 - [x] Deploy next app with support/terms/privacy
 - [x] Add import strava/apple health on home when no connected apps

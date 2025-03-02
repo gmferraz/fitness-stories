@@ -134,21 +134,18 @@ export const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
     fontFamily: 'Poppins',
     titleSize: 30,
     bodySize: 18,
-    opacity: 100,
   },
   stats: {
     ...DEFAULT_STYLE,
     fontFamily: 'Poppins',
     titleSize: 28,
     bodySize: 18,
-    opacity: 100,
   },
   aesthetic: {
     ...DEFAULT_STYLE,
     fontFamily: 'Montserrat',
     titleSize: 32,
     bodySize: 20,
-    opacity: 80,
   },
   achievement: {
     ...DEFAULT_STYLE,

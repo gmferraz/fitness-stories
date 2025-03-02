@@ -41,7 +41,7 @@ export default function LayoutEditorScreen() {
               }}>
               <View className="bg-primary/10 flex-row items-center rounded-full px-3 py-1.5">
                 <MaterialCommunityIcons name="refresh" size={16} color={colors.primary} />
-                <Text color="primary" variant="caption1" className="ml-1 font-medium">
+                <Text color="primary" variant="subhead" className="ml-2 font-medium">
                   {t('share.editor.reset')}
                 </Text>
               </View>

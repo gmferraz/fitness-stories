@@ -238,7 +238,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
             minimumValue={5}
             maximumValue={100}
             step={5}
-            onSlidingComplete={(value) =>
+            onValueChange={(value) =>
               selectedLayout && setLayoutStyle(selectedLayout, { opacity: value })
             }
           />
@@ -290,7 +290,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
             minimumValue={20}
             maximumValue={40}
             step={1}
-            onSlidingComplete={(value) =>
+            onValueChange={(value) =>
               selectedLayout && setLayoutStyle(selectedLayout, { titleSize: value })
             }
           />
@@ -309,7 +309,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
             minimumValue={12}
             maximumValue={24}
             step={1}
-            onSlidingComplete={(value) =>
+            onValueChange={(value) =>
               selectedLayout && setLayoutStyle(selectedLayout, { bodySize: value })
             }
           />
@@ -328,7 +328,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
             minimumValue={10}
             maximumValue={18}
             step={1}
-            onSlidingComplete={(value) =>
+            onValueChange={(value) =>
               selectedLayout && setLayoutStyle(selectedLayout, { labelSize: value })
             }
           />
@@ -347,7 +347,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
             minimumValue={4}
             maximumValue={24}
             step={1}
-            onSlidingComplete={(value) => {
+            onValueChange={(value) => {
               selectedLayout && setLayoutStyle(selectedLayout, { padding: value });
             }}
           />
@@ -498,11 +498,8 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
       transition={{ type: 'timing', duration: 300 }}
       className="flex-1">
       <View className="flex-1">
-        <View className="p-4">
+        <View className="px-2 py-2">
           <View className="flex-row items-center justify-between">
-            <Text color="primary" variant="title2" className="font-bold">
-              {t('share.editor.title')}
-            </Text>
             <MotiPressable
               onPress={() => selectedLayout && toggleBackground()}
               animate={({ pressed }) => {
@@ -525,9 +522,10 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
                 </Text>
               </View>
             </MotiPressable>
+            <View />
           </View>
 
-          <View className="my-4 mb-8">{renderPreview()}</View>
+          <View className="mb-8 mt-2">{renderPreview()}</View>
 
           {/* Section Control */}
           <SegmentedControl
