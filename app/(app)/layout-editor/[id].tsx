@@ -29,6 +29,7 @@ export default function LayoutEditorScreen() {
         options={{
           title: t('share.editor.title'),
           headerLargeTitle: false,
+          headerTitleAlign: 'center',
           headerRight: () => (
             <MotiPressable
               onPress={handleReset}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import { Ionicons } from '@expo/vector-icons';
@@ -82,7 +82,6 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
           backgroundColor: showBackground ? bgColor : 'transparent',
           padding: style.padding ?? 20,
         },
-        showBackground && localStyles.cardShadow,
       ]}>
       <View>
         <Text
@@ -126,7 +125,7 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
                     <Ionicons name={stat.icon as any} size={18} color={iconColor} />
                   </View>
                   <Text
-                    className="font-bold"
+                    className="ios:font-bold"
                     style={{
                       fontFamily: style.fontFamily,
                       fontSize: style.bodySize * 1.2,
@@ -156,16 +155,3 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
     </View>
   );
 };
-
-const localStyles = StyleSheet.create({
-  cardShadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-});

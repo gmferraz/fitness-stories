@@ -63,7 +63,7 @@ export function MinimalLayout({
       </Text>
       <Text
         numberOfLines={2}
-        className="mb-6 mt-2 font-bold"
+        className="ios:font-bold mb-6 mt-2"
         style={{
           fontSize: style.titleSize,
           fontFamily: style.fontFamily,
@@ -86,7 +86,7 @@ export function MinimalLayout({
             {t('share.layouts.common.avgPace')}
           </Text>
           <Text
-            className="font-bold"
+            className="ios:font-bold"
             style={{
               fontSize: style.bodySize,
               fontFamily: style.fontFamily,
@@ -108,7 +108,7 @@ export function MinimalLayout({
             {t('share.layouts.common.time')}
           </Text>
           <Text
-            className="font-bold"
+            className="ios:font-bold"
             style={{
               fontSize: style.bodySize,
               fontFamily: style.fontFamily,
@@ -131,7 +131,7 @@ export function MinimalLayout({
               {t('share.layouts.common.elevation')}
             </Text>
             <Text
-              className="font-bold"
+              className="ios:font-bold"
               style={{
                 fontSize: style.bodySize,
                 fontFamily: style.fontFamily,

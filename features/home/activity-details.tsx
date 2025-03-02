@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -220,7 +220,7 @@ export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
       </View>
 
       {/* Map Section */}
-      {hasRoute && (
+      {hasRoute && Platform.OS === 'ios' && (
         <View className="mx-4 mb-4 mt-8 h-64 overflow-hidden rounded-2xl">
           <MapView
             style={StyleSheet.absoluteFill}

@@ -491,15 +491,18 @@
       "Yoga": "Yoga"
     },
     "paywall": {
-      "subscribe": "Suscribirse",
       "presets": {
         "editTemplates": {
           "title": "Editar plantillas es una función premium",
           "subtitle": "Desbloquea la edición ilimitada de plantillas con una suscripción. Restablece tu plantilla para continuar sin suscripción."
         },
         "removeAds": {
-          "title": "Disfruta de una experiencia sin anuncios",
-          "subtitle": "Elimina todos los anuncios y disfruta de sesiones ininterrumpidas con una suscripción"
+          "title": "Elimina Anuncios",
+          "subtitle": "Disfruta de una experiencia sin anuncios al crear tus historias"
+        },
+        "general": {
+          "title": "Desbloquea Características Premium",
+          "subtitle": "Obtén acceso a todas las características premium y mejora tu experiencia de creación de historias"
         }
       },
       "features": {
@@ -510,10 +513,11 @@
       "plans": {
         "annual": "Anual",
         "monthly": "Mensual",
-        "perYear": "/año",
-        "perMonth": "/mes",
-        "discount": "-{{ discount }}%"
-      }
+        "perYear": " por año",
+        "perMonth": " por mes",
+        "discount": "{{discount}}% OFF"
+      },
+      "subscribe": "Suscribirse Ahora"
     }
   }
   

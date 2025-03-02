@@ -1,4 +1,4 @@
-import { View, ScrollView, Pressable } from 'react-native';
+import { View, ScrollView, Pressable, Platform } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { MotiView } from 'moti';
 import { MotiPressable } from 'moti/interactions';
@@ -30,10 +30,10 @@ import { Activity } from '~/features/home/types/activity';
 import { LAYOUT_COMPONENTS } from './components/share-layout-step';
 
 const FONT_FAMILIES: { label: string; value: FontFamily }[] = [
-  { label: 'Inter', value: 'Inter' },
-  { label: 'Oswald', value: 'Oswald' },
-  { label: 'Montserrat', value: 'Montserrat' },
-  { label: 'Poppins', value: 'Poppins' },
+  { label: 'Inter', value: Platform.OS === 'ios' ? 'Inter' : 'Inter_400Regular' },
+  { label: 'Oswald', value: Platform.OS === 'ios' ? 'Oswald' : 'Oswald_400Regular' },
+  { label: 'Montserrat', value: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat_400Regular' },
+  { label: 'Poppins', value: Platform.OS === 'ios' ? 'Poppins' : 'Poppins_400Regular' },
 ];
 
 type EditorSection = 'Style' | 'Sizes' | 'Colors';

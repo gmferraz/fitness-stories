@@ -65,7 +65,7 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
               fontSize: style.bodySize,
               lineHeight: style.bodySize * 1.2,
             }}
-            className="ml-2 font-bold">
+            className="ios:font-bold ml-2">
             {t('share.layouts.weight.title')}
           </Text>
         </View>
@@ -115,7 +115,7 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
                   fontSize: style.bodySize,
                   lineHeight: style.bodySize * 1.2,
                 }}
-                className="font-bold">
+                className="ios:font-bold">
                 {Math.round(activity.average_heartrate!)} bpm
               </Text>
             </View>
@@ -140,8 +140,8 @@ export function WeightLayout({ duration, activity, showBackground = true }: Weig
                   fontSize: style.bodySize,
                   lineHeight: style.bodySize * 1.2,
                 }}
-                className="font-bold">
-                {Math.round(activity.calories!)} kcal
+                className="ios:font-bold">
+                {Math.round(activity.calories ?? 0)} kcal
               </Text>
             </View>
           )}

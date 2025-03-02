@@ -26,6 +26,7 @@ export default function ActivityDetailsScreen() {
         options={{
           title: translateSportType(t, type as SportType),
           headerLargeTitle: true,
+          headerTitleAlign: 'center',
           headerRight: () =>
             availableLayouts.length > 0 ? (
               <MotiPressable

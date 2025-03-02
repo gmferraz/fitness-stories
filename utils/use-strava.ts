@@ -5,6 +5,7 @@ import { useStravaStore } from '../stores/use-strava-store';
 import { decode } from '@googlemaps/polyline-codec';
 import { StravaActivity } from '~/features/home/types/activity';
 import * as Sentry from '@sentry/react-native';
+import * as WebBrowser from 'expo-web-browser';
 
 export const stravaStorage = new MMKV({
   id: 'strava-storage',
@@ -13,16 +14,21 @@ export const stravaStorage = new MMKV({
 const stravaClientId = process.env.EXPO_PUBLIC_STRAVA_ID!;
 const stravaClientSecret = process.env.EXPO_PUBLIC_STRAVA_KEY!;
 
-// (Redirect URI construction is assumed to be correct)
-const redirectUri =
-  AuthSession.makeRedirectUri({ scheme: 'com.ferrazgui.fitnessstories' }) +
-  'com.ferrazgui.fitnessstories';
+// Fix the redirect URI to handle Android differently
+const redirectUri = AuthSession.makeRedirectUri({
+  scheme: 'com.ferrazgui.fitnessstories',
+  path: 'com.ferrazgui.fitnessstories',
+});
+
+console.log('redirectUri', redirectUri);
 
 const discovery = {
   authorizationEndpoint: 'https://www.strava.com/oauth/mobile/authorize',
   tokenEndpoint: 'https://www.strava.com/oauth/token',
   revocationEndpoint: 'https://www.strava.com/oauth/deauthorize',
 };
+
+WebBrowser.maybeCompleteAuthSession();
 
 async function maybeRefreshToken() {
   const storedRefreshToken = stravaStorage.getString('strava_refresh_token');
@@ -107,10 +113,59 @@ export const useStrava = () => {
         message: 'Checking Strava authentication status',
         level: 'info',
       });
+
+      // Check if we have a stored auth code from a redirect
+      const storedAuthCode = stravaStorage.getString('strava_auth_code');
+      if (storedAuthCode) {
+        console.log('Found stored auth code, exchanging for token');
+
+        try {
+          const tokenResult = await AuthSession.exchangeCodeAsync(
+            {
+              clientId: stravaClientId,
+              redirectUri,
+              code: storedAuthCode,
+              extraParams: {
+                client_secret: stravaClientSecret,
+                grant_type: 'authorization_code',
+              },
+            },
+            { tokenEndpoint: 'https://www.strava.com/oauth/token' }
+          );
+
+          if (tokenResult?.accessToken) {
+            stravaStorage.set('strava_access_token', tokenResult.accessToken);
+            stravaStorage.set('strava_refresh_token', tokenResult.refreshToken ?? '');
+            stravaStorage.set(
+              'strava_token_expiry',
+              Math.floor(Date.now() / 1000) + (tokenResult.expiresIn ?? 1)
+            );
+            setIsAuthenticated(true);
+
+            // Clear the stored auth code
+            stravaStorage.delete('strava_auth_code');
+
+            Sentry.addBreadcrumb({
+              category: 'auth',
+              message: 'Strava token exchange successful from stored code',
+              level: 'info',
+            });
+            Sentry.setTag('strava_authenticated', true);
+
+            return;
+          }
+        } catch (error) {
+          console.error('Error exchanging stored auth code:', error);
+          stravaStorage.delete('strava_auth_code');
+        }
+      }
+
+      // If no stored code or exchange failed, check for refresh token
       const token = await maybeRefreshToken();
       setIsAuthenticated(!!token);
       Sentry.setTag('strava_authenticated', !!token);
     };
+
     checkAuth();
   }, [setIsAuthenticated]);
 

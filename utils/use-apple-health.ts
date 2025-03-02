@@ -47,6 +47,11 @@ export const useAppleHealth = () => {
   }, []);
 
   const checkAvailabilityAndPermissions = async () => {
+    if (Platform.OS !== 'ios') {
+      setIsAvailable(false);
+      return;
+    }
+
     // Check if HealthKit is available on this device
     AppleHealthKit.isAvailable((err: any, available: boolean) => {
       if (err) {

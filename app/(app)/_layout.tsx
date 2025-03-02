@@ -30,6 +30,7 @@ export default function AppLayout() {
           ...INDEX_OPTIONS,
           title: t('layout.title'),
           headerTitleStyle: { fontSize: 22, fontWeight: '900' },
+          headerTitleAlign: 'center',
         }}
       />
       <Stack.Screen name="modal" options={{ ...MODAL_OPTIONS, title: t('layout.settings') }} />

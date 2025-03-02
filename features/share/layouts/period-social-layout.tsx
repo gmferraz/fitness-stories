@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Text } from '~/components/nativewindui/Text';
 import { Ionicons } from '@expo/vector-icons';
@@ -74,7 +74,6 @@ export const PeriodSocialLayout: React.FC<PeriodSocialLayoutProps> = ({
           backgroundColor: showBackground ? bgColor : 'transparent',
           padding: style.padding ?? 20,
         },
-        showBackground && localStyles.cardShadow,
       ]}>
       <View>
         <View className="py-4">
@@ -87,7 +86,7 @@ export const PeriodSocialLayout: React.FC<PeriodSocialLayoutProps> = ({
               <Ionicons name={mainStat.icon as any} size={32} color={accentColor} />
             </View>
             <Text
-              className="mb-2 text-center font-bold"
+              className="ios:font-bold mb-2 text-center"
               style={{
                 fontFamily: style.fontFamily,
                 fontSize: style.titleSize * 1.2,
@@ -121,7 +120,7 @@ export const PeriodSocialLayout: React.FC<PeriodSocialLayoutProps> = ({
               {stats.map((stat) => (
                 <View key={stat.label} className="items-center px-2">
                   <Text
-                    className="mb-2 text-center font-bold"
+                    className="ios:font-bold mb-2 text-center"
                     style={{
                       fontFamily: style.fontFamily,
                       fontSize: style.bodySize,
@@ -153,16 +152,3 @@ export const PeriodSocialLayout: React.FC<PeriodSocialLayoutProps> = ({
     </View>
   );
 };
-
-const localStyles = StyleSheet.create({
-  cardShadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-});

@@ -3,12 +3,13 @@
     "name": "FitStories",
     "slug": "fitness-stories",
     "version": "1.0.0",
-    "scheme": "fitness-stories",
+    "scheme": "com.ferrazgui.fitnessstories",
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/favicon.png"
     },
+    "newArchEnabled": false,
     "plugins": [
       "expo-router",
       [
@@ -151,7 +152,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/adaptive-2.png",
         "backgroundColor": "#1E90FF"
       },
       "package": "com.ferrazgui.fitnessstories",

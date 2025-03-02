@@ -497,15 +497,18 @@
     "monthly": "Monthly",
     "annualPrice": "{{defaultValue}}",
     "monthlyPrice": "{{defaultValue}}",
-    "subscribe": "Subscribe",
     "presets": {
       "editTemplates": {
         "title": "Editing templates is a premium feature",
         "subtitle": "Unlock unlimited template editing with a subscription. Reset your template to continue without a subscription."
       },
       "removeAds": {
-        "title": "Enjoy an ad-free experience",
-        "subtitle": "Remove all ads and enjoy uninterrupted sessions with a subscription"
+        "title": "Remove Ads",
+        "subtitle": "Enjoy an ad-free experience while creating your stories"
+      },
+      "general": {
+        "title": "Unlock Premium Features",
+        "subtitle": "Get access to all premium features and enhance your story creation experience"
       }
     },
     "features": {
@@ -516,9 +519,10 @@
     "plans": {
       "annual": "Annual",
       "monthly": "Monthly",
-      "perYear": "/year",
-      "perMonth": "/month",
-      "discount": "-{{ discount }}%"
-    }
+      "perYear": " per year",
+      "perMonth": " per month",
+      "discount": "{{discount}}% OFF"
+    },
+    "subscribe": "Subscribe Now"
   }
 }

@@ -491,15 +491,18 @@
       "Yoga": "Yoga"
     },
     "paywall": {
-      "subscribe": "S'abonner",
       "presets": {
         "editTemplates": {
-          "title": "L'édition de modèles est une fonctionnalité premium",
-          "subtitle": "Débloquez l'édition illimitée de modèles avec un abonnement. Réinitialisez votre modèle pour continuer sans abonnement."
+          "title": "Débloquez les Modèles Premium",
+          "subtitle": "Accédez à tous les modèles premium et personnalisez vos stories"
         },
         "removeAds": {
-          "title": "Profitez d'une expérience sans publicité",
-          "subtitle": "Supprimez toutes les publicités et profitez de sessions ininterrompues avec un abonnement"
+          "title": "Supprimez les Publicités",
+          "subtitle": "Profitez d'une expérience sans publicité lors de la création de vos stories"
+        },
+        "general": {
+          "title": "Débloquez les Fonctionnalités Premium",
+          "subtitle": "Accédez à toutes les fonctionnalités premium et améliorez votre expérience de création de stories"
         }
       },
       "features": {
@@ -510,10 +513,11 @@
       "plans": {
         "annual": "Annuel",
         "monthly": "Mensuel",
-        "perYear": "/an",
-        "perMonth": "/mois",
-        "discount": "-{{ discount }}%"
-      }
+        "perYear": " par an",
+        "perMonth": " par mois",
+        "discount": "{{discount}}% OFF"
+      },
+      "subscribe": "S'abonner Maintenant"
     }
   }
   

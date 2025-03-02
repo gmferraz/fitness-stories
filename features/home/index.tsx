@@ -65,7 +65,7 @@ export const HomeScreen = () => {
             subtitle={t('home.noConnectedApps.subtitle')}
             className="mb-8 shadow-lg"
           />
-          <Text variant="title2" className="mb-2 text-center font-semibold">
+          <Text variant="title2" className="mb-4 text-center font-semibold">
             {t('home.apps.connectPrompt')}
           </Text>
           <TouchableOpacity

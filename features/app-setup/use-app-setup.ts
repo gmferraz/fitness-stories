@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import '../../translation';
-// import Purchases from 'react-native-purchases';
+import Purchases from 'react-native-purchases';
 import * as Sentry from '@sentry/react-native';
 
 import { useMountEffect } from '~/utils/use-mount-effect';
@@ -13,6 +13,7 @@ import { useAds } from '../ads/use-ads';
 import { MMKV } from 'react-native-mmkv';
 import { router } from 'expo-router';
 import { showRequestReview } from '~/utils/app-review';
+import { Platform } from 'react-native';
 
 type AppSetupState = 'pending' | 'done' | 'failed';
 
@@ -23,14 +24,13 @@ const APP_OPEN_COUNT_KEY = 'appOpenCount';
 const storage = new MMKV();
 
 export const runSynchronousSetupChores = () => {
-  // TODO: Uncomment this when we have a way to test the app without ads
-  // Purchases.configure({
-  //   apiKey:
-  //     Platform.select({
-  //       ios: process.env.EXPO_PUBLIC_REVENUECAT_IOS_API_KEY,
-  //       android: process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_API_KEY,
-  //     }) ?? '',
-  // });
+  Purchases.configure({
+    apiKey:
+      Platform.select({
+        ios: process.env.EXPO_PUBLIC_REVENUECAT_IOS_API_KEY,
+        android: process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_API_KEY,
+      }) ?? '',
+  });
 };
 
 export const useAppSetup = () => {

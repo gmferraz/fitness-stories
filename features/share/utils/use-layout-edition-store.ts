@@ -5,7 +5,16 @@ import { LayoutType } from './get-available-layouts';
 import { Appearance } from 'react-native';
 import { applyOpacityToColor } from './apply-opacity-to-color';
 
-export type FontFamily = 'Inter' | 'Oswald' | 'Montserrat' | 'Poppins';
+export type FontFamily =
+  | 'Inter'
+  | 'Oswald'
+  | 'Montserrat'
+  | 'Poppins'
+  | 'Inter_400Regular'
+  | 'Poppins_400Regular'
+  | 'Montserrat_400Regular'
+  | 'Oswald_400Regular';
+
 export type ColorScheme = 'blue' | 'purple' | 'pink' | 'orange' | 'green';
 export type BackgroundColor =
   | 'white'

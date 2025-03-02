@@ -491,15 +491,18 @@
       "Yoga": "Yoga"
     },
     "paywall": {
-      "subscribe": "Assinar",
       "presets": {
         "editTemplates": {
           "title": "Editar layouts é um recurso premium",
           "subtitle": "Desbloqueie a edição ilimitada de layouts com uma assinatura. Reinicie seu layout para continuar sem uma assinatura."
         },
         "removeAds": {
-          "title": "Tenha uma experiência sem anúncios",
-          "subtitle": "Remova todos os anúncios e aproveite sessões ininterruptas com uma assinatura"
+          "title": "Remova Anúncios",
+          "subtitle": "Aproveite uma experiência sem anúncios ao criar suas histórias"
+        },
+        "general": {
+          "title": "Desbloqueie Recursos Premium",
+          "subtitle": "Tenha acesso a todos os recursos premium e melhore sua experiência."
         }
       },
       "features": {
@@ -510,10 +513,11 @@
       "plans": {
         "annual": "Anual",
         "monthly": "Mensal",
-        "perYear": "/ano",
-        "perMonth": "/mês",
+        "perYear": " por ano",
+        "perMonth": " por mês",
         "discount": "-{{ discount }}%"
-      }
+      },
+      "subscribe": "Assinar Agora"
     }
   }
   

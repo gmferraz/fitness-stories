@@ -23,6 +23,7 @@ export default function ShareScreen() {
         options={{
           title: t('share.layouts.common.share'),
           headerLargeTitle: false,
+          headerTitleAlign: 'center',
           headerRight:
             step === 'layout'
               ? () => (

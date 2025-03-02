@@ -21,6 +21,7 @@ export default function Screen() {
         options={{
           title: t('weekDetails.title'),
           headerLargeTitle: true,
+          headerTitleAlign: 'center',
           headerRight: () => (
             <MotiPressable
               onPress={() => router.push(`/share/${formattedWeekRange}?type=period`)}

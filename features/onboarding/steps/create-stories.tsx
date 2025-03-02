@@ -132,7 +132,6 @@ export const CreateStoriesStep: React.FC<CreateStoriesStepProps> = ({ onNext, on
         </MotiPressable>
         <MotiPressable
           onPress={onNext}
-          disabled={!hasViewedAll}
           animate={({ pressed }) => {
             'worklet';
             return {

@@ -32,6 +32,7 @@ import { useStrava } from '~/utils/use-strava';
 import { weekStartStore } from '~/stores/use-week-start-store';
 import { useAppleHealth } from '~/utils/use-apple-health';
 import { supabase } from '~/utils/supabase';
+import { router } from 'expo-router';
 
 export default function SettingsScreen() {
   const { colors, colorScheme } = useColorScheme();
@@ -280,7 +281,17 @@ export default function SettingsScreen() {
               </View>
               <Toggle
                 value={isPremium}
-                onValueChange={isGui ? setIsPremium : isPremium ? null : () => null}
+                onValueChange={
+                  isGui
+                    ? setIsPremium
+                    : isPremium
+                      ? null
+                      : () =>
+                          router.push({
+                            pathname: '/paywall',
+                            params: { preset: 'general' },
+                          })
+                }
                 trackColor={{ false: colors.grey4, true: 'green' }}
               />
             </View>

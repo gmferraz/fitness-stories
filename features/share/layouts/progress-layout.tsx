@@ -60,7 +60,7 @@ export function ProgressLayout({
           fontSize: style.titleSize,
           lineHeight: style.titleSize * 1.2,
         }}
-        className="mb-4 font-bold">
+        className="ios:font-bold mb-4">
         {formatDistance(activity.distance)}
       </Text>
 
@@ -83,7 +83,7 @@ export function ProgressLayout({
               fontSize: style.bodySize,
               lineHeight: style.bodySize * 1.2,
             }}
-            className="font-bold">
+            className="ios:font-bold">
             {pace}
           </Text>
         </View>
@@ -105,7 +105,7 @@ export function ProgressLayout({
               fontSize: style.bodySize,
               lineHeight: style.bodySize * 1.2,
             }}
-            className="font-bold">
+            className="ios:font-bold">
             {formatDuration(duration)}
           </Text>
         </View>

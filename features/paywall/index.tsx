@@ -20,10 +20,10 @@ const ANNUAL_PACKAGE_ID = isAndroid ? 'rc_annual_2w0' : 'rc_annual_2w0';
 const MONTHLY_PACKAGE_ID = isAndroid ? 'rc_monthly_2w0' : 'rc_monthly_2w0';
 
 // Fixed discount percentage for annual plan
-const ANNUAL_DISCOUNT = 65;
+const ANNUAL_DISCOUNT = 60;
 
 // Paywall presets
-export type PaywallPreset = 'editTemplates' | 'removeAds';
+export type PaywallPreset = 'editTemplates' | 'removeAds' | 'general';
 
 export interface PaywallContent {
   title: string;

@@ -93,7 +93,7 @@ export function StatsLayout({
               fontSize: style.bodySize,
               lineHeight: style.bodySize * 1.2,
             }}
-            className="font-bold">
+            className="ios:font-bold">
             {formatDuration(duration)}
           </Text>
         </View>
@@ -119,7 +119,7 @@ export function StatsLayout({
               fontSize: style.bodySize,
               lineHeight: style.bodySize * 1.2,
             }}
-            className="font-bold">
+            className="ios:font-bold">
             {pace}
           </Text>
         </View>
@@ -150,7 +150,7 @@ export function StatsLayout({
                   fontSize: style.bodySize,
                   lineHeight: style.bodySize * 1.2,
                 }}
-                className="font-bold">
+                className="ios:font-bold">
                 {Math.round(activity.average_heartrate!)} bpm
               </Text>
             </View>
@@ -176,7 +176,7 @@ export function StatsLayout({
                   fontSize: style.bodySize,
                   lineHeight: style.bodySize * 1.2,
                 }}
-                className="font-bold">
+                className="ios:font-bold">
                 {Math.round(activity.max_heartrate!)} bpm
               </Text>
             </View>
