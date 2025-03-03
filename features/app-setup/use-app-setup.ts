@@ -80,7 +80,18 @@ export const useAppSetup = () => {
   };
 
   useMountEffect(() => {
-    const runSetup = async () => {};
+    const runSetup = async () => {
+      const isConfigured = await Purchases.isConfigured();
+      if (!isConfigured) {
+        Purchases.configure({
+          apiKey:
+            Platform.select({
+              ios: process.env.EXPO_PUBLIC_REVENUECAT_IOS_API_KEY,
+              android: process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_API_KEY,
+            }) ?? '',
+        });
+      }
+    };
 
     const completeSetup = () => {
       const appOpenAd = createAppOpenAd();

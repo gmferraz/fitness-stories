@@ -16,8 +16,8 @@ import { useColorScheme } from '~/lib/useColorScheme';
 
 const isAndroid = Platform.OS === 'android';
 
-const ANNUAL_PACKAGE_ID = isAndroid ? 'rc_annual_2w0' : 'rc_annual_2w0';
-const MONTHLY_PACKAGE_ID = isAndroid ? 'rc_monthly_2w0' : 'rc_monthly_2w0';
+const ANNUAL_PACKAGE_ID = isAndroid ? 'rc_annual' : 'rc_annual';
+const MONTHLY_PACKAGE_ID = isAndroid ? 'rc_monthly' : 'rc_monthly';
 
 // Fixed discount percentage for annual plan
 const ANNUAL_DISCOUNT = 60;
@@ -192,7 +192,7 @@ export function Paywall({ preset = 'editTemplates', customContent }: PaywallProp
           <Text variant="title1" className="max-w-[80%] text-center font-bold" color="primary">
             {content.title}
           </Text>
-          <Text variant="body" className="mt-2 text-center opacity-70" color="secondary">
+          <Text variant="body" className="mt-2 text-center opacity-70" color="tertiary">
             {content.subtitle}
           </Text>
         </MotiView>
