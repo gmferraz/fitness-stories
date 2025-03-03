@@ -15,7 +15,7 @@
     "web": "expo start --web",
     "build:ios:production": "eas build -p ios --profile production --local",
     "build:ios:development": "eas build -p ios --profile development",
-    "build:android:production": "eas build -p android --profile production --auto-submit",
+    "build:android:production": "eas build -p android --profile production --local",
     "run:android": "expo prebuild && SENTRY_DISABLE_AUTO_UPLOAD=true bun android",
     "run:ios": "expo prebuild && SENTRY_DISABLE_AUTO_UPLOAD=true bun ios"
   },

@@ -16,8 +16,8 @@ import { useColorScheme } from '~/lib/useColorScheme';
 
 const isAndroid = Platform.OS === 'android';
 
-const ANNUAL_PACKAGE_ID = isAndroid ? 'rc_annual' : 'rc_annual';
-const MONTHLY_PACKAGE_ID = isAndroid ? 'rc_monthly' : 'rc_monthly';
+const ANNUAL_PACKAGE_ID = isAndroid ? 'rc_annual:annual' : 'rc_annual';
+const MONTHLY_PACKAGE_ID = isAndroid ? 'monthly:monthly' : 'rc_monthly';
 
 // Fixed discount percentage for annual plan
 const ANNUAL_DISCOUNT = 60;
