@@ -2,6 +2,7 @@ import { useState } from 'react';
 import '../../translation';
 import Purchases from 'react-native-purchases';
 import * as Sentry from '@sentry/react-native';
+import { checkAndUpdatePromoCodeAvailability } from '~/utils/promo-code';
 
 import { useMountEffect } from '~/utils/use-mount-effect';
 import {
@@ -91,6 +92,9 @@ export const useAppSetup = () => {
             }) ?? '',
         });
       }
+
+      // Check promo code availability
+      await checkAndUpdatePromoCodeAvailability();
     };
 
     const completeSetup = () => {

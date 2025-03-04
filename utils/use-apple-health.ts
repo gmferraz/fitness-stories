@@ -315,9 +315,11 @@ export const useAppleHealth = () => {
 
             const heartRates = heartRateData.map((hr) => hr.value);
             const avgHeartRate = heartRates.length
-              ? heartRates.reduce((sum, hr) => sum + hr, 0) / heartRates.length
+              ? Math.round(heartRates.reduce((sum, hr) => sum + hr, 0) / heartRates.length)
               : undefined;
-            const maxHeartRate = heartRates.length ? Math.max(...heartRates) : undefined;
+            const maxHeartRate = heartRates.length
+              ? Math.round(Math.max(...heartRates))
+              : undefined;
 
             const duration =
               (new Date(workout.end).getTime() - new Date(workout.start).getTime()) / 1000;

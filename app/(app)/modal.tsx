@@ -24,6 +24,7 @@ import { Toggle } from '~/components/nativewindui/Toggle';
 import { useEnvironmentStore } from '~/features/app-setup/use-environment';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { languageDetector } from '~/utils/i18n/languageDetector';
+import { isPromoCodeEnabled } from '~/utils/promo-code';
 
 import StravaIcon from '~/assets/svg/strava.svg';
 import AppleHealthIcon from '~/assets/svg/apple-health.svg';
@@ -264,6 +265,30 @@ export default function SettingsScreen() {
               </View>
               <Icon name="chevron-right" size={20} color={colors.grey} />
             </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => Linking.openURL('https://fitness-stories.app/privacy')}
+              className="flex-row items-center justify-between border-t border-gray-400/20 px-4 py-3 dark:border-gray-200/10">
+              <View className="flex-row items-center gap-3">
+                <View className="h-8 w-8 items-center justify-center rounded-md bg-purple-400 shadow-sm">
+                  <MaterialCommunityIcons name="shield-check" size={24} color="white" />
+                </View>
+                <Text variant="body">{t('settings.privacyPolicy')}</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.grey} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => Linking.openURL('https://fitness-stories.app/terms')}
+              className="flex-row items-center justify-between border-t border-gray-400/20 px-4 py-3 dark:border-gray-200/10">
+              <View className="flex-row items-center gap-3">
+                <View className="h-8 w-8 items-center justify-center rounded-md bg-indigo-400 shadow-sm">
+                  <MaterialCommunityIcons name="file-document" size={24} color="white" />
+                </View>
+                <Text variant="body">{t('settings.terms')}</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.grey} />
+            </TouchableOpacity>
           </View>
 
           <Text variant="footnote" className="mb-2  px-4 text-gray-500">
@@ -297,25 +322,27 @@ export default function SettingsScreen() {
             </View>
 
             {/* Redeem Code Button */}
-            <TouchableOpacity
-              onPress={() => {
-                setRedeemModalVisible(true);
-                setRedeemCode('');
-                setValidationError('');
-              }}
-              className="flex-row items-center justify-between px-4 py-3">
-              <View className="flex-row items-center gap-3">
-                <View className="h-8 w-8 items-center justify-center rounded-md bg-green-500 shadow-sm">
-                  <MaterialCommunityIcons name="ticket-confirmation" size={24} color="white" />
+            {isPromoCodeEnabled() && (
+              <TouchableOpacity
+                onPress={() => {
+                  setRedeemModalVisible(true);
+                  setRedeemCode('');
+                  setValidationError('');
+                }}
+                className="flex-row items-center justify-between px-4 py-3">
+                <View className="flex-row items-center gap-3">
+                  <View className="h-8 w-8 items-center justify-center rounded-md bg-green-500 shadow-sm">
+                    <MaterialCommunityIcons name="ticket-confirmation" size={24} color="white" />
+                  </View>
+                  <Text variant="body">{t('settings.redeemCode.title')}</Text>
                 </View>
-                <Text variant="body">{t('settings.redeemCode.title')}</Text>
-              </View>
-              <Icon
-                name={isPremiumForever ? 'check' : 'chevron-right'}
-                size={20}
-                color={colors.grey}
-              />
-            </TouchableOpacity>
+                <Icon
+                  name={isPremiumForever ? 'check' : 'chevron-right'}
+                  size={20}
+                  color={colors.grey}
+                />
+              </TouchableOpacity>
+            )}
           </View>
 
           <Text variant="footnote" className="mb-2 px-4 text-gray-500">

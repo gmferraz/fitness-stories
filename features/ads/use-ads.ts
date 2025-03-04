@@ -15,13 +15,13 @@ import {
   INTERSTITIAL_APPLE_AD_ID,
 } from './add-ids';
 import { useEnvironmentStore } from '../app-setup/use-environment';
+import { Platform } from 'react-native';
 
 const storage = new MMKV();
 const TRACKING_PERMISSION_KEY = 'trackingPermission';
 
 export const useAds = () => {
   const [isInitialized, setIsInitialized] = useState(false);
-  // TODO: Remove this
   // const isPremium = useEnvironmentStore((state) => state.isPremium);
   const isPremium = true;
 
@@ -46,8 +46,8 @@ export const useAds = () => {
   const createAppOpenAd = () => {
     if (isPremium) return null;
     return AppOpenAd.createForAdRequest(
-      // Platform.select({ ios: APP_OPEN_APPLE_AD_ID!, android: APP_OPEN_ANDROID_AD_ID! }) ?? '',
-      TestIds.APP_OPEN,
+      Platform.select({ ios: APP_OPEN_APPLE_AD_ID!, android: APP_OPEN_ANDROID_AD_ID! }) ?? '',
+      // TestIds.APP_OPEN,
       {
         requestNonPersonalizedAdsOnly: !isPersonalizedAdsAllowed(),
         keywords: ['running', 'clothing', 'sports', 'fitness', 'run', 'health', 'wellness'],
@@ -58,9 +58,9 @@ export const useAds = () => {
   const createInterstitialAd = () => {
     if (isPremium) return null;
     return InterstitialAd.createForAdRequest(
-      // Platform.select({ ios: INTERSTITIAL_APPLE_AD_ID!, android: INTERSTITIAL_ANDROID_AD_ID! }) ??
-      // '',
-      TestIds.INTERSTITIAL,
+      Platform.select({ ios: INTERSTITIAL_APPLE_AD_ID!, android: INTERSTITIAL_ANDROID_AD_ID! }) ??
+        '',
+      // TestIds.INTERSTITIAL,
       {
         requestNonPersonalizedAdsOnly: !isPersonalizedAdsAllowed(),
         keywords: ['running', 'clothing', 'sports', 'fitness', 'run', 'health', 'wellness'],

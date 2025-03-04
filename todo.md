@@ -5,7 +5,7 @@
 - [x] Setup privacy stuff (privacy policy and terms) -> [Privacy Policy Generator](https://www.privacypolicygenerator.info/)
 - [x] Setup OTA with Expo EAS
 - [ ] Setup [AdMob](https://github.com/invertase/react-native-google-mobile-ads)
-- [ ] Setup RevenueCat or Adapty [Here](https://community.revenuecat.com/general-questions-7/looking-for-guidance-on-integrating-subscriptions-in-app-without-login-5330)
+- [x] Setup RevenueCat or Adapty [Here](https://community.revenuecat.com/general-questions-7/looking-for-guidance-on-integrating-subscriptions-in-app-without-login-5330)
 - [x] Request Strava API [Here](https://share.hsforms.com/1VXSwPUYqSH6IxK0y51FjHwcnkd8)
 - [x] Allow premium for testflight users -> [Here](https://github.com/jeremybarbet/expo-testflight)
 
@@ -26,7 +26,7 @@
 - [x] Setup splash screen
 - [x] Add ads everywhere needed
 - [x] Check offline mode
-- [ ] Setup app store project
+- [x] Setup app store project
 - [x] Deploy next app with support/terms/privacy
 - [x] Add import strava/apple health on home when no connected apps
 
