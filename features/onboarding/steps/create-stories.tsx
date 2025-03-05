@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, useWindowDimensions } from 'react-native';
+import { View, Image, useWindowDimensions, Dimensions } from 'react-native';
 import { MotiView } from 'moti';
 import { MotiPressable } from 'moti/interactions';
 import { useTranslation } from 'react-i18next';
@@ -46,6 +46,10 @@ export const CreateStoriesStep: React.FC<CreateStoriesStepProps> = ({ onNext, on
     }
   };
 
+  const carouselHeight = Dimensions.get('window').height * 0.45;
+
+  console.log(carouselHeight);
+
   return (
     <View className="flex-1 items-center justify-between px-6 py-12">
       <MotiView
@@ -60,10 +64,10 @@ export const CreateStoriesStep: React.FC<CreateStoriesStepProps> = ({ onNext, on
           {t('onboarding.createStories.description')}
         </Text>
 
-        <View className="mt-4 h-[400px] w-full">
+        <View className="mt-4 w-full" style={{ height: carouselHeight }}>
           <Carousel
             width={width - 48}
-            height={400}
+            height={carouselHeight}
             data={steps}
             onSnapToItem={handleSnapToItem}
             mode="parallax"
@@ -89,7 +93,8 @@ export const CreateStoriesStep: React.FC<CreateStoriesStepProps> = ({ onNext, on
                 className="px-2">
                 <Image
                   source={item.image}
-                  className="mb-6 h-64 w-full rounded-3xl"
+                  className="mb-6 w-full rounded-3xl"
+                  style={{ height: carouselHeight - 120 }}
                   resizeMode="contain"
                 />
                 <Text variant="body" color="primary" className="text-center text-xl">

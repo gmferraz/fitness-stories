@@ -549,7 +549,7 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
         </ScrollView>
 
         <View
-          style={{ paddingBottom: bottom }}
+          style={{ paddingBottom: bottom + 16 }}
           className="border-border/30 border-t bg-background p-4">
           <Button variant="primary" size="lg" onPress={() => router.back()} className="w-full">
             <Text className="font-medium">{t('share.editor.done')}</Text>

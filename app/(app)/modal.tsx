@@ -267,7 +267,7 @@ export default function SettingsScreen() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => Linking.openURL('https://fitness-stories.app/privacy')}
+              onPress={() => Linking.openURL('https://fitstories-drab.vercel.app/privacy')}
               className="flex-row items-center justify-between border-t border-gray-400/20 px-4 py-3 dark:border-gray-200/10">
               <View className="flex-row items-center gap-3">
                 <View className="h-8 w-8 items-center justify-center rounded-md bg-purple-400 shadow-sm">
@@ -279,7 +279,7 @@ export default function SettingsScreen() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => Linking.openURL('https://fitness-stories.app/terms')}
+              onPress={() => Linking.openURL('https://fitstories-drab.vercel.app/terms')}
               className="flex-row items-center justify-between border-t border-gray-400/20 px-4 py-3 dark:border-gray-200/10">
               <View className="flex-row items-center gap-3">
                 <View className="h-8 w-8 items-center justify-center rounded-md bg-indigo-400 shadow-sm">

@@ -121,7 +121,7 @@ export function SharePhotoStep({ next }: SharePhotoStepProps) {
               style={{ shadowColor: colors.primary, shadowOpacity: 0.1, shadowRadius: 20 }}
             />
           )}
-          <View className="mt-8 flex-row justify-between" style={{ paddingBottom: bottom }}>
+          <View className="mt-8 flex-row justify-between" style={{ paddingBottom: bottom + 16 }}>
             <MotiPressable
               onPress={() => setSelectedImage(null)}
               animate={({ pressed }) => {

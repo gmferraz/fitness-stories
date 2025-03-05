@@ -269,7 +269,7 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
         ))}
       </View>
 
-      <View className="mt-auto flex-row justify-between" style={{ paddingBottom: bottom }}>
+      <View className="mt-auto flex-row justify-between" style={{ paddingBottom: bottom + 16 }}>
         <MotiPressable
           onPress={previous}
           animate={({ pressed }) => {
