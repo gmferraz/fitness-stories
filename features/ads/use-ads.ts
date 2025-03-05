@@ -22,8 +22,7 @@ const TRACKING_PERMISSION_KEY = 'trackingPermission';
 
 export const useAds = () => {
   const [isInitialized, setIsInitialized] = useState(false);
-  // const isPremium = useEnvironmentStore((state) => state.isPremium);
-  const isPremium = true;
+  const isPremium = useEnvironmentStore((state) => state.isPremium);
 
   useEffect(() => {
     const initializeAds = async () => {
