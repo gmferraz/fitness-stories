@@ -103,7 +103,7 @@ export function AchievementLayout({
                   fontSize: style.bodySize,
                   lineHeight: style.bodySize * 1.2,
                 }}
-                className="ios:font-bold">
+                className="font-bold">
                 {formatDuration(duration)}
               </Text>
             </View>
@@ -125,7 +125,7 @@ export function AchievementLayout({
                   fontSize: style.bodySize,
                   lineHeight: style.bodySize * 1.2,
                 }}
-                className="ios:font-bold">
+                className="font-bold">
                 {pace}
               </Text>
             </View>

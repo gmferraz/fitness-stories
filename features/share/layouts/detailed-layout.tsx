@@ -71,7 +71,7 @@ export function DetailedLayout({
                 fontSize: style.bodySize,
                 lineHeight: style.bodySize * 1.2,
               }}
-              className="ios:font-bold">
+              className="font-bold">
               {formatDistance(distance)}
             </Text>
           </View>
@@ -97,7 +97,7 @@ export function DetailedLayout({
                 fontSize: style.bodySize,
                 lineHeight: style.bodySize * 1.2,
               }}
-              className="ios:font-bold">
+              className="font-bold">
               {formatDuration(duration)}
             </Text>
           </View>
@@ -125,7 +125,7 @@ export function DetailedLayout({
                 fontSize: style.bodySize,
                 lineHeight: style.bodySize * 1.2,
               }}
-              className="ios:font-bold">
+              className="font-bold">
               {pace}
             </Text>
           </View>
@@ -150,7 +150,7 @@ export function DetailedLayout({
                 fontSize: style.bodySize,
                 lineHeight: style.bodySize * 1.2,
               }}
-              className="ios:font-bold">
+              className="font-bold">
               {totalElevation}m
             </Text>
           </View>

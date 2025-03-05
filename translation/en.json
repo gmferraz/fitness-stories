@@ -223,7 +223,7 @@
       }
     },
     "editor": {
-      "title": "Edit Layout",
+      "title": "Edit",
       "fontStyle": "Font Style",
       "titleSize": "Title",
       "bodySize": "Body",
@@ -341,7 +341,7 @@
       }
     },
     "weekStart": {
-      "title": "Week starts on",
+      "title": "Starts on",
       "options": {
         "monday": "Monday",
         "sunday": "Sunday"
@@ -402,7 +402,7 @@
     "last90Days": "Last 90 Days"
   },
   "weekDetails": {
-    "title": "Week Details",
+    "title": "Details",
     "activities": "Activities",
     "stats": {
       "totalActivities": "Activities",

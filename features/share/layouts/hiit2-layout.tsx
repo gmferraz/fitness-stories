@@ -58,7 +58,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
               <Text style={labelStyles} className="mb-1">
                 {t('share.layouts.common.duration')}
               </Text>
-              <Text style={bodyStyles} className="ios:font-bold">
+              <Text style={bodyStyles} className="font-bold">
                 {formatTime(activity.moving_time)}
               </Text>
             </View>
@@ -67,7 +67,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
               <Text style={labelStyles} className="mb-1">
                 {t('share.layouts.common.calories')}
               </Text>
-              <Text style={bodyStyles} className="ios:font-bold">
+              <Text style={bodyStyles} className="font-bold">
                 {activity.calories}
               </Text>
             </View>
@@ -79,7 +79,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
                 <Text style={labelStyles} className="mb-1">
                   {t('share.layouts.common.heartRate')}
                 </Text>
-                <Text style={bodyStyles} className="ios:font-bold">
+                <Text style={bodyStyles} className="font-bold">
                   {activity.average_heartrate} bpm
                 </Text>
               </View>
@@ -89,7 +89,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
                   <Text style={labelStyles} className="mb-1">
                     {t('share.layouts.common.maxHeartRate')}
                   </Text>
-                  <Text style={bodyStyles} className="ios:font-bold">
+                  <Text style={bodyStyles} className="font-bold">
                     {activity.max_heartrate} bpm
                   </Text>
                 </View>
@@ -104,7 +104,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
             <Text style={labelStyles} className="mb-1">
               {t('share.layouts.common.duration')}
             </Text>
-            <Text style={bodyStyles} className="ios:font-bold">
+            <Text style={bodyStyles} className="font-bold">
               {formatTime(activity.moving_time)}
             </Text>
           </View>
@@ -113,7 +113,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
             <Text style={labelStyles} className="mb-1 self-center">
               {t('share.layouts.common.calories')}
             </Text>
-            <Text style={bodyStyles} className="ios:font-bold self-center">
+            <Text style={bodyStyles} className="self-center font-bold">
               {activity.calories}
             </Text>
           </View>
@@ -123,7 +123,7 @@ export function Hiit2Layout({ activity, showBackground = true }: Hiit2LayoutProp
               <Text style={labelStyles} className="mb-1 self-end">
                 {t('share.layouts.common.heartRate')}
               </Text>
-              <Text style={bodyStyles} className="ios:font-bold self-end">
+              <Text style={bodyStyles} className="self-end font-bold">
                 {activity.average_heartrate} bpm
               </Text>
             </View>

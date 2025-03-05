@@ -181,7 +181,11 @@ export function LayoutEditor({ id, type }: { id: string; type: 'activity' | 'per
   const renderStyleSection = () => (
     <View className="mb-4">
       <SubSectionSelector
-        options={[t('share.editor.font'), t('share.editor.opacity')]}
+        options={
+          Platform.OS === 'ios'
+            ? [t('share.editor.font'), t('share.editor.opacity')]
+            : [t('share.editor.opacity')]
+        }
         value={styleSubSection === 'Font' ? t('share.editor.font') : t('share.editor.opacity')}
         onChange={(value) =>
           setStyleSubSection(value === t('share.editor.font') ? 'Font' : 'Opacity')

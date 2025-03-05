@@ -73,7 +73,7 @@ export function MapLayout({
               fontSize: style.titleSize,
               lineHeight: style.titleSize * 1.2,
             }}
-            className="ios:font-bold">
+            className="font-bold">
             {formatDistance(distance)}
           </Text>
 
@@ -96,7 +96,7 @@ export function MapLayout({
                   fontSize: style.bodySize,
                   lineHeight: style.bodySize * 1.2,
                 }}
-                className="ios:font-bold">
+                className="font-bold">
                 {formatPace(distance, duration)}
               </Text>
             </View>
@@ -118,7 +118,7 @@ export function MapLayout({
                   fontSize: style.bodySize,
                   lineHeight: style.bodySize * 1.2,
                 }}
-                className="ios:font-bold">
+                className="font-bold">
                 {formatDuration(duration)}
               </Text>
             </View>
@@ -144,7 +144,7 @@ export function MapLayout({
                     fontSize: style.bodySize,
                     lineHeight: style.bodySize * 1.2,
                   }}
-                  className="ios:font-bold">
+                  className="font-bold">
                   {Math.round(activity.average_heartrate)} bpm
                 </Text>
               </View>
@@ -167,7 +167,7 @@ export function MapLayout({
                       fontSize: style.bodySize,
                       lineHeight: style.bodySize * 1.2,
                     }}
-                    className="ios:font-bold">
+                    className="font-bold">
                     {Math.round(activity.max_heartrate)} bpm
                   </Text>
                 </View>

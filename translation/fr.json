@@ -223,7 +223,7 @@
         }
       },
       "editor": {
-        "title": "Modifier la Mise en Page",
+        "title": "Modifier",
         "fontStyle": "Style de Police",
         "titleSize": "Titre",
         "bodySize": "Corps",
@@ -340,7 +340,7 @@
         }
       },
       "weekStart": {
-        "title": "La semaine commence le",
+        "title": "Commence le",
         "options": {
           "monday": "Lundi",
           "sunday": "Dimanche"
@@ -389,7 +389,7 @@
       }
     },
     "weekDetails": {
-      "title": "Détails de la Semaine",
+      "title": "Détails",
       "activities": "Activités",
       "stats": {
         "totalActivities": "Activités",

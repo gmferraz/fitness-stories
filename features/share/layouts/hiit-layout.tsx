@@ -49,7 +49,7 @@ export function HiitLayout({ activity, showBackground = true }: HiitLayoutProps)
       </Text>
       <Text
         numberOfLines={2}
-        className="ios:font-bold mb-6 mt-2"
+        className="mb-6 mt-2 font-bold"
         style={{
           fontSize: style.titleSize,
           fontFamily: style.fontFamily,
@@ -72,7 +72,7 @@ export function HiitLayout({ activity, showBackground = true }: HiitLayoutProps)
             {t('share.layouts.common.calories')}
           </Text>
           <Text
-            className="ios:font-bold"
+            className="font-bold"
             style={{
               fontSize: style.bodySize,
               fontFamily: style.fontFamily,
@@ -95,7 +95,7 @@ export function HiitLayout({ activity, showBackground = true }: HiitLayoutProps)
               {t('share.layouts.common.heartRate')}
             </Text>
             <Text
-              className="ios:font-bold"
+              className="font-bold"
               style={{
                 fontSize: style.bodySize,
                 fontFamily: style.fontFamily,

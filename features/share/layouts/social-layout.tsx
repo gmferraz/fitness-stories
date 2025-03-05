@@ -68,7 +68,7 @@ export function SocialLayout({
               <Text style={labelStyles} className="mb-1">
                 {t('share.layouts.common.distance')}
               </Text>
-              <Text style={bodyStyles} className="ios:font-bold">
+              <Text style={bodyStyles} className="font-bold">
                 {formatDistance(distance)}
               </Text>
             </View>
@@ -77,7 +77,7 @@ export function SocialLayout({
               <Text style={labelStyles} className="mb-1">
                 {t('share.layouts.common.avgPace')}
               </Text>
-              <Text style={bodyStyles} className="ios:font-bold">
+              <Text style={bodyStyles} className="font-bold">
                 {pace}
               </Text>
             </View>
@@ -88,7 +88,7 @@ export function SocialLayout({
               <Text style={labelStyles} className="mb-1">
                 {t('share.layouts.common.avgHeartRate')}
               </Text>
-              <Text style={bodyStyles} className="ios:font-bold">
+              <Text style={bodyStyles} className="font-bold">
                 {Math.round(activity.average_heartrate!)} bpm
               </Text>
             </View>
@@ -98,7 +98,7 @@ export function SocialLayout({
                 <Text style={labelStyles} className="mb-1">
                   {t('share.layouts.common.elevation')}
                 </Text>
-                <Text style={bodyStyles} className="ios:font-bold">
+                <Text style={bodyStyles} className="font-bold">
                   {Math.round(activity.total_elevation_gain!)} m
                 </Text>
               </View>
@@ -112,7 +112,7 @@ export function SocialLayout({
             <Text style={labelStyles} className="mb-1">
               {t('share.layouts.common.distance')}
             </Text>
-            <Text style={bodyStyles} className="ios:font-bold">
+            <Text style={bodyStyles} className="font-bold">
               {formatDistance(distance)}
             </Text>
           </View>
@@ -121,7 +121,7 @@ export function SocialLayout({
             <Text style={labelStyles} className="mb-1 self-center">
               {t('share.layouts.common.avgPace')}
             </Text>
-            <Text style={bodyStyles} className="ios:font-bold self-center">
+            <Text style={bodyStyles} className="self-center font-bold">
               {pace}
             </Text>
           </View>
@@ -131,7 +131,7 @@ export function SocialLayout({
               <Text style={labelStyles} className="mb-1 self-end">
                 {t('share.layouts.common.elevation')}
               </Text>
-              <Text style={bodyStyles} className="ios:font-bold self-end">
+              <Text style={bodyStyles} className="self-end font-bold">
                 {Math.round(activity.total_elevation_gain!)} m
               </Text>
             </View>

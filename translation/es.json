@@ -223,7 +223,7 @@
         }
       },
       "editor": {
-        "title": "Editar Diseño",
+        "title": "Editar",
         "fontStyle": "Estilo de Fuente",
         "titleSize": "Título",
         "bodySize": "Cuerpo",
@@ -340,7 +340,7 @@
         }
       },
       "weekStart": {
-        "title": "La semana comienza en",
+        "title": "Comienza en",
         "options": {
           "monday": "Lunes",
           "sunday": "Domingo"

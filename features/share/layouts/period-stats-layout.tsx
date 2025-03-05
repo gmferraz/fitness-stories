@@ -125,7 +125,7 @@ export const PeriodStatsLayout: React.FC<PeriodStatsLayoutProps> = ({
                     <Ionicons name={stat.icon as any} size={18} color={iconColor} />
                   </View>
                   <Text
-                    className="ios:font-bold"
+                    className="font-bold"
                     style={{
                       fontFamily: style.fontFamily,
                       fontSize: style.bodySize * 1.2,

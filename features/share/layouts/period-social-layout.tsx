@@ -86,7 +86,7 @@ export const PeriodSocialLayout: React.FC<PeriodSocialLayoutProps> = ({
               <Ionicons name={mainStat.icon as any} size={32} color={accentColor} />
             </View>
             <Text
-              className="ios:font-bold mb-2 text-center"
+              className="mb-2 text-center font-bold"
               style={{
                 fontFamily: style.fontFamily,
                 fontSize: style.titleSize * 1.2,
@@ -120,7 +120,7 @@ export const PeriodSocialLayout: React.FC<PeriodSocialLayoutProps> = ({
               {stats.map((stat) => (
                 <View key={stat.label} className="items-center px-2">
                   <Text
-                    className="ios:font-bold mb-2 text-center"
+                    className="mb-2 text-center font-bold"
                     style={{
                       fontFamily: style.fontFamily,
                       fontSize: style.bodySize,

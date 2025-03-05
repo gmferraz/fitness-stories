@@ -129,7 +129,7 @@ export const PeriodMinimalLayout: React.FC<PeriodMinimalLayoutProps> = ({
                   </Text>
                 </View>
                 <Text
-                  className="ios:font-bold"
+                  className="font-bold"
                   style={{
                     fontFamily: style.fontFamily,
                     fontSize: style.bodySize,
