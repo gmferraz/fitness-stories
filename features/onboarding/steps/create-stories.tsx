@@ -48,8 +48,6 @@ export const CreateStoriesStep: React.FC<CreateStoriesStepProps> = ({ onNext, on
 
   const carouselHeight = Dimensions.get('window').height * 0.45;
 
-  console.log(carouselHeight);
-
   return (
     <View className="flex-1 items-center justify-between px-6 py-12">
       <MotiView
