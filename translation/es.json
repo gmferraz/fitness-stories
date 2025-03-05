@@ -350,7 +350,8 @@
         "title": "Habla con nosotros"
       },
       "premium": {
-        "title": "Premium"
+        "title": "Premium",
+        "restorePurchases": "Restaurar Compras"
       },
       "redeemCode": {
         "title": "Canjear Código",
@@ -502,7 +503,7 @@
         },
         "general": {
           "title": "Desbloquea Características Premium",
-          "subtitle": "Obtén acceso a todas las características premium y mejora tu experiencia de creación de historias"
+          "subtitle": "Disfruta de una experiencia sin anuncios y la capacidad de crear plantillas personalizadas."
         }
       },
       "features": {

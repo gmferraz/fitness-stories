@@ -18,6 +18,7 @@ import {
   Keyboard,
 } from 'react-native';
 import * as DropdownMenu from 'zeego/dropdown-menu';
+import Purchases from 'react-native-purchases';
 
 import { Text } from '~/components/nativewindui/Text';
 import { Toggle } from '~/components/nativewindui/Toggle';
@@ -329,7 +330,7 @@ export default function SettingsScreen() {
                   setRedeemCode('');
                   setValidationError('');
                 }}
-                className="flex-row items-center justify-between px-4 py-3">
+                className="flex-row items-center justify-between border-b border-gray-400/20 px-4 py-3 dark:border-gray-200/10">
                 <View className="flex-row items-center gap-3">
                   <View className="h-8 w-8 items-center justify-center rounded-md bg-green-500 shadow-sm">
                     <MaterialCommunityIcons name="ticket-confirmation" size={24} color="white" />
@@ -343,6 +344,32 @@ export default function SettingsScreen() {
                 />
               </TouchableOpacity>
             )}
+
+            {/* Restore Purchases Button */}
+            <TouchableOpacity
+              onPress={async () => {
+                try {
+                  const customerInfo = await Purchases.restorePurchases();
+                  if (typeof customerInfo.entitlements.active['premium'] !== 'undefined') {
+                    setIsPremium(true);
+                    Alert.alert(t('settings.redeemCode.successTitle'), '', [{ text: 'OK' }]);
+                  }
+                } catch (error) {
+                  console.error('Error restoring purchases:', error);
+                  Alert.alert('Error', 'Failed to restore purchases. Please try again.', [
+                    { text: 'OK' },
+                  ]);
+                }
+              }}
+              className="flex-row items-center justify-between px-4 py-3">
+              <View className="flex-row items-center gap-3">
+                <View className="h-8 w-8 items-center justify-center rounded-md bg-blue-500 shadow-sm">
+                  <MaterialCommunityIcons name="restore" size={24} color="white" />
+                </View>
+                <Text variant="body">{t('settings.premium.restorePurchases')}</Text>
+              </View>
+              <Icon name="chevron-right" size={20} color={colors.grey} />
+            </TouchableOpacity>
           </View>
 
           <Text variant="footnote" className="mb-2 px-4 text-gray-500">

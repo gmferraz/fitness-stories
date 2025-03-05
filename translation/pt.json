@@ -350,7 +350,8 @@
         "title": "Fale conosco"
       },
       "premium": {
-        "title": "Premium"
+        "title": "Premium",
+        "restorePurchases": "Restaurar Compras"
       },
       "redeemCode": {
         "title": "Resgatar Código",
@@ -502,7 +503,7 @@
         },
         "general": {
           "title": "Desbloqueie Recursos Premium",
-          "subtitle": "Tenha acesso a todos os recursos premium e melhore sua experiência."
+          "subtitle": "Aproveite uma experiência sem anúncios e a capacidade de criar layouts personalizados."
         }
       },
       "features": {

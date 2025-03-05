@@ -350,7 +350,8 @@
         "title": "Contactez-nous"
       },
       "premium": {
-        "title": "Premium"
+        "title": "Premium",
+        "restorePurchases": "Restaurer les Achats"
       },
       "redeemCode": {
         "title": "Utiliser un Code",
@@ -502,7 +503,7 @@
         },
         "general": {
           "title": "Débloquez les Fonctionnalités Premium",
-          "subtitle": "Accédez à toutes les fonctionnalités premium et améliorez votre expérience de création de stories"
+          "subtitle": "Profitez d'une expérience sans publicité et de la possibilité de créer des modèles personnalisés."
         }
       },
       "features": {
