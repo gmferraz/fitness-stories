@@ -13,7 +13,6 @@ export default function Screen() {
         options={{
           title: t('weeksList.title'),
           headerLargeTitle: true,
-          headerTitleAlign: 'center',
           headerRight: () => (
             <Text variant="caption1" color="primary">
               {t('weeksList.last12Weeks')}
