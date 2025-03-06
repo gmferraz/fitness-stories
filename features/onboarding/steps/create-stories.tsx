@@ -37,13 +37,9 @@ export const CreateStoriesStep: React.FC<CreateStoriesStepProps> = ({ onNext, on
   const [activeIndex, setActiveIndex] = useState(0);
   const { colors } = useColorScheme();
   const { t } = useTranslation();
-  const [hasViewedAll, setHasViewedAll] = useState(false);
 
   const handleSnapToItem = (index: number) => {
     setActiveIndex(index);
-    if (index === steps.length - 1) {
-      setHasViewedAll(true);
-    }
   };
 
   const carouselHeight = Dimensions.get('window').height * 0.45;
@@ -139,7 +135,6 @@ export const CreateStoriesStep: React.FC<CreateStoriesStepProps> = ({ onNext, on
             'worklet';
             return {
               scale: pressed ? 0.95 : 1,
-              opacity: hasViewedAll ? 1 : 0.5,
             };
           }}>
           <View className="flex-row items-center gap-2 rounded-full bg-primary px-4 py-2">
