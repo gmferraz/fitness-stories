@@ -2,7 +2,7 @@
   "expo": {
     "name": "FitStories",
     "slug": "fitness-stories",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "scheme": "com.ferrazgui.fitnessstories",
     "web": {
       "bundler": "metro",
