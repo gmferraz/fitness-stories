@@ -99,15 +99,6 @@ export function AestheticLayout({
                 className="font-bold">
                 {pace}
               </Text>
-              <Text
-                style={{
-                  fontFamily: style.fontFamily,
-                  color: textColor,
-                  fontSize: style.labelSize,
-                  lineHeight: style.labelSize * 1.2,
-                }}>
-                {t('share.layouts.common.per')} {unit}
-              </Text>
             </View>
 
             <View>
@@ -130,15 +121,6 @@ export function AestheticLayout({
                 }}
                 className="font-bold">
                 {formatDuration(duration)}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: style.fontFamily,
-                  color: textColor,
-                  fontSize: style.labelSize,
-                  lineHeight: style.labelSize * 1.2,
-                }}>
-                {t('share.layouts.common.totalTime')}
               </Text>
             </View>
           </View>

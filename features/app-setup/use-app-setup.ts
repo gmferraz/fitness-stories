@@ -63,7 +63,7 @@ export const useAppSetup = () => {
     storage.set(APP_OPEN_COUNT_KEY, newCount);
 
     // Return true if this is the fifth open
-    return newCount === 5;
+    return newCount >= 5;
   };
 
   const markPaywallAsShown = () => {
@@ -115,7 +115,7 @@ export const useAppSetup = () => {
             }
           });
         }
-      }, 1000);
+      }, 2000);
 
       // Show review request if it's the 5th open
       if (isFifthOpen) {

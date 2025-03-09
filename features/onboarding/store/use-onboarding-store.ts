@@ -2,7 +2,7 @@ import { MMKV } from 'react-native-mmkv';
 import { create } from 'zustand';
 import { persist, createJSONStorage, StateStorage } from 'zustand/middleware';
 
-const onboardingStorage = new MMKV({
+export const onboardingStorage = new MMKV({
   id: 'onboarding-storage',
 });
 

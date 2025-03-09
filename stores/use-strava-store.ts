@@ -3,7 +3,7 @@ import { createJSONStorage, persist, StateStorage } from 'zustand/middleware';
 import { MMKV } from 'react-native-mmkv';
 
 // Create a new storage instance for Strava state
-const stravaStateStorage = new MMKV({
+export const stravaStateStorage = new MMKV({
   id: 'strava-state-storage',
 });
 

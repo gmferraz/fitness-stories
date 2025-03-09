@@ -1,10 +1,10 @@
 import * as StoreReview from 'expo-store-review';
 import { MMKV } from 'react-native-mmkv'; // Correct import for MMKV
 
-const storage = new MMKV(); // Initialize MMKV storage
+export const appReviewStorage = new MMKV(); // Initialize MMKV storage
 
 export function hasRequestedReview() {
-  return storage.getBoolean('hasRequestedReview') || false; // Check storage for review request status
+  return appReviewStorage.getBoolean('hasRequestedReview') || false; // Check storage for review request status
 }
 
 export async function showRequestReview() {
@@ -20,6 +20,6 @@ export async function showRequestReview() {
       error
     );
   } finally {
-    storage.set('hasRequestedReview', true); // Store review request status
+    appReviewStorage.set('hasRequestedReview', true); // Store review request status
   }
 }

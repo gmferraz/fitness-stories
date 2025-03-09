@@ -13,6 +13,7 @@ interface WeekSummaryCardProps {
   totalCalories: number;
   avgPace: number;
   weekRange: string;
+  totalActivities: number;
 }
 
 export const WeekSummaryCard: React.FC<WeekSummaryCardProps> = ({
@@ -21,11 +22,18 @@ export const WeekSummaryCard: React.FC<WeekSummaryCardProps> = ({
   totalCalories,
   avgPace,
   weekRange,
+  totalActivities,
 }) => {
   const { colors } = useColorScheme();
   const { t } = useTranslation();
 
   const stats = [
+    {
+      icon: 'stats-chart-outline',
+      value: totalActivities.toString(),
+      label: t('weekDetails.stats.totalActivities'),
+      color: '#34C759',
+    },
     {
       icon: 'stopwatch-outline',
       value: formatDuration(totalDuration),
@@ -43,12 +51,6 @@ export const WeekSummaryCard: React.FC<WeekSummaryCardProps> = ({
       value: formatPace(totalDistance, totalDuration),
       label: t('weekSummaryCard.stats.avgPace'),
       color: '#FF9500',
-    },
-    {
-      icon: 'flame-outline',
-      value: totalCalories.toString(),
-      label: t('weekSummaryCard.stats.calories'),
-      color: '#34C759',
     },
   ];
 

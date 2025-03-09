@@ -3,13 +3,13 @@ import { LanguageDetectorModule } from 'i18next';
 import { MMKV } from 'react-native-mmkv';
 
 const LANGUAGE_KEY = 'user_language';
-const storage = new MMKV();
+export const i18nStorage = new MMKV();
 
 export const languageDetector: LanguageDetectorModule = {
   type: 'languageDetector',
   detect: () => {
     try {
-      const storedLanguage = storage.getString(LANGUAGE_KEY);
+      const storedLanguage = i18nStorage.getString(LANGUAGE_KEY);
       if (storedLanguage) {
         return storedLanguage;
       }
@@ -23,7 +23,7 @@ export const languageDetector: LanguageDetectorModule = {
   init: () => {},
   cacheUserLanguage: async (lng: string) => {
     try {
-      storage.set(LANGUAGE_KEY, lng);
+      i18nStorage.set(LANGUAGE_KEY, lng);
     } catch (error) {
       console.error('Error caching user language:', error);
     }

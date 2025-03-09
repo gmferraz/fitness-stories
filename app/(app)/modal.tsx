@@ -22,15 +22,19 @@ import Purchases from 'react-native-purchases';
 
 import { Text } from '~/components/nativewindui/Text';
 import { Toggle } from '~/components/nativewindui/Toggle';
-import { useEnvironmentStore } from '~/features/app-setup/use-environment';
+import { useEnvironmentStore, envStorage } from '~/features/app-setup/use-environment';
 import { useColorScheme } from '~/lib/useColorScheme';
-import { languageDetector } from '~/utils/i18n/languageDetector';
-import { isPromoCodeEnabled } from '~/utils/promo-code';
+import { languageDetector, i18nStorage } from '~/utils/i18n/languageDetector';
+import { isPromoCodeEnabled, promoCodeStorage } from '~/utils/promo-code';
+import { activityStorage } from '~/features/home/hooks/use-activities';
+import { appReviewStorage } from '~/utils/app-review';
+import { useStrava, stravaStorage } from '~/utils/use-strava';
+import { useStravaStore, stravaStateStorage } from '~/stores/use-strava-store';
+import { onboardingStorage } from '~/features/onboarding/store/use-onboarding-store';
+import { appleHealthStateStorage } from '~/stores/use-apple-health-store';
 
 import StravaIcon from '~/assets/svg/strava.svg';
 import AppleHealthIcon from '~/assets/svg/apple-health.svg';
-import { useStravaStore } from '~/stores/use-strava-store';
-import { useStrava } from '~/utils/use-strava';
 import { weekStartStore } from '~/stores/use-week-start-store';
 import { useAppleHealth } from '~/utils/use-apple-health';
 import { supabase } from '~/utils/supabase';
@@ -290,6 +294,33 @@ export default function SettingsScreen() {
               </View>
               <Icon name="chevron-right" size={20} color={colors.grey} />
             </TouchableOpacity>
+
+            {__DEV__ && (
+              <TouchableOpacity
+                onPress={() => {
+                  // Clear all MMKV storages
+                  activityStorage.clearAll();
+                  i18nStorage.clearAll();
+                  appReviewStorage.clearAll();
+                  promoCodeStorage.clearAll();
+                  stravaStorage.clearAll();
+                  stravaStateStorage.clearAll();
+                  onboardingStorage.clearAll();
+                  appleHealthStateStorage.clearAll();
+                  envStorage.clearAll();
+
+                  Alert.alert('Cache Cleared', 'All app storage has been cleared.');
+                }}
+                className="flex-row items-center justify-between border-t border-gray-400/20 px-4 py-3 dark:border-gray-200/10">
+                <View className="flex-row items-center gap-3">
+                  <View className="h-8 w-8 items-center justify-center rounded-md bg-red-400 shadow-sm">
+                    <MaterialCommunityIcons name="trash-can" size={24} color="white" />
+                  </View>
+                  <Text variant="body">Clear All Cache</Text>
+                </View>
+                <Icon name="chevron-right" size={20} color={colors.grey} />
+              </TouchableOpacity>
+            )}
           </View>
 
           <Text variant="footnote" className="mb-2  px-4 text-gray-500">

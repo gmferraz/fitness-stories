@@ -19,6 +19,9 @@ import {
   formatWatts,
 } from '~/utils/formatters';
 import { getStoredActivityDetails } from './utils/get-stored-activity-details';
+import { MotiPressable } from 'moti/interactions';
+import { router } from 'expo-router';
+import { getAvailableLayouts } from '../share/utils/get-available-layouts';
 
 interface ActivityDetailsProps {
   id: string;
@@ -45,6 +48,8 @@ export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
   const hasRoute =
     (activity.root === 'strava' || activity.root === 'apple-health') &&
     !!activity.map?.coordinates?.length;
+
+  const availableLayouts = activity ? getAvailableLayouts('activity', activity) : [];
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -192,95 +197,125 @@ export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
         : [];
 
   return (
-    <ScrollView
-      className="flex-1 bg-background"
-      contentInsetAdjustmentBehavior="automatic"
-      contentContainerStyle={{
-        paddingBottom: bottom + 16,
-      }}>
-      {/* Header Section */}
-      <View className="border-gray-200 bg-card px-8 pb-6 pt-4 dark:border-gray-800">
-        <View className="mb-4 flex-row items-center justify-between">
-          <View className="h-12 w-12 items-center justify-center rounded-2xl bg-gray-100 dark:bg-gray-800">
-            <MaterialCommunityIcons
-              name={sportTypeToIcon[activity.type as keyof typeof sportTypeToIcon]}
-              size={24}
-              color={colors.primary}
-            />
+    <View className="flex-1 bg-background">
+      <ScrollView
+        className="flex-1"
+        contentInsetAdjustmentBehavior="automatic"
+        contentContainerStyle={{
+          paddingBottom: bottom + 80,
+        }}>
+        {/* Header Section */}
+        <View className="border-gray-200 bg-card px-8 pb-6 pt-4 dark:border-gray-800">
+          <View className="mb-4 flex-row items-center justify-between">
+            <View className="h-12 w-12 items-center justify-center rounded-2xl bg-gray-100 dark:bg-gray-800">
+              <MaterialCommunityIcons
+                name={sportTypeToIcon[activity.type as keyof typeof sportTypeToIcon]}
+                size={24}
+                color={colors.primary}
+              />
+            </View>
+            <View className="flex-row items-center shadow-sm">{getSourceIcon(activity.root)}</View>
           </View>
-          <View className="flex-row items-center shadow-sm">{getSourceIcon(activity.root)}</View>
+
+          <Text variant="title1" className="mb-2">
+            {activity.name}
+          </Text>
+          <Text variant="subhead" className="text-gray-500">
+            {formatDate(activity.start_date)}
+          </Text>
         </View>
 
-        <Text variant="title1" className="mb-2">
-          {activity.name}
-        </Text>
-        <Text variant="subhead" className="text-gray-500">
-          {formatDate(activity.start_date)}
-        </Text>
-      </View>
+        {/* Map Section */}
+        {hasRoute && Platform.OS === 'ios' && (
+          <View className="mx-4 mb-4 mt-8 h-64 overflow-hidden rounded-2xl">
+            <MapView
+              style={StyleSheet.absoluteFill}
+              initialRegion={{
+                latitude: activity.map?.coordinates?.[0]?.latitude ?? 0,
+                longitude: activity.map?.coordinates?.[0]?.longitude ?? 0,
+                latitudeDelta: 0.02,
+                longitudeDelta: 0.02,
+              }}>
+              <Polyline
+                coordinates={activity.map?.coordinates ?? []}
+                strokeColor={colors.primary}
+                strokeWidth={3}
+              />
+            </MapView>
+          </View>
+        )}
 
-      {/* Map Section */}
-      {hasRoute && Platform.OS === 'ios' && (
-        <View className="mx-4 mb-4 mt-8 h-64 overflow-hidden rounded-2xl">
-          <MapView
-            style={StyleSheet.absoluteFill}
-            initialRegion={{
-              latitude: activity.map?.coordinates?.[0]?.latitude ?? 0,
-              longitude: activity.map?.coordinates?.[0]?.longitude ?? 0,
-              latitudeDelta: 0.02,
-              longitudeDelta: 0.02,
-            }}>
-            <Polyline
-              coordinates={activity.map?.coordinates ?? []}
-              strokeColor={colors.primary}
-              strokeWidth={3}
-            />
-          </MapView>
+        {/* Stats Grid */}
+        <View className="p-4">
+          <View className="flex-row flex-wrap">
+            {/* Primary Stats */}
+            {stats.map((stat) => (
+              <View key={stat.label} className="w-1/2 p-1">
+                <View className="rounded-2xl bg-card p-4">
+                  <View
+                    className="mb-3 h-10 w-10 items-center justify-center rounded-xl"
+                    style={{ backgroundColor: `${stat.color}20` }}>
+                    <Ionicons name={stat.icon as any} size={20} color={stat.color} />
+                  </View>
+                  <Text variant="title2" className="font-semibold">
+                    {stat.value}
+                  </Text>
+                  <Text variant="subhead" className="text-gray-500">
+                    {stat.label}
+                  </Text>
+                </View>
+              </View>
+            ))}
+
+            {/* Additional Stats */}
+            {additionalStats.map((stat) => (
+              <View key={stat.label} className="w-1/2 p-1">
+                <View className="rounded-2xl bg-card p-4">
+                  <View
+                    className="mb-3 h-10 w-10 items-center justify-center rounded-xl"
+                    style={{ backgroundColor: `${stat.color}20` }}>
+                    <Ionicons name={stat.icon as any} size={20} color={stat.color} />
+                  </View>
+                  <Text variant="title2" className="font-semibold">
+                    {stat.value}
+                  </Text>
+                  <Text variant="subhead" className="text-gray-500">
+                    {stat.label}
+                  </Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        </View>
+      </ScrollView>
+
+      {/* Fixed Share Button */}
+      {!!availableLayouts.length && (
+        <View
+          className="absolute inset-x-0 bottom-0"
+          style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}>
+          <View className="p-4" style={{ paddingBottom: bottom + 8 }}>
+            <MotiPressable
+              onPress={() => router.push(`/share/${id}?type=activity`)}
+              animate={({ pressed }) => {
+                'worklet';
+                return {
+                  scale: pressed ? 0.98 : 1,
+                  opacity: pressed ? 0.9 : 1,
+                };
+              }}>
+              <View
+                className="flex-row items-center justify-center gap-2 rounded-2xl px-4 py-4"
+                style={{ backgroundColor: colors.primary }}>
+                <Text variant="body" className="font-medium text-white">
+                  {t('activityDetails.shareOnInstagram')}
+                </Text>
+                <MaterialCommunityIcons name="instagram" size={24} color="white" />
+              </View>
+            </MotiPressable>
+          </View>
         </View>
       )}
-
-      {/* Stats Grid */}
-      <View className="p-4">
-        <View className="flex-row flex-wrap">
-          {/* Primary Stats */}
-          {stats.map((stat) => (
-            <View key={stat.label} className="w-1/2 p-1">
-              <View className="rounded-2xl bg-card p-4">
-                <View
-                  className="mb-3 h-10 w-10 items-center justify-center rounded-xl"
-                  style={{ backgroundColor: `${stat.color}20` }}>
-                  <Ionicons name={stat.icon as any} size={20} color={stat.color} />
-                </View>
-                <Text variant="title2" className="font-semibold">
-                  {stat.value}
-                </Text>
-                <Text variant="subhead" className="text-gray-500">
-                  {stat.label}
-                </Text>
-              </View>
-            </View>
-          ))}
-
-          {/* Additional Stats */}
-          {additionalStats.map((stat) => (
-            <View key={stat.label} className="w-1/2 p-1">
-              <View className="rounded-2xl bg-card p-4">
-                <View
-                  className="mb-3 h-10 w-10 items-center justify-center rounded-xl"
-                  style={{ backgroundColor: `${stat.color}20` }}>
-                  <Ionicons name={stat.icon as any} size={20} color={stat.color} />
-                </View>
-                <Text variant="title2" className="font-semibold">
-                  {stat.value}
-                </Text>
-                <Text variant="subhead" className="text-gray-500">
-                  {stat.label}
-                </Text>
-              </View>
-            </View>
-          ))}
-        </View>
-      </View>
-    </ScrollView>
+    </View>
   );
 };

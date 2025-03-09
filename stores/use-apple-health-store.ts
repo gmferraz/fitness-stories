@@ -3,7 +3,7 @@ import { createJSONStorage, persist, StateStorage } from 'zustand/middleware';
 import { MMKV } from 'react-native-mmkv';
 
 // Create a new storage instance for Apple Health state
-const appleHealthStateStorage = new MMKV({
+export const appleHealthStateStorage = new MMKV({
   id: 'apple-health-state-storage',
 });
 

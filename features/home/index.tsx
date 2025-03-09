@@ -225,6 +225,7 @@ export const HomeScreen = () => {
               title={t('home.weekSummary.empty.title')}
               subtitle={t('home.weekSummary.empty.subtitle')}
               className="shadow-lg"
+              icon="calendar-outline"
             />
           )}
         </View>

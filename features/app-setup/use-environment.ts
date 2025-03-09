@@ -6,8 +6,8 @@ import { createJSONStorage, persist, StateStorage } from 'zustand/middleware';
 import { MMKV } from 'react-native-mmkv';
 import { isTestFlight } from 'expo-testflight';
 
-const envStorage = new MMKV({
-  id: 'environment-storage',
+export const envStorage = new MMKV({
+  id: 'env-storage',
 });
 
 export const zustandStorage: StateStorage = {

@@ -1,7 +1,7 @@
 import { MMKV } from 'react-native-mmkv';
 import { supabase } from './supabase';
 
-const storage = new MMKV();
+export const promoCodeStorage = new MMKV();
 const PROMO_CODE_ENABLED_KEY = 'promoCodeEnabled';
 
 export const checkAndUpdatePromoCodeAvailability = async () => {
@@ -14,20 +14,20 @@ export const checkAndUpdatePromoCodeAvailability = async () => {
 
     if (error) {
       console.error('Error checking promo code availability:', error);
-      storage.set(PROMO_CODE_ENABLED_KEY, false);
+      promoCodeStorage.set(PROMO_CODE_ENABLED_KEY, false);
       return false;
     }
 
     const isEnabled = data?.enabled ?? false;
-    storage.set(PROMO_CODE_ENABLED_KEY, isEnabled);
+    promoCodeStorage.set(PROMO_CODE_ENABLED_KEY, isEnabled);
     return isEnabled;
   } catch (error) {
     console.error('Error checking promo code availability:', error);
-    storage.set(PROMO_CODE_ENABLED_KEY, false);
+    promoCodeStorage.set(PROMO_CODE_ENABLED_KEY, false);
     return false;
   }
 };
 
 export const isPromoCodeEnabled = () => {
-  return storage.getBoolean(PROMO_CODE_ENABLED_KEY) ?? false;
+  return promoCodeStorage.getBoolean(PROMO_CODE_ENABLED_KEY) ?? false;
 };

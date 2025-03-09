@@ -19,14 +19,14 @@ export const formatTime = (seconds: number) => {
   return `${hours}h ${minutes}m`;
 };
 
-export const formatPace = (meters?: number, seconds?: number) => {
+export const formatPace = (meters?: number, seconds?: number, showUnit = true) => {
   if (!meters || !seconds) {
-    return `0'0"`;
+    return '0:00';
   }
   const minutesPerKm = seconds / 60 / (meters / 1000);
   const minutes = Math.floor(minutesPerKm);
-  const secondsDecimal = (minutesPerKm - minutes) * 60;
-  return `${minutes}'${secondsDecimal.toFixed(0)}"`;
+  const secondsDecimal = Math.round((minutesPerKm - minutes) * 60);
+  return `${minutes}:${secondsDecimal.toString().padStart(2, '0')}${showUnit ? ' /km' : ''}`;
 };
 
 export const formatHeartRate = (bpm?: number) => {

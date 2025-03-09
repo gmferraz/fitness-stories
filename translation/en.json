@@ -31,7 +31,7 @@
         },
         "shareToInstagram": {
           "title": "Share to Instagram",
-          "description": "Tap the Instagram icon to start creating your story"
+          "description": "Tap the Create Story button to start creating your story"
         },
         "chooseBackground": {
           "title": "Choose Background",
@@ -380,7 +380,7 @@
   },
   "activityDetails": {
     "title": "Activity Details",
-    "shareOnInstagram": "Story",
+    "shareOnInstagram": "Create Story",
     "stats": {
       "avgHeartRate": "Avg Heart Rate",
       "maxHeartRate": "Max Heart Rate",

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useActivities } from './use-activities';
 import { WeekSummary } from '../types/week-summary';
 import { startOfWeek, endOfWeek, subWeeks, format } from 'date-fns';
@@ -6,7 +6,13 @@ import { weekStartStore } from '~/stores/use-week-start-store';
 
 export const useWeeks = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { activities, refreshActivities } = useActivities({ origin: 'activity-details' });
+  const {
+    activities,
+    refreshActivities,
+    isLoading: isActivitiesLoading,
+  } = useActivities({
+    origin: 'home',
+  });
   const { weekStartsOn } = weekStartStore();
 
   const getWeeks = useCallback(() => {
@@ -58,11 +64,16 @@ export const useWeeks = () => {
     setIsLoading(true);
     await refreshActivities();
     setIsLoading(false);
+  }, [refreshActivities]);
+
+  // Automatically refresh weeks when mounted
+  useEffect(() => {
+    refreshWeeks();
   }, []);
 
   return {
     weeks: getWeeks(),
-    isLoading,
+    isLoading: isLoading || isActivitiesLoading,
     refreshWeeks,
   };
 };

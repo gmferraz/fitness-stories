@@ -5,9 +5,11 @@ import { Text } from '~/components/nativewindui/Text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ActivityCard } from '~/features/home/components/ActivityCard';
 import { getWeekDetails } from '~/features/home/hooks/get-week-details';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { formatDistance, formatDuration, formatPace } from '~/utils/formatters';
+import { MotiPressable } from 'moti/build/interactions';
+import { router } from 'expo-router';
 
 export const WeekDetails = ({ weekRange }: { weekRange: string }) => {
   const weekDetails = getWeekDetails(weekRange);
@@ -55,66 +57,99 @@ export const WeekDetails = ({ weekRange }: { weekRange: string }) => {
     },
   ].filter((item): item is NonNullable<typeof item> => Boolean(item));
 
+  const hasActivities = !!weekDetails.activities?.length;
+  const formattedWeekRange = weekRange.replace(/\//g, '.');
+
   return (
-    <ScrollView
-      className="flex-1 bg-background"
-      contentInsetAdjustmentBehavior="automatic"
-      contentContainerStyle={{
-        paddingBottom: bottom + 16,
-      }}>
-      {/* Header Section */}
-      <View className="border-gray-200 bg-card px-8 pb-6 pt-4 dark:border-gray-800">
-        <View className="mb-4 flex-row items-center justify-between">
-          <View className="h-12 w-12 items-center justify-center rounded-2xl bg-gray-100 dark:bg-gray-800">
-            <Ionicons name="calendar-outline" size={24} color={colors.primary} />
+    <View className="flex-1 bg-background">
+      <ScrollView
+        className="flex-1"
+        contentInsetAdjustmentBehavior="automatic"
+        contentContainerStyle={{
+          paddingBottom: bottom + 80,
+        }}>
+        {/* Header Section */}
+        <View className="border-gray-200 bg-card px-8 pb-6 pt-4 dark:border-gray-800">
+          <View className="mb-4 flex-row items-center justify-between">
+            <View className="h-12 w-12 items-center justify-center rounded-2xl bg-gray-100 dark:bg-gray-800">
+              <Ionicons name="calendar-outline" size={24} color={colors.primary} />
+            </View>
+          </View>
+
+          <Text variant="title1" className="mb-2">
+            {t('home.weekDetails.title')}
+          </Text>
+          <Text variant="subhead" className="text-gray-500">
+            {weekDetails.weekRange}
+          </Text>
+        </View>
+
+        {/* Stats Grid */}
+        <View className="p-4">
+          <View className="flex-row flex-wrap">
+            {stats.map((stat) => {
+              if (!stat) return null;
+              return (
+                <View key={stat.label} className="w-1/2 p-1">
+                  <View className="rounded-2xl bg-card p-4">
+                    <View
+                      className="mb-3 h-10 w-10 items-center justify-center rounded-xl"
+                      style={{ backgroundColor: `${stat.color}20` }}>
+                      <Ionicons name={stat.icon as any} size={20} color={stat.color} />
+                    </View>
+                    <Text variant="title2" className="font-semibold">
+                      {stat.value}
+                    </Text>
+                    <Text variant="subhead" className="text-gray-500">
+                      {stat.label}
+                    </Text>
+                  </View>
+                </View>
+              );
+            })}
           </View>
         </View>
 
-        <Text variant="title1" className="mb-2">
-          {t('home.weekDetails.title')}
-        </Text>
-        <Text variant="subhead" className="text-gray-500">
-          {weekDetails.weekRange}
-        </Text>
-      </View>
+        {/* Activities Section */}
+        {!!weekDetails.activities?.length && (
+          <View className="px-4">
+            <Text variant="title2" className="mb-4 font-semibold">
+              {t('home.weekDetails.activities')}
+            </Text>
+            {weekDetails.activities?.map((activity) => (
+              <ActivityCard key={activity.id} activity={activity} />
+            ))}
+          </View>
+        )}
+      </ScrollView>
 
-      {/* Stats Grid */}
-      <View className="p-4">
-        <View className="flex-row flex-wrap">
-          {stats.map((stat) => {
-            if (!stat) return null;
-            return (
-              <View key={stat.label} className="w-1/2 p-1">
-                <View className="rounded-2xl bg-card p-4">
-                  <View
-                    className="mb-3 h-10 w-10 items-center justify-center rounded-xl"
-                    style={{ backgroundColor: `${stat.color}20` }}>
-                    <Ionicons name={stat.icon as any} size={20} color={stat.color} />
-                  </View>
-                  <Text variant="title2" className="font-semibold">
-                    {stat.value}
-                  </Text>
-                  <Text variant="subhead" className="text-gray-500">
-                    {stat.label}
-                  </Text>
-                </View>
+      {/* Fixed Share Button */}
+      {!!hasActivities && (
+        <View
+          className="absolute inset-x-0 bottom-0"
+          style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}>
+          <View className="p-4" style={{ paddingBottom: bottom + 8 }}>
+            <MotiPressable
+              onPress={() => router.push(`/share/${formattedWeekRange}?type=period`)}
+              animate={({ pressed }) => {
+                'worklet';
+                return {
+                  scale: pressed ? 0.98 : 1,
+                  opacity: pressed ? 0.9 : 1,
+                };
+              }}>
+              <View
+                className="flex-row items-center justify-center gap-2 rounded-2xl px-4 py-4"
+                style={{ backgroundColor: '#1E90FF' }}>
+                <Text variant="body" className="font-medium text-white">
+                  {t('activityDetails.shareOnInstagram')}
+                </Text>
+                <MaterialCommunityIcons name="instagram" size={24} color="white" />
               </View>
-            );
-          })}
-        </View>
-      </View>
-
-      {/* Activities Section */}
-      {!!weekDetails.activities?.length && (
-        <View className="px-4">
-          <Text variant="title2" className="mb-4 font-semibold">
-            {t('home.weekDetails.activities')}
-          </Text>
-          {weekDetails.activities?.map((activity) => (
-            <ActivityCard key={activity.id} activity={activity} />
-          ))}
+            </MotiPressable>
+          </View>
         </View>
       )}
-    </ScrollView>
+    </View>
   );
 };

@@ -31,7 +31,7 @@
           },
           "shareToInstagram": {
             "title": "Compartilhar",
-            "description": "Toque no ícone do Instagram para criar seu story"
+            "description": "Toque no botão Criar Story para começar a criar seu story"
           },
           "chooseBackground": {
             "title": "Escolher Fundo",
@@ -379,7 +379,7 @@
     },
     "activityDetails": {
       "title": "Detalhes da Atividade",
-      "shareOnInstagram": "Story",
+      "shareOnInstagram": "Criar Story",
       "stats": {
         "avgHeartRate": "FC Média",
         "maxHeartRate": "FC Máxima",
