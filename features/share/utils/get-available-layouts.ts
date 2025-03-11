@@ -14,7 +14,8 @@ export type LayoutType =
   | 'period-stats'
   | 'period-social'
   | 'hiit'
-  | 'hiit2';
+  | 'hiit2'
+  | 'advanced-stats';
 
 interface LayoutRequirements {
   minimal: string[];
@@ -28,9 +29,11 @@ interface LayoutRequirements {
   weight: string[];
   hiit: string[];
   hiit2: string[];
+  'advanced-stats': string[];
 }
 
 const LAYOUT_REQUIREMENTS: LayoutRequirements = {
+  'advanced-stats': ['distance', 'moving_time', 'total_elevation_gain', 'average_watts'],
   minimal: ['distance', 'moving_time'],
   social: ['distance', 'moving_time'],
   progress: ['distance', 'moving_time', 'average_speed'],

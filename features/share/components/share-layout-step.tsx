@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Icon } from '@roninoss/icons';
 import { useState, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -36,6 +36,7 @@ import { getWeekDetails, WeekDetails } from '~/features/home/hooks/get-week-deta
 import { Activity } from '~/features/home/types/activity';
 import { HiitLayout } from '../layouts/hiit-layout';
 import { Hiit2Layout } from '../layouts/hiit2-layout';
+import { AdvancedStatsLayout } from '../layouts/advanced-stats-layout';
 
 interface ShareLayoutStepProps {
   previous: () => void;
@@ -58,6 +59,7 @@ export const LAYOUT_COMPONENTS: Record<LayoutType, React.ComponentType<any>> = {
   'period-minimal': PeriodMinimalLayout,
   'period-stats': PeriodStatsLayout,
   'period-social': PeriodSocialLayout,
+  'advanced-stats': AdvancedStatsLayout,
 };
 
 export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
@@ -204,28 +206,51 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
             />
           </View>
         </ViewShot>
-        <MotiPressable
-          onPress={toggleBackground}
-          animate={({ pressed }) => {
-            'worklet';
-            return {
-              scale: pressed ? 0.95 : 1,
-              opacity: pressed ? 0.9 : 1,
-            };
-          }}>
-          <View className="border-border/30 mt-4 flex-row items-center gap-2 self-end rounded-full border px-3 py-1.5">
-            <MaterialIcons
-              name={currentLayoutStyle?.showBackground ? 'visibility' : 'visibility-off'}
-              size={16}
-              color={colors.primary}
-            />
-            <Text color="primary" variant="caption1" className="font-medium">
-              {currentLayoutStyle?.showBackground
-                ? t('share.layout.hideBackground')
-                : t('share.layout.showBackground')}
-            </Text>
-          </View>
-        </MotiPressable>
+        <View className="mt-4 flex-row items-center justify-between">
+          <MotiPressable
+            onPress={() => {
+              router.push({
+                pathname: `/layout-editor/[id]`,
+                params: { id, type },
+              });
+            }}
+            animate={({ pressed }) => {
+              'worklet';
+              return {
+                scale: pressed ? 0.95 : 1,
+                opacity: pressed ? 0.9 : 1,
+              };
+            }}>
+            <View className="border-border/30 flex-row items-center gap-2 self-end rounded-full border px-3 py-1.5">
+              <MaterialCommunityIcons name="table-edit" size={16} color={colors.primary} />
+              <Text color="primary" variant="subhead" className="font-medium">
+                {t('share.layouts.common.edit')}
+              </Text>
+            </View>
+          </MotiPressable>
+          <MotiPressable
+            onPress={toggleBackground}
+            animate={({ pressed }) => {
+              'worklet';
+              return {
+                scale: pressed ? 0.95 : 1,
+                opacity: pressed ? 0.9 : 1,
+              };
+            }}>
+            <View className="border-border/30 flex-row items-center gap-2 self-end rounded-full border px-3 py-1.5">
+              <MaterialIcons
+                name={currentLayoutStyle?.showBackground ? 'visibility' : 'visibility-off'}
+                size={16}
+                color={colors.primary}
+              />
+              <Text color="primary" variant="subhead" className="font-medium">
+                {currentLayoutStyle?.showBackground
+                  ? t('share.layout.hideBackground')
+                  : t('share.layout.showBackground')}
+              </Text>
+            </View>
+          </MotiPressable>
+        </View>
       </View>
     );
   };

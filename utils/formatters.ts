@@ -40,3 +40,7 @@ export const formatWatts = (watts?: number) => {
 export const formatCadence = (cadence?: number) => {
   return cadence ? `${Math.round(cadence)} spm` : '-';
 };
+
+export const formatCalories = (calories?: number) => {
+  return calories ? `${Math.round(calories)} kcal` : '-';
+};

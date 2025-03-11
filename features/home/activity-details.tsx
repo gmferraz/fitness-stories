@@ -19,9 +19,9 @@ import {
   formatWatts,
 } from '~/utils/formatters';
 import { getStoredActivityDetails } from './utils/get-stored-activity-details';
-import { MotiPressable } from 'moti/interactions';
 import { router } from 'expo-router';
 import { getAvailableLayouts } from '../share/utils/get-available-layouts';
+import { Button } from '~/components/nativewindui/Button';
 
 interface ActivityDetailsProps {
   id: string;
@@ -291,28 +291,16 @@ export const ActivityDetails: React.FC<ActivityDetailsProps> = ({ id }) => {
 
       {/* Fixed Share Button */}
       {!!availableLayouts.length && (
-        <View
-          className="absolute inset-x-0 bottom-0"
-          style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}>
-          <View className="p-4" style={{ paddingBottom: bottom + 8 }}>
-            <MotiPressable
+        <View className="absolute inset-x-0 bottom-0">
+          <View style={{ paddingBottom: bottom + 16 }} className="p-4">
+            <Button
+              variant="primary"
+              size="lg"
               onPress={() => router.push(`/share/${id}?type=activity`)}
-              animate={({ pressed }) => {
-                'worklet';
-                return {
-                  scale: pressed ? 0.98 : 1,
-                  opacity: pressed ? 0.9 : 1,
-                };
-              }}>
-              <View
-                className="flex-row items-center justify-center gap-2 rounded-2xl px-4 py-4"
-                style={{ backgroundColor: colors.primary }}>
-                <Text variant="body" className="font-medium text-white">
-                  {t('activityDetails.shareOnInstagram')}
-                </Text>
-                <MaterialCommunityIcons name="instagram" size={24} color="white" />
-              </View>
-            </MotiPressable>
+              className="w-full">
+              <Text className="font-medium">{t('activityDetails.shareOnInstagram')}</Text>
+              <MaterialCommunityIcons name="instagram" size={20} color="white" />
+            </Button>
           </View>
         </View>
       )}

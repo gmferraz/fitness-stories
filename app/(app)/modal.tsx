@@ -87,7 +87,7 @@ export default function SettingsScreen() {
     setValidationError('');
 
     try {
-      if (redeemCode.trim() === 'GUILHERMELINDO') {
+      if (redeemCode.trim() === 'GUILHERMELINDO2') {
         setIsGui(true);
         setIsPremiumForever(true);
         setIsPremium(true);

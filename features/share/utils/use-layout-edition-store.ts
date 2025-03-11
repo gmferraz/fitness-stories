@@ -198,6 +198,11 @@ export const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
     titleSize: 36,
     bodySize: 22,
   },
+  'advanced-stats': {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Inter',
+    labelSize: 12,
+  },
 };
 
 export const useLayoutEditionStore = create<LayoutStylesState>()(
