@@ -3,8 +3,23 @@ import { MMKV } from 'react-native-mmkv'; // Correct import for MMKV
 
 export const appReviewStorage = new MMKV(); // Initialize MMKV storage
 
+const HAS_REQUESTED_REVIEW_KEY = 'hasRequestedReview';
+const SHOULD_SHOW_REVIEW_ON_NEXT_OPEN_KEY = 'shouldShowReviewOnNextOpen';
+
 export function hasRequestedReview() {
-  return appReviewStorage.getBoolean('hasRequestedReview') || false; // Check storage for review request status
+  return appReviewStorage.getBoolean(HAS_REQUESTED_REVIEW_KEY) || false; // Check storage for review request status
+}
+
+export function setShouldShowReviewOnNextOpen() {
+  appReviewStorage.set(SHOULD_SHOW_REVIEW_ON_NEXT_OPEN_KEY, true);
+}
+
+export function shouldShowReviewOnNextOpen() {
+  return appReviewStorage.getBoolean(SHOULD_SHOW_REVIEW_ON_NEXT_OPEN_KEY) || false;
+}
+
+export function clearShouldShowReviewOnNextOpen() {
+  appReviewStorage.set(SHOULD_SHOW_REVIEW_ON_NEXT_OPEN_KEY, false);
 }
 
 export async function showRequestReview() {
@@ -20,6 +35,6 @@ export async function showRequestReview() {
       error
     );
   } finally {
-    appReviewStorage.set('hasRequestedReview', true); // Store review request status
+    appReviewStorage.set(HAS_REQUESTED_REVIEW_KEY, true); // Store review request status
   }
 }

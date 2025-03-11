@@ -9,7 +9,6 @@ import ViewShot from 'react-native-view-shot';
 import { MotiPressable } from 'moti/interactions';
 import { useEnvironmentStore } from '~/features/app-setup/use-environment';
 import { router } from 'expo-router';
-
 import { DetailedLayout } from '../layouts/detailed-layout';
 import { MinimalLayout } from '../layouts/minimal-layout';
 import { ProgressLayout } from '../layouts/progress-layout';
@@ -37,6 +36,7 @@ import { Activity } from '~/features/home/types/activity';
 import { HiitLayout } from '../layouts/hiit-layout';
 import { Hiit2Layout } from '../layouts/hiit2-layout';
 import { AdvancedStatsLayout } from '../layouts/advanced-stats-layout';
+import { setShouldShowReviewOnNextOpen } from '~/utils/app-review';
 
 interface ShareLayoutStepProps {
   previous: () => void;
@@ -122,6 +122,7 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
       if (stickerUri) {
         // Store the current layout as the last used layout before sharing
         setLastUsedLayout(availableLayouts[currentPage]);
+        setShouldShowReviewOnNextOpen();
         await handleShareToInstagram({
           backgroundUri: selectedImage,
           stickerUri,

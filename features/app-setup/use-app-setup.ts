@@ -13,14 +13,17 @@ import {
 import { useAds } from '../ads/use-ads';
 import { MMKV } from 'react-native-mmkv';
 import { router } from 'expo-router';
-import { showRequestReview } from '~/utils/app-review';
+import {
+  showRequestReview,
+  shouldShowReviewOnNextOpen,
+  clearShouldShowReviewOnNextOpen,
+} from '~/utils/app-review';
 import { Platform } from 'react-native';
 
 type AppSetupState = 'pending' | 'done' | 'failed';
 
 const APP_OPEN_AD_VIEWS_KEY = 'appOpenAdViews';
 const PAYWALL_SHOWN_KEY = 'paywallShown';
-const APP_OPEN_COUNT_KEY = 'appOpenCount';
 
 const storage = new MMKV();
 
@@ -54,16 +57,6 @@ export const useAppSetup = () => {
 
     // Return true if this is the third view
     return newViews === 3;
-  };
-
-  const trackAppOpenCount = () => {
-    // Get current count and increment
-    const currentCount = storage.getNumber(APP_OPEN_COUNT_KEY) || 0;
-    const newCount = currentCount + 1;
-    storage.set(APP_OPEN_COUNT_KEY, newCount);
-
-    // Return true if this is the fifth open
-    return newCount >= 5;
   };
 
   const markPaywallAsShown = () => {
@@ -102,9 +95,6 @@ export const useAppSetup = () => {
       appOpenAd?.load();
       setState('done');
 
-      // Track app open count and check if it's the 5th open
-      const isFifthOpen = trackAppOpenCount();
-
       // Show app open ad if applicable
       setTimeout(() => {
         if (!isPremium && appOpenAd?.loaded) {
@@ -117,15 +107,18 @@ export const useAppSetup = () => {
         }
       }, 2000);
 
-      // Show review request if it's the 5th open
-      if (isFifthOpen) {
+      // Check if we should show review based on previous Instagram share
+      const shouldShowReview = shouldShowReviewOnNextOpen();
+
+      if (shouldShowReview) {
         setTimeout(() => {
           showRequestReview();
-          Sentry.captureMessage('Review request shown', {
+          clearShouldShowReviewOnNextOpen();
+          Sentry.captureMessage('Review request shown after app open (Instagram share)', {
             level: 'info',
-            tags: { action: 'review_request_shown' },
+            tags: { action: 'review_request_shown_after_app_open' },
           });
-        }, 4000);
+        }, 3000);
       }
     };
 
