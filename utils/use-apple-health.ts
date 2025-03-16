@@ -7,6 +7,7 @@ import { useAppleHealthStore } from '../stores/use-apple-health-store';
 import { translateSportType } from '~/features/home/utils/translate-sport-type';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/react-native';
+import { usePostHog } from 'posthog-react-native';
 
 const workoutPermissions = [
   AppleHealthKit.Constants.Permissions.Workout,
@@ -41,6 +42,7 @@ export const useAppleHealth = () => {
     useAppleHealthStore();
 
   const { t } = useTranslation();
+  const posthog = usePostHog();
 
   useEffect(() => {
     checkAvailabilityAndPermissions();
@@ -199,6 +201,169 @@ export const useAppleHealth = () => {
     });
   };
 
+  // Function to log detailed workout data for debugging
+  const logWorkoutDataForDebugging = (workout: any, enrichedWorkout: AppleHealthActivity) => {
+    if (!posthog) return;
+
+    try {
+      // Extract raw data from the workout
+      const rawData = {
+        // Basic workout info
+        id: workout.id,
+        activityId: workout.activityId,
+        activityName: workout.activityName,
+        sourceName: workout.sourceName,
+        sourceId: workout.sourceId,
+        device: workout.device,
+        start: workout.start,
+        end: workout.end,
+
+        // Metrics
+        duration: workout.duration,
+        distance: workout.distance,
+        distanceUnit: workout.distanceUnit,
+        totalDistance: workout.totalDistance,
+        totalDistanceUnit: workout.totalDistanceUnit,
+        calories: workout.calories,
+
+        // Additional data
+        metadata: workout.metadata ? JSON.stringify(workout.metadata) : undefined,
+
+        // Processed data
+        processed_distance_meters: enrichedWorkout.distance,
+        processed_duration_seconds: enrichedWorkout.moving_time,
+        processed_avg_speed: enrichedWorkout.average_speed,
+      };
+
+      // Log to PostHog with a specific event name for debugging
+      posthog.capture('apple_health_workout_debug', {
+        ...rawData,
+        timestamp: new Date().toISOString(),
+        app_version:
+          Platform.OS === 'ios'
+            ? process.env.EXPO_PUBLIC_IOS_APP_VERSION
+            : process.env.EXPO_PUBLIC_ANDROID_APP_VERSION,
+      });
+
+      // Also log to console in dev mode
+      if (isDev) {
+        console.log('Apple Health Workout Debug Data:', rawData);
+      }
+    } catch (error) {
+      console.error('Error logging workout debug data:', error);
+      Sentry.captureException(error, {
+        tags: { action: 'apple_health_debug_logging' },
+      });
+    }
+  };
+
+  // Function to analyze and log discrepancies between Apple Health data and our processed data
+  const analyzeAndLogDiscrepancies = (workout: any, enrichedWorkout: AppleHealthActivity) => {
+    if (!posthog) return;
+
+    try {
+      // Calculate discrepancies
+      const originalDistance = workout.distance * 1000; // Convert to meters for comparison
+      const processedDistance = enrichedWorkout.distance;
+
+      const originalDuration = workout.duration; // Original duration in seconds
+      const processedDuration = enrichedWorkout.moving_time; // Our processed duration
+
+      const originalCalories = parseInt(workout.calories ?? '0', 10);
+      const processedCalories = enrichedWorkout.calories || 0; // Ensure it's not undefined
+
+      // Calculate percentage differences
+      const distanceDiffPercent =
+        originalDistance > 0
+          ? Math.abs(((processedDistance - originalDistance) / originalDistance) * 100)
+          : 0;
+
+      const durationDiffPercent =
+        originalDuration > 0
+          ? Math.abs(((processedDuration - originalDuration) / originalDuration) * 100)
+          : 0;
+
+      const caloriesDiffPercent =
+        originalCalories > 0
+          ? Math.abs(((processedCalories - originalCalories) / originalCalories) * 100)
+          : 0;
+
+      // Determine if there are significant discrepancies (more than 1%)
+      const hasDistanceDiscrepancy = distanceDiffPercent > 1;
+      const hasDurationDiscrepancy = durationDiffPercent > 1;
+      const hasCaloriesDiscrepancy = caloriesDiffPercent > 1;
+
+      // Common properties for all events
+      const commonProperties = {
+        workout_id: workout.id,
+        workout_type: workout.activityId,
+        workout_name: enrichedWorkout.name,
+        workout_source: workout.sourceName,
+        workout_source_id: workout.sourceId,
+        workout_device: workout.device,
+        timestamp: new Date().toISOString(),
+        device_model: Platform.OS === 'ios' ? 'iOS' : 'Android',
+        app_version:
+          Platform.OS === 'ios'
+            ? process.env.EXPO_PUBLIC_IOS_APP_VERSION
+            : process.env.EXPO_PUBLIC_ANDROID_APP_VERSION,
+      };
+
+      // Log distance discrepancy if significant
+      if (hasDistanceDiscrepancy) {
+        posthog.capture('apple_health_distance_discrepancy', {
+          ...commonProperties,
+          original_distance_meters: originalDistance,
+          processed_distance_meters: processedDistance,
+          distance_diff_percent: distanceDiffPercent.toFixed(2),
+          distance_diff_meters: Math.abs(processedDistance - originalDistance).toFixed(2),
+          distance_unit: workout.distanceUnit,
+          total_distance: workout.totalDistance,
+          total_distance_unit: workout.totalDistanceUnit,
+          // Pace calculation (min/km)
+          original_pace:
+            originalDistance > 0
+              ? (originalDuration / 60 / (originalDistance / 1000)).toFixed(2)
+              : 0,
+          processed_pace:
+            processedDistance > 0
+              ? (processedDuration / 60 / (processedDistance / 1000)).toFixed(2)
+              : 0,
+          raw_metadata: workout.metadata ? JSON.stringify(workout.metadata) : undefined,
+        });
+      }
+
+      // Log duration discrepancy if significant
+      if (hasDurationDiscrepancy) {
+        posthog.capture('apple_health_duration_discrepancy', {
+          ...commonProperties,
+          original_duration_seconds: originalDuration,
+          processed_duration_seconds: processedDuration,
+          duration_diff_percent: durationDiffPercent.toFixed(2),
+          duration_diff_seconds: Math.abs(processedDuration - originalDuration).toFixed(2),
+          raw_metadata: workout.metadata ? JSON.stringify(workout.metadata) : undefined,
+        });
+      }
+
+      // Log calories discrepancy if significant
+      if (hasCaloriesDiscrepancy) {
+        posthog.capture('apple_health_calories_discrepancy', {
+          ...commonProperties,
+          original_calories: originalCalories,
+          processed_calories: processedCalories,
+          calories_diff_percent: caloriesDiffPercent.toFixed(2),
+          calories_diff: Math.abs(processedCalories - originalCalories),
+          raw_metadata: workout.metadata ? JSON.stringify(workout.metadata) : undefined,
+        });
+      }
+    } catch (error) {
+      console.error('Error analyzing workout discrepancies:', error);
+      Sentry.captureException(error, {
+        tags: { action: 'apple_health_discrepancy_analysis' },
+      });
+    }
+  };
+
   const listLast150DaysWorkouts = async (): Promise<AppleHealthActivity[]> => {
     if (isDev) {
       Sentry.addBreadcrumb({
@@ -235,11 +400,11 @@ export const useAppleHealth = () => {
 
     Sentry.addBreadcrumb({
       category: 'health',
-      message: 'Fetching Apple Health workouts for last 150 days',
+      message: 'Fetching Apple Health workouts for last 90 days',
       level: 'info',
     });
 
-    const startDate = new Date(Date.now() - 150 * 24 * 60 * 60 * 1000).toISOString();
+    const startDate = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString();
     const endDate = new Date().toISOString();
 
     try {
@@ -326,7 +491,7 @@ export const useAppleHealth = () => {
             const distance = workout.distance * 1000 || 0;
             const avgSpeed = distance ? distance / 1000 / (duration / 3600) : undefined;
 
-            return {
+            const enrichedWorkout: AppleHealthActivity = {
               id: `apple-${workout.id}`,
               name:
                 translateSportType(t, mapWorkoutTypeToSportType(workout.activityId)) ||
@@ -367,6 +532,36 @@ export const useAppleHealth = () => {
                   }
                 : undefined,
             };
+
+            // Log workout data to PostHog for debugging
+            posthog?.capture('apple_health_workout_imported', {
+              workout_id: workout.id,
+              workout_type: workout.activityId,
+              workout_name: enrichedWorkout.name,
+              workout_source: workout.sourceName,
+              workout_source_id: workout.sourceId,
+              workout_device: workout.device,
+              workout_start: workout.start,
+              workout_end: workout.end,
+              workout_duration_seconds: duration,
+              workout_distance_meters: distance,
+              workout_calories: parseInt(workout.calories ?? '0', 10),
+              workout_avg_speed: avgSpeed,
+              workout_avg_heartrate: avgHeartRate,
+              workout_max_heartrate: maxHeartRate,
+              workout_avg_cadence: workout.metadata?.HKAverageCadence,
+              workout_has_route: !!routeData?.data,
+              // Include the raw data for debugging
+              raw_workout: JSON.stringify(workout),
+            });
+
+            // Log detailed workout data for debugging
+            logWorkoutDataForDebugging(workout, enrichedWorkout);
+
+            // Analyze and log any discrepancies
+            analyzeAndLogDiscrepancies(workout, enrichedWorkout);
+
+            return enrichedWorkout;
           } catch (error) {
             Sentry.captureException(error, {
               tags: {
