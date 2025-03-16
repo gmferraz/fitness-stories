@@ -206,8 +206,8 @@ export const useAppleHealth = () => {
     if (!posthog) return;
 
     try {
-      // Calculate discrepancies
-      const originalDistance = workout.distance * 1000; // Convert to meters for comparison
+      // Convert distance from miles to meters (1 mile = 1609.344 meters)
+      const originalDistance = workout.distance * 1609.344; // Convert miles to meters
       const processedDistance = enrichedWorkout.distance;
 
       const originalDuration = workout.duration; // Original duration in seconds
@@ -357,7 +357,6 @@ export const useAppleHealth = () => {
           {
             startDate,
             endDate,
-            unit: HealthUnit.meter,
           },
           (err: any, results: any) => {
             if (err) {
@@ -433,8 +432,22 @@ export const useAppleHealth = () => {
 
             const duration =
               (new Date(workout.end).getTime() - new Date(workout.start).getTime()) / 1000;
-            const distance = workout.distance * 1000 || 0;
-            const avgSpeed = distance ? distance / 1000 / (duration / 3600) : undefined;
+
+            // Convert distance from miles to meters (1 mile = 1609.344 meters)
+            const distanceInMeters = workout.distance * 1609.344;
+
+            // Log the distance conversion to console in dev mode
+            if (isDev) {
+              console.log('Apple Health Distance Conversion:', {
+                workout_id: workout.id,
+                raw_distance_miles: workout.distance,
+                converted_distance_meters: distanceInMeters,
+              });
+            }
+
+            const avgSpeed = distanceInMeters
+              ? distanceInMeters / 1000 / (duration / 3600)
+              : undefined;
 
             const enrichedWorkout: AppleHealthActivity = {
               id: `apple-${workout.id}`,
@@ -442,7 +455,7 @@ export const useAppleHealth = () => {
                 translateSportType(t, mapWorkoutTypeToSportType(workout.activityId)) ||
                 workout.activityName,
               type: mapWorkoutTypeToSportType(workout.activityId) as any,
-              distance,
+              distance: distanceInMeters,
               moving_time: duration,
               elapsed_time: duration,
               total_elevation_gain: 0,
@@ -489,7 +502,8 @@ export const useAppleHealth = () => {
               workout_start: workout.start,
               workout_end: workout.end,
               workout_duration_seconds: duration,
-              workout_distance_meters: distance,
+              workout_raw_distance_miles: workout.distance,
+              workout_distance_meters: distanceInMeters,
               workout_calories: parseInt(workout.calories ?? '0', 10),
               workout_avg_speed: avgSpeed,
               workout_avg_heartrate: avgHeartRate,
