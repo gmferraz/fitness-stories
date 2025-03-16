@@ -1,4 +1,4 @@
-import AppleHealthKit, { HealthKitPermissions } from 'react-native-health';
+import AppleHealthKit, { HealthKitPermissions, HealthUnit } from 'react-native-health';
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
 import { AppleHealthActivity, SportType } from '../features/home/types/activity';
@@ -201,62 +201,6 @@ export const useAppleHealth = () => {
     });
   };
 
-  // Function to log detailed workout data for debugging
-  const logWorkoutDataForDebugging = (workout: any, enrichedWorkout: AppleHealthActivity) => {
-    if (!posthog) return;
-
-    try {
-      // Extract raw data from the workout
-      const rawData = {
-        // Basic workout info
-        id: workout.id,
-        activityId: workout.activityId,
-        activityName: workout.activityName,
-        sourceName: workout.sourceName,
-        sourceId: workout.sourceId,
-        device: workout.device,
-        start: workout.start,
-        end: workout.end,
-
-        // Metrics
-        duration: workout.duration,
-        distance: workout.distance,
-        distanceUnit: workout.distanceUnit,
-        totalDistance: workout.totalDistance,
-        totalDistanceUnit: workout.totalDistanceUnit,
-        calories: workout.calories,
-
-        // Additional data
-        metadata: workout.metadata ? JSON.stringify(workout.metadata) : undefined,
-
-        // Processed data
-        processed_distance_meters: enrichedWorkout.distance,
-        processed_duration_seconds: enrichedWorkout.moving_time,
-        processed_avg_speed: enrichedWorkout.average_speed,
-      };
-
-      // Log to PostHog with a specific event name for debugging
-      posthog.capture('apple_health_workout_debug', {
-        ...rawData,
-        timestamp: new Date().toISOString(),
-        app_version:
-          Platform.OS === 'ios'
-            ? process.env.EXPO_PUBLIC_IOS_APP_VERSION
-            : process.env.EXPO_PUBLIC_ANDROID_APP_VERSION,
-      });
-
-      // Also log to console in dev mode
-      if (isDev) {
-        console.log('Apple Health Workout Debug Data:', rawData);
-      }
-    } catch (error) {
-      console.error('Error logging workout debug data:', error);
-      Sentry.captureException(error, {
-        tags: { action: 'apple_health_debug_logging' },
-      });
-    }
-  };
-
   // Function to analyze and log discrepancies between Apple Health data and our processed data
   const analyzeAndLogDiscrepancies = (workout: any, enrichedWorkout: AppleHealthActivity) => {
     if (!posthog) return;
@@ -413,6 +357,7 @@ export const useAppleHealth = () => {
           {
             startDate,
             endDate,
+            unit: HealthUnit.meter,
           },
           (err: any, results: any) => {
             if (err) {
@@ -554,9 +499,6 @@ export const useAppleHealth = () => {
               // Include the raw data for debugging
               raw_workout: JSON.stringify(workout),
             });
-
-            // Log detailed workout data for debugging
-            logWorkoutDataForDebugging(workout, enrichedWorkout);
 
             // Analyze and log any discrepancies
             analyzeAndLogDiscrepancies(workout, enrichedWorkout);
