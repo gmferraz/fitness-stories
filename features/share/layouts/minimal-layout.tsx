@@ -44,7 +44,7 @@ export function MinimalLayout({
     <View
       className="flex-col self-center rounded-2xl px-4"
       style={{
-        width: width - 108,
+        width: width - 64,
         backgroundColor: showBackground ? bgColor : 'transparent',
         padding: style.padding ?? 16,
       }}>

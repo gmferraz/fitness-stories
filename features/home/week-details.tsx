@@ -125,8 +125,8 @@ export const WeekDetails = ({ weekRange }: { weekRange: string }) => {
 
       {/* Fixed Share Button */}
       {!!hasActivities && (
-        <View className="absolute inset-x-0 bottom-0">
-          <View style={{ paddingBottom: bottom + 16 }} className="p-4">
+        <View className="absolute inset-x-0 bottom-0 bg-background">
+          <View style={{ paddingBottom: bottom ? bottom + 8 : 16 }} className="p-4">
             <Button
               variant="primary"
               size="lg"

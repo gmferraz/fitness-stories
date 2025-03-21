@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { Text } from '~/components/nativewindui/Text';
@@ -52,17 +52,19 @@ export function SocialLayout({
     lineHeight: style.bodySize * 1.2,
   };
 
+  const width = Dimensions.get('window').width;
+
   return (
     <View
       className="self-center overflow-hidden rounded-2xl"
       style={{
-        width: 300,
+        width: width - 64,
         backgroundColor: showBackground ? bgColor : 'transparent',
         padding: style.padding ?? 12,
       }}>
       {hasHeartRate ? (
         // Layout with heart rate: 2x2 grid
-        <View>
+        <View className="ml-8">
           <View className="flex-row justify-between">
             <View className="flex-1">
               <Text style={labelStyles} className="mb-1">
@@ -107,8 +109,8 @@ export function SocialLayout({
         </View>
       ) : (
         // Layout without heart rate: single row with consistent gaps
-        <View className="flex-row justify-between">
-          <View className="w-1/3">
+        <View className="ml-6 w-full flex-row justify-between">
+          <View className="flex-1">
             <Text style={labelStyles} className="mb-1">
               {t('share.layouts.common.distance')}
             </Text>
@@ -117,21 +119,21 @@ export function SocialLayout({
             </Text>
           </View>
 
-          <View className="w-1/3">
-            <Text style={labelStyles} className="mb-1 self-center">
+          <View className="flex-1">
+            <Text style={labelStyles} className="mb-1">
               {t('share.layouts.common.avgPace')}
             </Text>
-            <Text style={bodyStyles} className="self-center font-bold">
+            <Text style={bodyStyles} className="font-bold">
               {pace}
             </Text>
           </View>
 
           {hasElevation && (
-            <View className="w-1/3">
-              <Text style={labelStyles} className="mb-1 self-end">
+            <View className="flex-1">
+              <Text style={labelStyles} className="mb-1">
                 {t('share.layouts.common.elevation')}
               </Text>
-              <Text style={bodyStyles} className="self-end font-bold">
+              <Text style={bodyStyles} className="font-bold">
                 {Math.round(activity.total_elevation_gain!)} m
               </Text>
             </View>

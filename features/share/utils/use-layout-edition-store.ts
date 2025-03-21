@@ -73,7 +73,7 @@ export const zustandStorage: StateStorage = {
   },
 };
 
-interface LayoutStyle {
+export interface LayoutStyle {
   fontFamily: FontFamily;
   titleSize: number;
   bodySize: number;
@@ -124,7 +124,8 @@ export const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
     ...DEFAULT_STYLE,
     fontFamily: 'Poppins',
     titleSize: 32,
-    bodySize: 16,
+    bodySize: 18,
+    labelSize: 10,
   },
   detailed: {
     ...DEFAULT_STYLE,
@@ -202,6 +203,12 @@ export const DEFAULT_LAYOUT_STYLES: Record<LayoutType, LayoutStyle> = {
     ...DEFAULT_STYLE,
     fontFamily: 'Inter',
     labelSize: 12,
+  },
+  strava: {
+    ...DEFAULT_STYLE,
+    fontFamily: 'Inter',
+    labelSize: 12,
+    bodySize: 18,
   },
 };
 

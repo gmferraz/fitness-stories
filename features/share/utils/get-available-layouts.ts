@@ -15,25 +15,12 @@ export type LayoutType =
   | 'period-social'
   | 'hiit'
   | 'hiit2'
-  | 'advanced-stats';
+  | 'advanced-stats'
+  | 'strava';
 
-interface LayoutRequirements {
-  minimal: string[];
-  detailed: string[];
-  progress: string[];
-  map: string[];
-  stats: string[];
-  aesthetic: string[];
-  social: string[];
-  achievement: string[];
-  weight: string[];
-  hiit: string[];
-  hiit2: string[];
-  'advanced-stats': string[];
-}
-
-const LAYOUT_REQUIREMENTS: LayoutRequirements = {
+const LAYOUT_REQUIREMENTS: Record<LayoutType, string[]> = {
   'advanced-stats': ['distance', 'moving_time', 'total_elevation_gain', 'average_watts'],
+  strava: ['distance', 'moving_time', 'average_speed', 'total_elevation_gain'],
   minimal: ['distance', 'moving_time'],
   social: ['distance', 'moving_time'],
   progress: ['distance', 'moving_time', 'average_speed'],
@@ -45,6 +32,9 @@ const LAYOUT_REQUIREMENTS: LayoutRequirements = {
   weight: ['moving_time'],
   hiit: ['moving_time', 'calories'],
   hiit2: ['moving_time', 'calories'],
+  'period-minimal': ['skip'],
+  'period-stats': ['skip'],
+  'period-social': ['skip'],
 };
 
 export function getAvailableLayouts(

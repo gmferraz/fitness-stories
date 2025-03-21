@@ -37,6 +37,7 @@ import { HiitLayout } from '../layouts/hiit-layout';
 import { Hiit2Layout } from '../layouts/hiit2-layout';
 import { AdvancedStatsLayout } from '../layouts/advanced-stats-layout';
 import { setShouldShowReviewOnNextOpen } from '~/utils/app-review';
+import { StravaLayout } from '../layouts/strava-layout';
 
 interface ShareLayoutStepProps {
   previous: () => void;
@@ -60,6 +61,7 @@ export const LAYOUT_COMPONENTS: Record<LayoutType, React.ComponentType<any>> = {
   'period-stats': PeriodStatsLayout,
   'period-social': PeriodSocialLayout,
   'advanced-stats': AdvancedStatsLayout,
+  strava: StravaLayout,
 };
 
 export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
