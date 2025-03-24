@@ -18,7 +18,7 @@ const isAndroid = Platform.OS === 'android';
 
 const ANNUAL_PACKAGE_ID = isAndroid ? 'rc_annual:annual' : 'rc_annual';
 const MONTHLY_PACKAGE_ID = isAndroid ? 'monthly:monthly' : 'rc_monthly';
-const ONE_TIME_PACKAGE_ID = isAndroid ? 'one_time:one_time' : 'full_unlock';
+const ONE_TIME_PACKAGE_ID = isAndroid ? 'one_time' : 'full_unlock';
 
 // Fixed discount percentage for annual plan
 // const ANNUAL_DISCOUNT = 60;
