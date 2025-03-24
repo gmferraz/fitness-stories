@@ -522,7 +522,9 @@
       "monthly": "Monthly",
       "perYear": " per year",
       "perMonth": " per month",
-      "discount": "{{discount}}% OFF"
+      "discount": "{{discount}}% OFF",
+      "unlockPremium": "Unlock premium",
+      "oneTime": "One-time payment"
     },
     "subscribe": "Subscribe Now"
   }

@@ -18,9 +18,10 @@ const isAndroid = Platform.OS === 'android';
 
 const ANNUAL_PACKAGE_ID = isAndroid ? 'rc_annual:annual' : 'rc_annual';
 const MONTHLY_PACKAGE_ID = isAndroid ? 'monthly:monthly' : 'rc_monthly';
+const ONE_TIME_PACKAGE_ID = isAndroid ? 'one_time:one_time' : 'full_unlock';
 
 // Fixed discount percentage for annual plan
-const ANNUAL_DISCOUNT = 60;
+// const ANNUAL_DISCOUNT = 60;
 
 // Paywall presets
 export type PaywallPreset = 'editTemplates' | 'removeAds' | 'general';
@@ -99,13 +100,10 @@ export function Paywall({ preset = 'editTemplates', customContent }: PaywallProp
           return;
         }
 
-        const products = await Purchases.getProducts([ANNUAL_PACKAGE_ID, MONTHLY_PACKAGE_ID]);
+        const products = await Purchases.getProducts([ONE_TIME_PACKAGE_ID]);
         if (products.length > 0) {
           setPackages(products);
-          setSelectedPackage(
-            products.find((product) => product.identifier === ANNUAL_PACKAGE_ID)?.identifier ??
-              products[0].identifier
-          );
+          setSelectedPackage(products[0].identifier);
         }
       } catch (e) {
         console.error('Error fetching products:', e);
@@ -202,7 +200,6 @@ export function Paywall({ preset = 'editTemplates', customContent }: PaywallProp
         {/* Subscription Options - Smaller and closer to bottom */}
         <View className="mb-4">
           {packages.map((product, index) => {
-            const isAnnual = product.identifier === ANNUAL_PACKAGE_ID;
             const isSelected = selectedPackage === product.identifier;
 
             return (
@@ -221,7 +218,7 @@ export function Paywall({ preset = 'editTemplates', customContent }: PaywallProp
                   }}>
                   <View className="flex-row items-center justify-between">
                     <Text variant="callout" className="font-semibold" color="primary">
-                      {isAnnual ? t('paywall.plans.annual') : t('paywall.plans.monthly')}
+                      {t('paywall.plans.unlockPremium')}
                     </Text>
                     <Text variant="callout" className="font-bold" color="primary">
                       {product.priceString}
@@ -230,20 +227,8 @@ export function Paywall({ preset = 'editTemplates', customContent }: PaywallProp
 
                   <View className="mt-1 flex-row items-center justify-between">
                     <Text variant="footnote" color="tertiary" className="opacity-70">
-                      {isAnnual
-                        ? `${product.priceString}${t('paywall.plans.perYear')}`
-                        : `${product.priceString}${t('paywall.plans.perMonth')}`}
+                      {t('paywall.plans.oneTime')}
                     </Text>
-
-                    {isAnnual && (
-                      <View
-                        className="rounded-full px-2 py-0.5"
-                        style={{ backgroundColor: `${colors.primary}20` }}>
-                        <Text variant="caption2" className="font-bold" color="primary">
-                          {t('paywall.plans.discount', { discount: ANNUAL_DISCOUNT })}
-                        </Text>
-                      </View>
-                    )}
                   </View>
                 </MotiView>
               </MotiPressable>

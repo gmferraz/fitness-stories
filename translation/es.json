@@ -516,7 +516,9 @@
         "monthly": "Mensual",
         "perYear": " por año",
         "perMonth": " por mes",
-        "discount": "{{discount}}% OFF"
+        "discount": "{{discount}}% OFF",
+        "unlockPremium": "Desbloquear premium",
+        "oneTime": "Pago único"
       },
       "subscribe": "Suscribirse Ahora"
     }

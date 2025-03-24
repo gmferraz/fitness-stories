@@ -7,7 +7,6 @@ import Carousel from 'react-native-reanimated-carousel';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ViewShot from 'react-native-view-shot';
 import { MotiPressable } from 'moti/interactions';
-import { useEnvironmentStore } from '~/features/app-setup/use-environment';
 import { router } from 'expo-router';
 import { DetailedLayout } from '../layouts/detailed-layout';
 import { MinimalLayout } from '../layouts/minimal-layout';
@@ -38,6 +37,7 @@ import { Hiit2Layout } from '../layouts/hiit2-layout';
 import { AdvancedStatsLayout } from '../layouts/advanced-stats-layout';
 import { setShouldShowReviewOnNextOpen } from '~/utils/app-review';
 import { StravaLayout } from '../layouts/strava-layout';
+import { usePostHog } from 'posthog-react-native';
 
 interface ShareLayoutStepProps {
   previous: () => void;
@@ -74,8 +74,7 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
   const width = Dimensions.get('window').width;
   const { t } = useTranslation();
   const viewShotRef = useRef<ViewShot>(null);
-  const isPremium = useEnvironmentStore((state) => state.isPremium);
-
+  const posthog = usePostHog();
   const entity: WeekDetails | Activity =
     type === 'activity' ? getStoredActivityDetails(id) : getWeekDetails(id);
   const availableLayouts = getAvailableLayouts(
@@ -142,15 +141,20 @@ export function ShareLayoutStep({ previous, id, type }: ShareLayoutStepProps) {
     const isLayoutEdited = currentStyle?.isEdited || false;
 
     // If user is not premium and layout is edited, redirect to paywall
-    if (!isPremium && isLayoutEdited) {
-      // Store the current layout as the last used layout before redirecting
-      setLastUsedLayout(currentLayout);
-      router.push({
-        pathname: '/paywall',
-        params: { preset: 'editTemplates' },
-      });
-      return;
-    }
+    // if (!isPremium && isLayoutEdited) {
+    //   // Store the current layout as the last used layout before redirecting
+    //   setLastUsedLayout(currentLayout);
+    //   router.push({
+    //     pathname: '/paywall',
+    //     params: { preset: 'editTemplates' },
+    //   });
+    //   return;
+    // }
+
+    posthog.capture('story_created', {
+      layout: currentLayout,
+      is_edited: isLayoutEdited,
+    });
 
     await shareToInstagram();
   };
