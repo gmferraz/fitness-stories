@@ -21,7 +21,7 @@ export const WelcomeStep: React.FC<WelcomeStepProps> = ({ onNext }) => {
         transition={{ type: 'timing', duration: 1000 }}
         className="items-center">
         <Image
-          source={require('~/assets/icon.png')}
+          source={require('~/assets/new-icon.png')}
           className="mb-8 h-32 w-32 rounded-3xl"
           resizeMode="contain"
         />
