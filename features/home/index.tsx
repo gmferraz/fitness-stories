@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   ScrollView,
@@ -15,18 +15,34 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ActivityIndicator as LoadingIndicator } from '~/components/nativewindui/ActivityIndicator';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { EmptyState } from '~/components/EmptyState';
-import { router } from 'expo-router';
+import { router, usePathname } from 'expo-router';
 import { useStrava } from '~/utils/use-strava';
 import { useAppleHealth } from '~/utils/use-apple-health';
 import StravaIcon from '~/assets/svg/strava.svg';
 import AppleHealthIcon from '~/assets/svg/apple-health.svg';
 import { Ionicons } from '@expo/vector-icons';
 import { useWeeks } from './hooks/use-weeks';
+import { usePostHog } from 'posthog-react-native';
 
 export const HomeScreen = () => {
   const { activities, isLoading, refreshActivities, hasConnectedSource } = useActivities({
     origin: 'home',
   });
+  const posthog = usePostHog();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    posthog.capture('$pageview', {
+      $current_url: pathname,
+    });
+
+    return () => {
+      posthog.capture('$pageleave', {
+        $current_url: pathname,
+      });
+    };
+  }, [pathname]);
+
   const { bottom } = useSafeAreaInsets();
   const { colors } = useColorScheme();
   const { t } = useTranslation();
