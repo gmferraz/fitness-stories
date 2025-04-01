@@ -14,7 +14,7 @@ import {
   INTERSTITIAL_ANDROID_AD_ID,
   INTERSTITIAL_APPLE_AD_ID,
 } from './add-ids';
-import { useEnvironmentStore } from '../app-setup/use-environment';
+// import { useEnvironmentStore } from '../app-setup/use-environment';
 import { Platform } from 'react-native';
 
 const storage = new MMKV();
@@ -22,7 +22,8 @@ const TRACKING_PERMISSION_KEY = 'trackingPermission';
 
 export const useAds = () => {
   const [isInitialized, setIsInitialized] = useState(false);
-  const isPremium = useEnvironmentStore((state) => state.isPremium);
+  // const isPremium = useEnvironmentStore((state) => state.isPremium);
+  const isPremium = true;
 
   useEffect(() => {
     const initializeAds = async () => {
